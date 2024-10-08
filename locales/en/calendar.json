@@ -1,0 +1,94 @@
+{
+  "govnonworkingday": [
+    {
+      "date": {
+        "month": 0,
+        "day": 1
+      },
+      "hours": 23,
+      "minutes": 59,
+      "title": "en",
+      "color": "#ff2d55"
+    },
+    {
+      "date": {
+        "month": 1,
+        "day": 6
+      },
+      "hours": 9,
+      "minutes": 30,
+      "title": "en",
+      "color": "#ff2d55"
+    },
+    {
+      "date": {
+        "month": 4,
+        "day": 1
+      },
+      "hours": 9,
+      "minutes": 30,
+      "title": "en",
+      "color": "#ff2d55"
+    },
+    {
+      "date": {
+        "month": 4,
+        "day": 3
+      },
+      "hours": 9,
+      "minutes": 30,
+      "title": "en",
+      "color": "#ff2d55"
+    },
+    {
+      "date": {
+        "month": 7,
+        "day": 15
+      },
+      "hours": 9,
+      "minutes": 30,
+      "title": "en",
+      "color": "#ff2d55"
+    },
+    {
+      "date": {
+        "month": 10,
+        "day": 1
+      },
+      "hours": 9,
+      "minutes": 30,
+      "title": "en",
+      "color": "#ff2d55"
+    },
+    {
+      "date": {
+        "month": 10,
+        "day": 11
+      },
+      "hours": 9,
+      "minutes": 30,
+      "title": "en",
+      "color": "#ff2d55"
+    },
+    {
+      "date": {
+        "month": 11,
+        "day": 25
+      },
+      "hours": 9,
+      "minutes": 30,
+      "title": "en",
+      "color": "#ff2d55"
+    },
+    {
+      "date": {
+        "month": 11,
+        "day": 26
+      },
+      "hours": 9,
+      "minutes": 30,
+      "title": "en",
+      "color": "#ff2d55"
+    }
+  ]
+}
