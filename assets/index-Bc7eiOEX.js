@@ -53234,6 +53234,31 @@ const uiEN = {
     navTitle: "About",
     blockTitle: "Welcome to About page!",
     description: "This page about of all us."
+  },
+  calendar: {
+    months: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    days: [
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun"
+    ]
   }
 };
 const calendarEN = {
@@ -53328,29 +53353,6 @@ const calendarEN = {
       title: "en",
       color: "#ff2d55"
     }
-  ],
-  months: [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  ],
-  days: [
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat"
   ]
 };
 const logRU = {
@@ -53384,6 +53386,31 @@ const uiRU = {
     navTitle: "О нас",
     blockTitle: "Добро пожаловать на страницу О нас!",
     description: "Тут будет описание прокета, и всех кто принимал участие в нём."
+  },
+  calendar: {
+    months: [
+      "Январь",
+      "Февраль",
+      "Март",
+      "Апрель",
+      "Май",
+      "Июнь",
+      "Июль",
+      "Август",
+      "Сентябрь",
+      "Октябрь",
+      "Ноябрь",
+      "Декабрь"
+    ],
+    days: [
+      "Пн",
+      "Вт",
+      "Ср",
+      "Чт",
+      "Пт",
+      "Сб",
+      "Вс"
+    ]
   }
 };
 const calendarRU = {
@@ -53478,29 +53505,6 @@ const calendarRU = {
       title: "Второй день Рождества",
       color: "#ff2d55"
     }
-  ],
-  months: [
-    "Январь",
-    "Февраль",
-    "Март",
-    "Апрель",
-    "Май",
-    "Июнь",
-    "Июль",
-    "Август",
-    "Сентябрь",
-    "Октябрь",
-    "Ноябрь",
-    "Декабрь"
-  ],
-  days: [
-    "Пн",
-    "Вт",
-    "Ср",
-    "Чт",
-    "Пт",
-    "Сб",
-    "Вс"
   ]
 };
 const logEN = {
@@ -54861,9 +54865,9 @@ function instance$3($$self, $$props, $$invalidate) {
   const today = new Date(year, month, day);
   let events = [];
   let eventItems = [];
-  let SPEventsCalendar;
   let monthNames = [];
   let daysNames = [];
+  let SPEventsCalendar;
   function renderEvents(SPEventsCalendar2) {
     const currentDate = SPEventsCalendar2.value[0];
     const currentEvents = events.filter((event) => event.date.getTime() >= currentDate.getTime() && event.date.getTime() < currentDate.getTime() + 24 * 60 * 60 * 1e3);
@@ -54905,16 +54909,16 @@ function instance$3($$self, $$props, $$invalidate) {
   function dynamicDateGenerator(value2 = lng) {
     switch (value2) {
       case "ru":
-        renderDaysNameLocales(resources.ru.calendar.days);
-        renderMonthNameLocales(resources.ru.calendar.months);
+        renderMonthNameLocales(resources.ru.ui.calendar.months);
+        renderDaysNameLocales(resources.ru.ui.calendar.days);
         break;
       case "en":
-        renderDaysNameLocales(resources.en.calendar.days);
-        renderMonthNameLocales(resources.en.calendar.months);
+        renderMonthNameLocales(resources.en.ui.calendar.months);
+        renderDaysNameLocales(resources.en.ui.calendar.days);
         break;
       default:
-        renderDaysNameLocales(resources.ru.calendar.days);
-        renderMonthNameLocales(resources.ru.calendar.months);
+        renderMonthNameLocales(resources.ru.ui.calendar.months);
+        renderDaysNameLocales(resources.ru.ui.calendar.days);
     }
     $i18n.on("languageChanged", (changed) => {
       $i18n.t("debugmsg:debug:onLanguageChangedMsg");
@@ -54927,8 +54931,8 @@ function instance$3($$self, $$props, $$invalidate) {
     const $$ = f7.$;
     SPEventsCalendar = f7.calendar.create({
       containerEl: "#calendar-container",
-      // value: [new Date()],
-      dayNamesShort: daysNames,
+      locale: lng,
+      firstDay: 1,
       value: [today],
       events,
       renderToolbar() {
@@ -54958,8 +54962,8 @@ function instance$3($$self, $$props, $$invalidate) {
           $i18n.on("languageChanged", (changed) => {
             if (changed) {
               $$(".calendar-custom-toolbar .center").text(`${monthNames[SPEventsCalendar2.currentMonth]}, ${SPEventsCalendar2.currentYear}`);
-              daysNames.forEach((day2) => {
-                $$(".calendar-week-day").text(day2);
+              $$(".calendar-week-day").forEach((el, index2) => {
+                el.innerText = daysNames[index2];
               });
             }
           });
