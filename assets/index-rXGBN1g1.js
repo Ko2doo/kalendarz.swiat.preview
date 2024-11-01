@@ -19689,7 +19689,7 @@ const get_default_slot_context$5 = (ctx) => ({ popup: (
   /*f7Popup*/
   ctx[2]
 ) });
-function create_fragment$y(ctx) {
+function create_fragment$A(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -19979,7 +19979,7 @@ class Popup2 extends SvelteComponent {
       this,
       options,
       instance_1$5,
-      create_fragment$y,
+      create_fragment$A,
       safe_not_equal,
       {
         class: 6,
@@ -20067,7 +20067,7 @@ const useTab = (getEl, emit) => {
     detachEvents();
   });
 };
-function create_fragment$x(ctx) {
+function create_fragment$z(ctx) {
   let current;
   const default_slot_template = (
     /*#slots*/
@@ -20129,7 +20129,7 @@ function create_fragment$x(ctx) {
     }
   };
 }
-function instance$t($$self, $$props, $$invalidate) {
+function instance$v($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { route = void 0 } = $$props;
   let { router = void 0 } = $$props;
@@ -20144,10 +20144,10 @@ function instance$t($$self, $$props, $$invalidate) {
 class Router_context_provider extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$t, create_fragment$x, safe_not_equal, { route: 0, router: 1 });
+    init(this, options, instance$v, create_fragment$z, safe_not_equal, { route: 0, router: 1 });
   }
 }
-function get_each_context$4(ctx, list, i) {
+function get_each_context$5(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[31] = list[i];
   return child_ctx;
@@ -20158,7 +20158,7 @@ const get_default_slot_context$4 = (ctx) => ({ view: (
   /*f7View*/
   ctx[3]
 ) });
-function create_default_slot$c(ctx) {
+function create_default_slot$d(ctx) {
   let switch_instance;
   let t2;
   let current;
@@ -20243,7 +20243,7 @@ function create_default_slot$c(ctx) {
     }
   };
 }
-function create_each_block$4(key_1, ctx) {
+function create_each_block$5(key_1, ctx) {
   let first;
   let routercontextprovider;
   let current;
@@ -20257,7 +20257,7 @@ function create_each_block$4(key_1, ctx) {
         /*page*/
         ctx[31].props.f7router
       ),
-      $$slots: { default: [create_default_slot$c] },
+      $$slots: { default: [create_default_slot$d] },
       $$scope: { ctx }
     }
   });
@@ -20306,7 +20306,7 @@ function create_each_block$4(key_1, ctx) {
     }
   };
 }
-function create_fragment$w(ctx) {
+function create_fragment$y(ctx) {
   let div;
   let t2;
   let each_blocks = [];
@@ -20332,9 +20332,9 @@ function create_fragment$w(ctx) {
     ctx2[31].id
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context$4(ctx, each_value, i);
+    let child_ctx = get_each_context$5(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block$4(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$5(key, child_ctx));
   }
   return {
     c() {
@@ -20408,7 +20408,7 @@ function create_fragment$w(ctx) {
           ctx2[4]
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, outro_and_destroy_block, create_each_block$4, null, get_each_context$4);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, outro_and_destroy_block, create_each_block$5, null, get_each_context$5);
         check_outros();
       }
       if (!current || dirty[0] & /*classes*/
@@ -20667,7 +20667,7 @@ class View2 extends SvelteComponent {
       this,
       options,
       instance_1$4,
-      create_fragment$w,
+      create_fragment$y,
       safe_not_equal,
       {
         id: 0,
@@ -20691,7 +20691,7 @@ const get_default_slot_context$3 = (ctx) => ({ loginScreen: (
   /*f7LoginScreen*/
   ctx[2]
 ) });
-function create_fragment$v(ctx) {
+function create_fragment$x(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -20907,7 +20907,7 @@ function instance_1$3($$self, $$props, $$invalidate) {
 class Login_screen extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance_1$3, create_fragment$v, safe_not_equal, {
+    init(this, options, instance_1$3, create_fragment$x, safe_not_equal, {
       class: 6,
       style: 0,
       opened: 5,
@@ -20938,7 +20938,7 @@ const get_fixed_slot_context$1 = (ctx) => ({ sheet: (
   /*f7Sheet*/
   ctx[3]
 ) });
-function create_fragment$u(ctx) {
+function create_fragment$w(ctx) {
   let div1;
   let t0;
   let div0;
@@ -21401,7 +21401,7 @@ class Sheet extends SvelteComponent {
       this,
       options,
       instance_1$2,
-      create_fragment$u,
+      create_fragment$w,
       safe_not_equal,
       {
         class: 7,
@@ -21440,7 +21440,7 @@ const get_default_slot_context$1 = (ctx) => ({ popover: (
   /*f7Popover*/
   ctx[3]
 ) });
-function create_if_block$f(ctx) {
+function create_if_block$g(ctx) {
   let div;
   return {
     c() {
@@ -21457,14 +21457,14 @@ function create_if_block$f(ctx) {
     }
   };
 }
-function create_fragment$t(ctx) {
+function create_fragment$v(ctx) {
   let div1;
   let t2;
   let div0;
   let current;
   let if_block = (
     /*arrow*/
-    ctx[1] !== false && create_if_block$f()
+    ctx[1] !== false && create_if_block$g()
   );
   const default_slot_template = (
     /*#slots*/
@@ -21523,7 +21523,7 @@ function create_fragment$t(ctx) {
       ) {
         if (if_block) ;
         else {
-          if_block = create_if_block$f();
+          if_block = create_if_block$g();
           if_block.c();
           if_block.m(div1, t2);
         }
@@ -21748,7 +21748,7 @@ function instance_1$1($$self, $$props, $$invalidate) {
 class Popover2 extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance_1$1, create_fragment$t, safe_not_equal, {
+    init(this, options, instance_1$1, create_fragment$v, safe_not_equal, {
       class: 7,
       style: 0,
       opened: 6,
@@ -21775,7 +21775,7 @@ const get_default_slot_context = (ctx) => ({ panel: (
   /*f7Panel*/
   ctx[3]
 ) });
-function create_if_block$e(ctx) {
+function create_if_block$f(ctx) {
   let div;
   return {
     c() {
@@ -21792,7 +21792,7 @@ function create_if_block$e(ctx) {
     }
   };
 }
-function create_fragment$s(ctx) {
+function create_fragment$u(ctx) {
   let div;
   let t2;
   let current;
@@ -21809,7 +21809,7 @@ function create_fragment$s(ctx) {
   );
   let if_block = (
     /*resizable*/
-    ctx[0] && create_if_block$e()
+    ctx[0] && create_if_block$f()
   );
   let div_levels = [
     { class: (
@@ -21877,7 +21877,7 @@ function create_fragment$s(ctx) {
       ) {
         if (if_block) ;
         else {
-          if_block = create_if_block$e();
+          if_block = create_if_block$f();
           if_block.c();
           if_block.m(div, null);
         }
@@ -22208,7 +22208,7 @@ class Panel2 extends SvelteComponent {
       this,
       options,
       instance_1,
-      create_fragment$s,
+      create_fragment$u,
       safe_not_equal,
       {
         class: 7,
@@ -22254,7 +22254,7 @@ function create_if_block_4$2(ctx) {
         /*url*/
         ctx[1]
       ),
-      $$slots: { default: [create_default_slot_4$5] },
+      $$slots: { default: [create_default_slot_4$6] },
       $$scope: { ctx }
     }
   });
@@ -22291,7 +22291,7 @@ function create_if_block_4$2(ctx) {
     }
   };
 }
-function create_default_slot_4$5(ctx) {
+function create_default_slot_4$6(ctx) {
   let view;
   let current;
   view = new View2({
@@ -22349,7 +22349,7 @@ function create_if_block_3$4(ctx) {
         /*url*/
         ctx[1]
       ),
-      $$slots: { default: [create_default_slot_3$5] },
+      $$slots: { default: [create_default_slot_3$6] },
       $$scope: { ctx }
     }
   });
@@ -22386,7 +22386,7 @@ function create_if_block_3$4(ctx) {
     }
   };
 }
-function create_default_slot_3$5(ctx) {
+function create_default_slot_3$6(ctx) {
   let view;
   let current;
   view = new View2({
@@ -22444,7 +22444,7 @@ function create_if_block_2$6(ctx) {
         /*url*/
         ctx[1]
       ),
-      $$slots: { default: [create_default_slot_2$6] },
+      $$slots: { default: [create_default_slot_2$7] },
       $$scope: { ctx }
     }
   });
@@ -22481,7 +22481,7 @@ function create_if_block_2$6(ctx) {
     }
   };
 }
-function create_default_slot_2$6(ctx) {
+function create_default_slot_2$7(ctx) {
   let view;
   let current;
   view = new View2({
@@ -22529,7 +22529,7 @@ function create_default_slot_2$6(ctx) {
     }
   };
 }
-function create_if_block_1$8(ctx) {
+function create_if_block_1$9(ctx) {
   let popover;
   let current;
   popover = new Popover2({
@@ -22543,7 +22543,7 @@ function create_if_block_1$8(ctx) {
         /*url*/
         ctx[1]
       ),
-      $$slots: { default: [create_default_slot_1$8] },
+      $$slots: { default: [create_default_slot_1$9] },
       $$scope: { ctx }
     }
   });
@@ -22583,7 +22583,7 @@ function create_if_block_1$8(ctx) {
     }
   };
 }
-function create_default_slot_1$8(ctx) {
+function create_default_slot_1$9(ctx) {
   let view;
   let current;
   view = new View2({
@@ -22631,7 +22631,7 @@ function create_default_slot_1$8(ctx) {
     }
   };
 }
-function create_if_block$d(ctx) {
+function create_if_block$e(ctx) {
   let panel;
   let current;
   panel = new Panel2({
@@ -22649,7 +22649,7 @@ function create_if_block$d(ctx) {
         /*url*/
         ctx[1]
       ),
-      $$slots: { default: [create_default_slot$b] },
+      $$slots: { default: [create_default_slot$c] },
       $$scope: { ctx }
     }
   });
@@ -22692,7 +22692,7 @@ function create_if_block$d(ctx) {
     }
   };
 }
-function create_default_slot$b(ctx) {
+function create_default_slot$c(ctx) {
   let view;
   let current;
   view = new View2({
@@ -22740,7 +22740,7 @@ function create_default_slot$b(ctx) {
     }
   };
 }
-function create_fragment$r(ctx) {
+function create_fragment$t(ctx) {
   let t0;
   let t1;
   let t2;
@@ -22765,9 +22765,9 @@ function create_fragment$r(ctx) {
   );
   let if_block3 = (
     /*openIn*/
-    ctx[0] === "popover" && create_if_block_1$8(ctx)
+    ctx[0] === "popover" && create_if_block_1$9(ctx)
   );
-  let if_block4 = show_if && create_if_block$d(ctx);
+  let if_block4 = show_if && create_if_block$e(ctx);
   return {
     c() {
       if (if_block0) if_block0.c();
@@ -22875,7 +22875,7 @@ function create_fragment$r(ctx) {
             transition_in(if_block3, 1);
           }
         } else {
-          if_block3 = create_if_block_1$8(ctx2);
+          if_block3 = create_if_block_1$9(ctx2);
           if_block3.c();
           transition_in(if_block3, 1);
           if_block3.m(t3.parentNode, t3);
@@ -22898,7 +22898,7 @@ function create_fragment$r(ctx) {
             transition_in(if_block4, 1);
           }
         } else {
-          if_block4 = create_if_block$d(ctx2);
+          if_block4 = create_if_block$e(ctx2);
           if_block4.c();
           transition_in(if_block4, 1);
           if_block4.m(if_block4_anchor.parentNode, if_block4_anchor);
@@ -22944,7 +22944,7 @@ function create_fragment$r(ctx) {
     }
   };
 }
-function instance$s($$self, $$props, $$invalidate) {
+function instance$u($$self, $$props, $$invalidate) {
   let { openIn } = $$props;
   let { url } = $$props;
   let { viewSelector } = $$props;
@@ -22964,7 +22964,7 @@ function instance$s($$self, $$props, $$invalidate) {
 class Router_open_in_component extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$s, create_fragment$r, safe_not_equal, {
+    init(this, options, instance$u, create_fragment$t, safe_not_equal, {
       openIn: 0,
       url: 1,
       viewSelector: 2,
@@ -23254,12 +23254,12 @@ const Framework7Svelte = {
     Framework72.Router.use(componentsRouter);
   }
 };
-function get_each_context$3(ctx, list, i) {
+function get_each_context$4(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[5] = list[i];
   return child_ctx;
 }
-function create_each_block$3(key_1, ctx) {
+function create_each_block$4(key_1, ctx) {
   let first;
   let switch_instance;
   let switch_instance_anchor;
@@ -23352,7 +23352,7 @@ function create_each_block$3(key_1, ctx) {
     }
   };
 }
-function create_fragment$q(ctx) {
+function create_fragment$s(ctx) {
   let div;
   let each_blocks = [];
   let each_1_lookup = /* @__PURE__ */ new Map();
@@ -23366,9 +23366,9 @@ function create_fragment$q(ctx) {
     ctx2[5].id
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context$3(ctx, each_value, i);
+    let child_ctx = get_each_context$4(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block$3(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$4(key, child_ctx));
   }
   return {
     c() {
@@ -23396,7 +23396,7 @@ function create_fragment$q(ctx) {
           ctx2[0]
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, outro_and_destroy_block, create_each_block$3, null, get_each_context$3);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, outro_and_destroy_block, create_each_block$4, null, get_each_context$4);
         check_outros();
       }
     },
@@ -23424,7 +23424,7 @@ function create_fragment$q(ctx) {
     }
   };
 }
-function instance$r($$self, $$props, $$invalidate) {
+function instance$t($$self, $$props, $$invalidate) {
   let modals = [];
   let el;
   let routerData;
@@ -23460,10 +23460,10 @@ function instance$r($$self, $$props, $$invalidate) {
 class Routable_modals extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$r, create_fragment$q, safe_not_equal, {});
+    init(this, options, instance$t, create_fragment$s, safe_not_equal, {});
   }
 }
-function create_fragment$p(ctx) {
+function create_fragment$r(ctx) {
   let div;
   let t2;
   let routablemodals;
@@ -23558,7 +23558,7 @@ function create_fragment$p(ctx) {
     }
   };
 }
-function instance$q($$self, $$props, $$invalidate) {
+function instance$s($$self, $$props, $$invalidate) {
   let classes;
   let { $$slots: slots = {}, $$scope } = $$props;
   let { class: className = void 0 } = $$props;
@@ -23597,7 +23597,7 @@ function instance$q($$self, $$props, $$invalidate) {
 class App extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$q, create_fragment$p, safe_not_equal, { class: 2 });
+    init(this, options, instance$s, create_fragment$r, safe_not_equal, { class: 2 });
   }
 }
 const useTooltip = (el, props) => {
@@ -23644,7 +23644,7 @@ const useTooltip = (el, props) => {
     }
   };
 };
-function create_fragment$o(ctx) {
+function create_fragment$q(ctx) {
   let span;
   let useTooltip_action;
   let current;
@@ -23765,7 +23765,7 @@ function create_fragment$o(ctx) {
     }
   };
 }
-function instance$p($$self, $$props, $$invalidate) {
+function instance$r($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = ["class", "tooltip", "tooltipTrigger"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -23790,10 +23790,10 @@ function instance$p($$self, $$props, $$invalidate) {
 class Badge extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$p, create_fragment$o, safe_not_equal, { class: 4, tooltip: 0, tooltipTrigger: 1 });
+    init(this, options, instance$r, create_fragment$q, safe_not_equal, { class: 4, tooltip: 0, tooltipTrigger: 1 });
   }
 }
-function create_fragment$n(ctx) {
+function create_fragment$p(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -23885,7 +23885,7 @@ function create_fragment$n(ctx) {
     }
   };
 }
-function instance$o($$self, $$props, $$invalidate) {
+function instance$q($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = ["large", "medium", "class"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -23918,10 +23918,10 @@ function instance$o($$self, $$props, $$invalidate) {
 class Block_title extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$o, create_fragment$n, safe_not_equal, { large: 2, medium: 3, class: 4 });
+    init(this, options, instance$q, create_fragment$p, safe_not_equal, { large: 2, medium: 3, class: 4 });
   }
 }
-function create_fragment$m(ctx) {
+function create_fragment$o(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -24015,7 +24015,7 @@ function create_fragment$m(ctx) {
     }
   };
 }
-function instance$n($$self, $$props, $$invalidate) {
+function instance$p($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = [
     "inset",
@@ -24209,8 +24209,8 @@ class Block extends SvelteComponent {
     init(
       this,
       options,
-      instance$n,
-      create_fragment$m,
+      instance$p,
+      create_fragment$o,
       safe_not_equal,
       {
         inset: 3,
@@ -24311,7 +24311,7 @@ const useTheme = (set) => {
   }
   return t2;
 };
-function create_fragment$l(ctx) {
+function create_fragment$n(ctx) {
   let i;
   let t0_value = (
     /*iconText*/
@@ -24459,7 +24459,7 @@ function create_fragment$l(ctx) {
     }
   };
 }
-function instance$m($$self, $$props, $$invalidate) {
+function instance$o($$self, $$props, $$invalidate) {
   let iconClasses;
   let iconText;
   let iconSize;
@@ -24604,7 +24604,7 @@ function instance$m($$self, $$props, $$invalidate) {
 class Icon extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$m, create_fragment$l, safe_not_equal, {
+    init(this, options, instance$o, create_fragment$n, safe_not_equal, {
       style: 7,
       class: 8,
       material: 9,
@@ -24618,7 +24618,7 @@ class Icon extends SvelteComponent {
     });
   }
 }
-function create_if_block$c(ctx) {
+function create_if_block$d(ctx) {
   let badge;
   let current;
   const badge_spread_levels = [
@@ -24626,7 +24626,7 @@ function create_if_block$c(ctx) {
     ctx[0].badge.props
   ];
   let badge_props = {
-    $$slots: { default: [create_default_slot_1$7] },
+    $$slots: { default: [create_default_slot_1$8] },
     $$scope: { ctx }
   };
   for (let i = 0; i < badge_spread_levels.length; i += 1) {
@@ -24667,7 +24667,7 @@ function create_if_block$c(ctx) {
     }
   };
 }
-function create_default_slot_1$7(ctx) {
+function create_default_slot_1$8(ctx) {
   let t_value = (
     /*icon*/
     ctx[0].badge.content + ""
@@ -24692,12 +24692,12 @@ function create_default_slot_1$7(ctx) {
     }
   };
 }
-function create_default_slot$a(ctx) {
+function create_default_slot$b(ctx) {
   let if_block_anchor;
   let current;
   let if_block = (
     /*icon*/
-    ctx[0].badge && create_if_block$c(ctx)
+    ctx[0].badge && create_if_block$d(ctx)
   );
   return {
     c() {
@@ -24721,7 +24721,7 @@ function create_default_slot$a(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$c(ctx2);
+          if_block = create_if_block$d(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -24751,7 +24751,7 @@ function create_default_slot$a(ctx) {
     }
   };
 }
-function create_fragment$k(ctx) {
+function create_fragment$m(ctx) {
   let icon_1;
   let current;
   const icon_1_spread_levels = [
@@ -24759,7 +24759,7 @@ function create_fragment$k(ctx) {
     ctx[0].props
   ];
   let icon_1_props = {
-    $$slots: { default: [create_default_slot$a] },
+    $$slots: { default: [create_default_slot$b] },
     $$scope: { ctx }
   };
   for (let i = 0; i < icon_1_spread_levels.length; i += 1) {
@@ -24800,7 +24800,7 @@ function create_fragment$k(ctx) {
     }
   };
 }
-function instance$l($$self, $$props, $$invalidate) {
+function instance$n($$self, $$props, $$invalidate) {
   let { icon = void 0 } = $$props;
   $$self.$$set = ($$props2) => {
     if ("icon" in $$props2) $$invalidate(0, icon = $$props2.icon);
@@ -24810,10 +24810,10 @@ function instance$l($$self, $$props, $$invalidate) {
 class Use_icon extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$l, create_fragment$k, safe_not_equal, { icon: 0 });
+    init(this, options, instance$n, create_fragment$m, safe_not_equal, { icon: 0 });
   }
 }
-function create_else_block$4(ctx) {
+function create_else_block$5(ctx) {
   let span;
   return {
     c() {
@@ -24830,7 +24830,7 @@ function create_else_block$4(ctx) {
     }
   };
 }
-function create_if_block_1$7(ctx) {
+function create_if_block_1$8(ctx) {
   let span8;
   return {
     c() {
@@ -24848,7 +24848,7 @@ function create_if_block_1$7(ctx) {
     }
   };
 }
-function create_if_block$b(ctx) {
+function create_if_block$c(ctx) {
   let span;
   return {
     c() {
@@ -24866,20 +24866,20 @@ function create_if_block$b(ctx) {
     }
   };
 }
-function create_fragment$j(ctx) {
+function create_fragment$l(ctx) {
   let span;
   function select_block_type(ctx2, dirty) {
     if (
       /*theme*/
       ctx2[0] && /*theme*/
       ctx2[0].md
-    ) return create_if_block$b;
+    ) return create_if_block$c;
     if (
       /*theme*/
       ctx2[0] && /*theme*/
       ctx2[0].ios
-    ) return create_if_block_1$7;
-    return create_else_block$4;
+    ) return create_if_block_1$8;
+    return create_else_block$5;
   }
   let current_block_type = select_block_type(ctx);
   let if_block = current_block_type(ctx);
@@ -24948,7 +24948,7 @@ function create_fragment$j(ctx) {
     }
   };
 }
-function instance$k($$self, $$props, $$invalidate) {
+function instance$m($$self, $$props, $$invalidate) {
   let sizeComputed;
   let preloaderStyle;
   let classes;
@@ -24993,7 +24993,7 @@ function instance$k($$self, $$props, $$invalidate) {
 class Preloader extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$k, create_fragment$j, safe_not_equal, { style: 4, class: 5, size: 6 });
+    init(this, options, instance$m, create_fragment$l, safe_not_equal, { style: 4, class: 5, size: 6 });
   }
 }
 function create_else_block_1$2(ctx) {
@@ -25136,7 +25136,7 @@ function create_else_block_1$2(ctx) {
     }
   };
 }
-function create_if_block$a(ctx) {
+function create_if_block$b(ctx) {
   let button;
   let current_block_type_index;
   let if_block;
@@ -25145,7 +25145,7 @@ function create_if_block$a(ctx) {
   let current;
   let mounted;
   let dispose;
-  const if_block_creators = [create_if_block_1$6, create_else_block$3];
+  const if_block_creators = [create_if_block_1$7, create_else_block$4];
   const if_blocks = [];
   function select_block_type_1(ctx2, dirty) {
     if (
@@ -25685,7 +25685,7 @@ function create_if_block_7$1(ctx) {
     }
   };
 }
-function create_else_block$3(ctx) {
+function create_else_block$4(ctx) {
   let t0;
   let t1;
   let current;
@@ -25807,7 +25807,7 @@ function create_else_block$3(ctx) {
     }
   };
 }
-function create_if_block_1$6(ctx) {
+function create_if_block_1$7(ctx) {
   let preloader_1;
   let t0;
   let span;
@@ -26093,12 +26093,12 @@ function create_if_block_2$5(ctx) {
     }
   };
 }
-function create_fragment$i(ctx) {
+function create_fragment$k(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$a, create_else_block_1$2];
+  const if_block_creators = [create_if_block$b, create_else_block_1$2];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -26158,7 +26158,7 @@ function create_fragment$i(ctx) {
     }
   };
 }
-function instance$j($$self, $$props, $$invalidate) {
+function instance$l($$self, $$props, $$invalidate) {
   let hrefComputed;
   let attrs;
   let classes;
@@ -26417,8 +26417,8 @@ class Button extends SvelteComponent {
     init(
       this,
       options,
-      instance$j,
-      create_fragment$i,
+      instance$l,
+      create_fragment$k,
       safe_not_equal,
       {
         class: 13,
@@ -26535,7 +26535,7 @@ function create_if_block_2$4(ctx) {
     }
   };
 }
-function create_if_block$9(ctx) {
+function create_if_block$a(ctx) {
   let span;
   let t0_value = plainText(
     /*text*/
@@ -26545,7 +26545,7 @@ function create_if_block$9(ctx) {
   let t1;
   let current;
   let if_block = typeof /*badge*/
-  ctx[1] !== "undefined" && create_if_block_1$5(ctx);
+  ctx[1] !== "undefined" && create_if_block_1$6(ctx);
   return {
     c() {
       span = element("span");
@@ -26581,7 +26581,7 @@ function create_if_block$9(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block_1$5(ctx2);
+          if_block = create_if_block_1$6(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(span, null);
@@ -26620,7 +26620,7 @@ function create_if_block$9(ctx) {
     }
   };
 }
-function create_if_block_1$5(ctx) {
+function create_if_block_1$6(ctx) {
   let badge_1;
   let current;
   badge_1 = new Badge({
@@ -26629,7 +26629,7 @@ function create_if_block_1$5(ctx) {
         /*badgeColor*/
         ctx[2]
       ),
-      $$slots: { default: [create_default_slot$9] },
+      $$slots: { default: [create_default_slot$a] },
       $$scope: { ctx }
     }
   });
@@ -26666,7 +26666,7 @@ function create_if_block_1$5(ctx) {
     }
   };
 }
-function create_default_slot$9(ctx) {
+function create_default_slot$a(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[1]
@@ -26693,7 +26693,7 @@ function create_default_slot$9(ctx) {
     }
   };
 }
-function create_fragment$h(ctx) {
+function create_fragment$j(ctx) {
   let a;
   let t0;
   let t1;
@@ -26719,7 +26719,7 @@ function create_fragment$h(ctx) {
   );
   let if_block1 = (typeof /*text*/
   ctx[0] !== "undefined" || typeof /*badge*/
-  ctx[1] !== "undefined") && create_if_block$9(ctx);
+  ctx[1] !== "undefined") && create_if_block$a(ctx);
   let a_levels = [
     { class: (
       /*classes*/
@@ -26838,7 +26838,7 @@ function create_fragment$h(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block$9(ctx2);
+          if_block1 = create_if_block$a(ctx2);
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(a, null);
@@ -26904,7 +26904,7 @@ function create_fragment$h(ctx) {
     }
   };
 }
-function instance$i($$self, $$props, $$invalidate) {
+function instance$k($$self, $$props, $$invalidate) {
   let isTabbarIcons;
   let hrefComputed;
   let attrs;
@@ -27075,8 +27075,8 @@ class Link extends SvelteComponent {
     init(
       this,
       options,
-      instance$i,
-      create_fragment$h,
+      instance$k,
+      create_fragment$j,
       safe_not_equal,
       {
         class: 12,
@@ -27447,7 +27447,7 @@ const get_content_start_slot_changes = (dirty) => ({});
 const get_content_start_slot_context = (ctx) => ({});
 const get_root_start_slot_changes = (dirty) => ({});
 const get_root_start_slot_context = (ctx) => ({});
-function create_else_block$2(ctx) {
+function create_else_block$3(ctx) {
   let li;
   let t0;
   let current_block_type_index;
@@ -27784,7 +27784,7 @@ function create_else_block$2(ctx) {
     }
   };
 }
-function create_if_block_1$4(ctx) {
+function create_if_block_1$5(ctx) {
   let li;
   let t0_value = plainText(
     /*title*/
@@ -27946,7 +27946,7 @@ function create_if_block_1$4(ctx) {
     }
   };
 }
-function create_if_block$8(ctx) {
+function create_if_block$9(ctx) {
   let li;
   let span;
   let useTooltip_action;
@@ -33202,7 +33202,7 @@ function create_if_block_101(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_9] },
+      $$slots: { default: [create_default_slot_9$1] },
       $$scope: { ctx }
     }
   });
@@ -33240,7 +33240,7 @@ function create_if_block_101(ctx) {
     }
   };
 }
-function create_default_slot_9(ctx) {
+function create_default_slot_9$1(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -39158,7 +39158,7 @@ function create_if_block_59(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_5$2] },
+      $$slots: { default: [create_default_slot_5$3] },
       $$scope: { ctx }
     }
   });
@@ -39196,7 +39196,7 @@ function create_if_block_59(ctx) {
     }
   };
 }
-function create_default_slot_5$2(ctx) {
+function create_default_slot_5$3(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -39701,7 +39701,7 @@ function create_if_block_53(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_4$4] },
+      $$slots: { default: [create_default_slot_4$5] },
       $$scope: { ctx }
     }
   });
@@ -39739,7 +39739,7 @@ function create_if_block_53(ctx) {
     }
   };
 }
-function create_default_slot_4$4(ctx) {
+function create_default_slot_4$5(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -41461,7 +41461,7 @@ function create_if_block_39(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_3$4] },
+      $$slots: { default: [create_default_slot_3$5] },
       $$scope: { ctx }
     }
   });
@@ -41499,7 +41499,7 @@ function create_if_block_39(ctx) {
     }
   };
 }
-function create_default_slot_3$4(ctx) {
+function create_default_slot_3$5(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -42004,7 +42004,7 @@ function create_if_block_33(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_2$5] },
+      $$slots: { default: [create_default_slot_2$6] },
       $$scope: { ctx }
     }
   });
@@ -42042,7 +42042,7 @@ function create_if_block_33(ctx) {
     }
   };
 }
-function create_default_slot_2$5(ctx) {
+function create_default_slot_2$6(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -43764,7 +43764,7 @@ function create_if_block_18(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_1$6] },
+      $$slots: { default: [create_default_slot_1$7] },
       $$scope: { ctx }
     }
   });
@@ -43802,7 +43802,7 @@ function create_if_block_18(ctx) {
     }
   };
 }
-function create_default_slot_1$6(ctx) {
+function create_default_slot_1$7(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -44307,7 +44307,7 @@ function create_if_block_12(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot$8] },
+      $$slots: { default: [create_default_slot$9] },
       $$scope: { ctx }
     }
   });
@@ -44345,7 +44345,7 @@ function create_if_block_12(ctx) {
     }
   };
 }
-function create_default_slot$8(ctx) {
+function create_default_slot$9(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -44792,12 +44792,12 @@ function fallback_block(ctx) {
     }
   };
 }
-function create_fragment$g(ctx) {
+function create_fragment$i(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$8, create_if_block_1$4, create_else_block$2];
+  const if_block_creators = [create_if_block$9, create_if_block_1$5, create_else_block$3];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -44861,7 +44861,7 @@ function create_fragment$g(ctx) {
     }
   };
 }
-function instance$h($$self, $$props, $$invalidate) {
+function instance$j($$self, $$props, $$invalidate) {
   let isMedia;
   let isSortable;
   let isSortableOpposite;
@@ -45454,8 +45454,8 @@ class List_item extends SvelteComponent {
     init(
       this,
       options,
-      instance$h,
-      create_fragment$g,
+      instance$j,
+      create_fragment$i,
       safe_not_equal,
       {
         class: 48,
@@ -45723,7 +45723,7 @@ function create_else_block_1(ctx) {
     }
   };
 }
-function create_if_block$7(ctx) {
+function create_if_block$8(ctx) {
   let form_1;
   let t0;
   let current_block_type_index;
@@ -45744,7 +45744,7 @@ function create_if_block$7(ctx) {
     ctx[55],
     get_before_list_slot_context
   );
-  const if_block_creators = [create_if_block_1$3, create_else_block$1];
+  const if_block_creators = [create_if_block_1$4, create_else_block$2];
   const if_blocks = [];
   function select_block_type_1(ctx2, dirty) {
     if (
@@ -46109,7 +46109,7 @@ function create_if_block_2$2(ctx) {
     }
   };
 }
-function create_else_block$1(ctx) {
+function create_else_block$2(ctx) {
   let current;
   const default_slot_template = (
     /*#slots*/
@@ -46171,7 +46171,7 @@ function create_else_block$1(ctx) {
     }
   };
 }
-function create_if_block_1$3(ctx) {
+function create_if_block_1$4(ctx) {
   let ul_1;
   let t2;
   let current;
@@ -46283,12 +46283,12 @@ function create_if_block_1$3(ctx) {
     }
   };
 }
-function create_fragment$f(ctx) {
+function create_fragment$h(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$7, create_else_block_1];
+  const if_block_creators = [create_if_block$8, create_else_block_1];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -46348,7 +46348,7 @@ function create_fragment$f(ctx) {
     }
   };
 }
-function instance$g($$self, $$props, $$invalidate) {
+function instance$i($$self, $$props, $$invalidate) {
   let hasUlSlots;
   let classes;
   const omit_props_names = [
@@ -46722,8 +46722,8 @@ class List extends SvelteComponent {
     init(
       this,
       options,
-      instance$g,
-      create_fragment$f,
+      instance$i,
+      create_fragment$h,
       safe_not_equal,
       {
         class: 8,
@@ -46785,7 +46785,7 @@ class List extends SvelteComponent {
     return this.$$.ctx[54];
   }
 }
-function create_if_block$6(ctx) {
+function create_if_block$7(ctx) {
   let link;
   let current;
   link = new Link({
@@ -46850,13 +46850,13 @@ function create_if_block$6(ctx) {
     }
   };
 }
-function create_fragment$e(ctx) {
+function create_fragment$g(ctx) {
   let div;
   let t2;
   let current;
   let if_block = (
     /*backLink*/
-    ctx[0] && create_if_block$6(ctx)
+    ctx[0] && create_if_block$7(ctx)
   );
   const default_slot_template = (
     /*#slots*/
@@ -46909,7 +46909,7 @@ function create_fragment$e(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$6(ctx2);
+          if_block = create_if_block$7(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(div, t2);
@@ -46977,7 +46977,7 @@ function create_fragment$e(ctx) {
     }
   };
 }
-function instance$f($$self, $$props, $$invalidate) {
+function instance$h($$self, $$props, $$invalidate) {
   let classes;
   let needBackLinkText;
   let backLinkText;
@@ -47045,7 +47045,7 @@ function instance$f($$self, $$props, $$invalidate) {
 class Nav_left extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$f, create_fragment$e, safe_not_equal, {
+    init(this, options, instance$h, create_fragment$g, safe_not_equal, {
       class: 7,
       backLink: 0,
       backLinkUrl: 1,
@@ -47055,7 +47055,7 @@ class Nav_left extends SvelteComponent {
     });
   }
 }
-function create_fragment$d(ctx) {
+function create_fragment$f(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -47147,7 +47147,7 @@ function create_fragment$d(ctx) {
     }
   };
 }
-function instance$e($$self, $$props, $$invalidate) {
+function instance$g($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = ["class", "sliding"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -47170,10 +47170,10 @@ function instance$e($$self, $$props, $$invalidate) {
 class Nav_right extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$e, create_fragment$d, safe_not_equal, { class: 2, sliding: 3 });
+    init(this, options, instance$g, create_fragment$f, safe_not_equal, { class: 2, sliding: 3 });
   }
 }
-function create_if_block_1$2(ctx) {
+function create_if_block_1$3(ctx) {
   let t_value = plainText(
     /*title*/
     ctx[0]
@@ -47200,7 +47200,7 @@ function create_if_block_1$2(ctx) {
     }
   };
 }
-function create_if_block$5(ctx) {
+function create_if_block$6(ctx) {
   let span;
   let t_value = plainText(
     /*subtitle*/
@@ -47231,15 +47231,15 @@ function create_if_block$5(ctx) {
     }
   };
 }
-function create_fragment$c(ctx) {
+function create_fragment$e(ctx) {
   let div;
   let t0;
   let t1;
   let current;
   let if_block0 = typeof /*title*/
-  ctx[0] !== "undefined" && create_if_block_1$2(ctx);
+  ctx[0] !== "undefined" && create_if_block_1$3(ctx);
   let if_block1 = typeof /*subtitle*/
-  ctx[1] !== "undefined" && create_if_block$5(ctx);
+  ctx[1] !== "undefined" && create_if_block$6(ctx);
   const default_slot_template = (
     /*#slots*/
     ctx[7].default
@@ -47289,7 +47289,7 @@ function create_fragment$c(ctx) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_1$2(ctx2);
+          if_block0 = create_if_block_1$3(ctx2);
           if_block0.c();
           if_block0.m(div, t0);
         }
@@ -47302,7 +47302,7 @@ function create_fragment$c(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block$5(ctx2);
+          if_block1 = create_if_block$6(ctx2);
           if_block1.c();
           if_block1.m(div, t1);
         }
@@ -47365,7 +47365,7 @@ function create_fragment$c(ctx) {
     }
   };
 }
-function instance$d($$self, $$props, $$invalidate) {
+function instance$f($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = ["class", "title", "subtitle", "sliding"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -47392,7 +47392,7 @@ function instance$d($$self, $$props, $$invalidate) {
 class Nav_title extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$d, create_fragment$c, safe_not_equal, {
+    init(this, options, instance$f, create_fragment$e, safe_not_equal, {
       class: 4,
       title: 0,
       subtitle: 1,
@@ -47441,7 +47441,7 @@ function create_if_block_3$1(ctx) {
         /*onBackClick*/
         ctx[15]
       ),
-      $$slots: { default: [create_default_slot_2$4] },
+      $$slots: { default: [create_default_slot_2$5] },
       $$scope: { ctx }
     }
   });
@@ -47487,7 +47487,7 @@ function create_if_block_3$1(ctx) {
     }
   };
 }
-function create_default_slot_2$4(ctx) {
+function create_default_slot_2$5(ctx) {
   let t2;
   let current;
   const nav_left_slot_template = (
@@ -47609,7 +47609,7 @@ function create_if_block_2$1(ctx) {
         /*subtitle*/
         ctx[5]
       ),
-      $$slots: { default: [create_default_slot_1$5] },
+      $$slots: { default: [create_default_slot_1$6] },
       $$scope: { ctx }
     }
   });
@@ -47649,7 +47649,7 @@ function create_if_block_2$1(ctx) {
     }
   };
 }
-function create_default_slot_1$5(ctx) {
+function create_default_slot_1$6(ctx) {
   let current;
   const title_slot_template = (
     /*#slots*/
@@ -47711,12 +47711,12 @@ function create_default_slot_1$5(ctx) {
     }
   };
 }
-function create_if_block_1$1(ctx) {
+function create_if_block_1$2(ctx) {
   let navright;
   let current;
   navright = new Nav_right({
     props: {
-      $$slots: { default: [create_default_slot$7] },
+      $$slots: { default: [create_default_slot$8] },
       $$scope: { ctx }
     }
   });
@@ -47750,7 +47750,7 @@ function create_if_block_1$1(ctx) {
     }
   };
 }
-function create_default_slot$7(ctx) {
+function create_default_slot$8(ctx) {
   let t2;
   let current;
   const nav_right_slot_template = (
@@ -47859,7 +47859,7 @@ function create_default_slot$7(ctx) {
     }
   };
 }
-function create_if_block$4(ctx) {
+function create_if_block$5(ctx) {
   let div1;
   let div0;
   let t0_value = plainText(
@@ -47947,7 +47947,7 @@ function create_if_block$4(ctx) {
     }
   };
 }
-function create_fragment$b(ctx) {
+function create_fragment$d(ctx) {
   let div2;
   let div0;
   let t0;
@@ -47983,12 +47983,12 @@ function create_fragment$b(ctx) {
   );
   let if_block2 = (
     /*hasRightSlots*/
-    ctx[13] && create_if_block_1$1(ctx)
+    ctx[13] && create_if_block_1$2(ctx)
   );
   let if_block3 = (
     /*largeTitle*/
     (ctx[11] || /*hasTitleLargeSlots*/
-    ctx[10]) && create_if_block$4(ctx)
+    ctx[10]) && create_if_block$5(ctx)
   );
   const default_slot_template = (
     /*#slots*/
@@ -48169,7 +48169,7 @@ function create_fragment$b(ctx) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block_1$1(ctx2);
+          if_block2 = create_if_block_1$2(ctx2);
           if_block2.c();
           transition_in(if_block2, 1);
           if_block2.m(div1, t4);
@@ -48193,7 +48193,7 @@ function create_fragment$b(ctx) {
             transition_in(if_block3, 1);
           }
         } else {
-          if_block3 = create_if_block$4(ctx2);
+          if_block3 = create_if_block$5(ctx2);
           if_block3.c();
           transition_in(if_block3, 1);
           if_block3.m(div1, t5);
@@ -48314,7 +48314,7 @@ function create_fragment$b(ctx) {
     }
   };
 }
-function instance$c($$self, $$props, $$invalidate) {
+function instance$e($$self, $$props, $$invalidate) {
   let hasLeftSlots;
   let hasRightSlots;
   let hasTitleSlots;
@@ -48615,8 +48615,8 @@ class Navbar extends SvelteComponent {
     init(
       this,
       options,
-      instance$c,
-      create_fragment$b,
+      instance$e,
+      create_fragment$d,
       safe_not_equal,
       {
         class: 17,
@@ -48722,7 +48722,7 @@ function create_if_block_2(ctx) {
     }
   };
 }
-function create_if_block_1(ctx) {
+function create_if_block_1$1(ctx) {
   let preloader;
   let current;
   preloader = new Preloader({
@@ -48750,7 +48750,7 @@ function create_if_block_1(ctx) {
     }
   };
 }
-function create_if_block$3(ctx) {
+function create_if_block$4(ctx) {
   let div1;
   let preloader;
   let t2;
@@ -48790,7 +48790,7 @@ function create_if_block$3(ctx) {
     }
   };
 }
-function create_fragment$a(ctx) {
+function create_fragment$c(ctx) {
   let div;
   let t0;
   let t1;
@@ -48826,13 +48826,13 @@ function create_fragment$a(ctx) {
     /*infinite*/
     ctx[5] && !/*infiniteTop*/
     ctx[6] && /*infinitePreloader*/
-    ctx[8] && create_if_block_1()
+    ctx[8] && create_if_block_1$1()
   );
   let if_block3 = (
     /*ptr*/
     ctx[0] && /*ptrPreloader*/
     ctx[2] && /*ptrBottom*/
-    ctx[3] && create_if_block$3()
+    ctx[3] && create_if_block$4()
   );
   let div_levels = [
     { class: (
@@ -48976,7 +48976,7 @@ function create_fragment$a(ctx) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block_1();
+          if_block2 = create_if_block_1$1();
           if_block2.c();
           transition_in(if_block2, 1);
           if_block2.m(div, t3);
@@ -49000,7 +49000,7 @@ function create_fragment$a(ctx) {
             transition_in(if_block3, 1);
           }
         } else {
-          if_block3 = create_if_block$3();
+          if_block3 = create_if_block$4();
           if_block3.c();
           transition_in(if_block3, 1);
           if_block3.m(div, null);
@@ -49072,7 +49072,7 @@ function create_fragment$a(ctx) {
     }
   };
 }
-function instance$b($$self, $$props, $$invalidate) {
+function instance$d($$self, $$props, $$invalidate) {
   let pageContentClasses;
   const omit_props_names = [
     "tab",
@@ -49253,8 +49253,8 @@ class Page_content extends SvelteComponent {
     init(
       this,
       options,
-      instance$b,
-      create_fragment$a,
+      instance$d,
+      create_fragment$c,
       safe_not_equal,
       {
         tab: 12,
@@ -49286,7 +49286,7 @@ const get_static_slot_changes = (dirty) => ({});
 const get_static_slot_context = (ctx) => ({});
 const get_fixed_slot_changes = (dirty) => ({});
 const get_fixed_slot_context = (ctx) => ({});
-function create_else_block(ctx) {
+function create_else_block$1(ctx) {
   let t2;
   let current;
   const static_slot_template = (
@@ -49395,7 +49395,7 @@ function create_else_block(ctx) {
     }
   };
 }
-function create_if_block$2(ctx) {
+function create_if_block$3(ctx) {
   let pagecontent;
   let current;
   pagecontent = new Page_content({
@@ -49480,7 +49480,7 @@ function create_if_block$2(ctx) {
         /*onInfinite*/
         ctx[23]
       ),
-      $$slots: { default: [create_default_slot$6] },
+      $$slots: { default: [create_default_slot$7] },
       $$scope: { ctx }
     }
   });
@@ -49556,7 +49556,7 @@ function create_if_block$2(ctx) {
     }
   };
 }
-function create_default_slot$6(ctx) {
+function create_default_slot$7(ctx) {
   let t2;
   let current;
   const static_slot_template = (
@@ -49665,7 +49665,7 @@ function create_default_slot$6(ctx) {
     }
   };
 }
-function create_fragment$9(ctx) {
+function create_fragment$b(ctx) {
   let div;
   let t2;
   let current_block_type_index;
@@ -49682,7 +49682,7 @@ function create_fragment$9(ctx) {
     ctx[46],
     get_fixed_slot_context
   );
-  const if_block_creators = [create_if_block$2, create_else_block];
+  const if_block_creators = [create_if_block$3, create_else_block$1];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -49812,7 +49812,7 @@ function create_fragment$9(ctx) {
     }
   };
 }
-function instance$a($$self, $$props, $$invalidate) {
+function instance$c($$self, $$props, $$invalidate) {
   let forceSubnavbar;
   let forceNavbarLarge;
   let classes;
@@ -50200,8 +50200,8 @@ class Page extends SvelteComponent {
     init(
       this,
       options,
-      instance$a,
-      create_fragment$9,
+      instance$c,
+      create_fragment$b,
       safe_not_equal,
       {
         name: 0,
@@ -50235,7 +50235,7 @@ class Page extends SvelteComponent {
     );
   }
 }
-function create_fragment$8(ctx) {
+function create_fragment$a(ctx) {
   let svg;
   let path2;
   let svg_levels = [
@@ -50283,7 +50283,7 @@ function create_fragment$8(ctx) {
     }
   };
 }
-function instance$9($$self, $$props, $$invalidate) {
+function instance$b($$self, $$props, $$invalidate) {
   const omit_props_names = [];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   $$self.$$set = ($$new_props) => {
@@ -50295,10 +50295,10 @@ function instance$9($$self, $$props, $$invalidate) {
 class Bell extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$9, create_fragment$8, safe_not_equal, {});
+    init(this, options, instance$b, create_fragment$a, safe_not_equal, {});
   }
 }
-function create_fragment$7(ctx) {
+function create_fragment$9(ctx) {
   let svg;
   let path2;
   let svg_levels = [
@@ -50346,7 +50346,7 @@ function create_fragment$7(ctx) {
     }
   };
 }
-function instance$8($$self, $$props, $$invalidate) {
+function instance$a($$self, $$props, $$invalidate) {
   const omit_props_names = [];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   $$self.$$set = ($$new_props) => {
@@ -50358,10 +50358,73 @@ function instance$8($$self, $$props, $$invalidate) {
 class LineHorizontal3 extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$8, create_fragment$7, safe_not_equal, {});
+    init(this, options, instance$a, create_fragment$9, safe_not_equal, {});
   }
 }
-function create_fragment$6(ctx) {
+function create_fragment$8(ctx) {
+  let svg;
+  let path2;
+  let svg_levels = [
+    { fill: "currentcolor" },
+    { xmlns: "http://www.w3.org/2000/svg" },
+    { width: "1em" },
+    { height: "1em" },
+    { viewBox: "0 0 56 56" },
+    /*$$restProps*/
+    ctx[0] || {}
+  ];
+  let svg_data = {};
+  for (let i = 0; i < svg_levels.length; i += 1) {
+    svg_data = assign(svg_data, svg_levels[i]);
+  }
+  return {
+    c() {
+      svg = svg_element("svg");
+      path2 = svg_element("path");
+      attr(path2, "d", "M 13.0117 40.0117 C 12.2148 40.8086 12.1914 42.1680 13.0117 42.9883 C 13.8086 43.8086 15.1680 43.7851 15.9883 42.9883 L 27.9883 30.9648 L 40.0117 42.9883 C 40.8086 43.7851 42.1680 43.8086 42.9648 42.9883 C 43.8086 42.1680 43.7851 40.8086 42.9648 40.0117 L 30.9648 27.9883 L 42.9648 15.9883 C 43.7851 15.1914 43.8086 13.8086 42.9648 13.0117 C 42.1680 12.1914 40.8086 12.2148 40.0117 13.0117 L 27.9883 25.0352 L 15.9883 13.0117 C 15.1680 12.2148 13.8086 12.1914 13.0117 13.0117 C 12.1914 13.8086 12.2148 15.1914 13.0117 15.9883 L 25.0117 27.9883 Z");
+      set_svg_attributes(svg, svg_data);
+    },
+    m(target, anchor) {
+      insert(target, svg, anchor);
+      append(svg, path2);
+    },
+    p(ctx2, [dirty]) {
+      set_svg_attributes(svg, svg_data = get_spread_update(svg_levels, [
+        { fill: "currentcolor" },
+        { xmlns: "http://www.w3.org/2000/svg" },
+        { width: "1em" },
+        { height: "1em" },
+        { viewBox: "0 0 56 56" },
+        dirty & /*$$restProps*/
+        1 && /*$$restProps*/
+        (ctx2[0] || {})
+      ]));
+    },
+    i: noop$1,
+    o: noop$1,
+    d(detaching) {
+      if (detaching) {
+        detach(svg);
+      }
+    }
+  };
+}
+function instance$9($$self, $$props, $$invalidate) {
+  const omit_props_names = [];
+  let $$restProps = compute_rest_props($$props, omit_props_names);
+  $$self.$$set = ($$new_props) => {
+    $$props = assign(assign({}, $$props), exclude_internal_props($$new_props));
+    $$invalidate(0, $$restProps = compute_rest_props($$props, omit_props_names));
+  };
+  return [$$restProps];
+}
+class Multiply extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$9, create_fragment$8, safe_not_equal, {});
+  }
+}
+function create_fragment$7(ctx) {
   let svg;
   let path2;
   let svg_levels = [
@@ -50409,7 +50472,7 @@ function create_fragment$6(ctx) {
     }
   };
 }
-function instance$7($$self, $$props, $$invalidate) {
+function instance$8($$self, $$props, $$invalidate) {
   const omit_props_names = [];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   $$self.$$set = ($$new_props) => {
@@ -50421,7 +50484,7 @@ function instance$7($$self, $$props, $$invalidate) {
 class Question extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$7, create_fragment$6, safe_not_equal, {});
+    init(this, options, instance$8, create_fragment$7, safe_not_equal, {});
   }
 }
 const consoleLogger = {
@@ -52770,22 +52833,22 @@ class I18n extends EventEmitter {
     };
   }
 }
-const instance$6 = I18n.createInstance();
-instance$6.createInstance = I18n.createInstance;
-instance$6.createInstance;
-instance$6.dir;
-instance$6.init;
-instance$6.loadResources;
-instance$6.reloadResources;
-instance$6.use;
-instance$6.changeLanguage;
-instance$6.getFixedT;
-instance$6.t;
-instance$6.exists;
-instance$6.setDefaultNamespace;
-instance$6.hasLoadedNamespace;
-instance$6.loadNamespaces;
-instance$6.loadLanguages;
+const instance$7 = I18n.createInstance();
+instance$7.createInstance = I18n.createInstance;
+instance$7.createInstance;
+instance$7.dir;
+instance$7.init;
+instance$7.loadResources;
+instance$7.reloadResources;
+instance$7.use;
+instance$7.changeLanguage;
+instance$7.getFixedT;
+instance$7.t;
+instance$7.exists;
+instance$7.setDefaultNamespace;
+instance$7.hasLoadedNamespace;
+instance$7.loadNamespaces;
+instance$7.loadLanguages;
 const subscriber_queue = [];
 function writable(value2, start = noop$1) {
   let stop2;
@@ -53225,7 +53288,7 @@ const uiEN = {
     navAbout: "About page"
   },
   langswitcher: {
-    title: "Choise lang"
+    title: "Language"
   },
   home: {
     navTitle: "Holiday calendar"
@@ -53250,15 +53313,11 @@ const uiEN = {
       "November",
       "December"
     ],
-    days: [
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat",
-      "Sun"
-    ]
+    days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+  },
+  wikipopup: {
+    title: "About the holiday",
+    openedLinkText: "More details..."
   }
 };
 const calendarEN = {
@@ -53270,7 +53329,7 @@ const calendarEN = {
       },
       hours: 23,
       minutes: 59,
-      title: "en",
+      title: "New Year",
       color: "#ff2d55"
     },
     {
@@ -53280,7 +53339,7 @@ const calendarEN = {
       },
       hours: 9,
       minutes: 30,
-      title: "en",
+      title: "Epiphany",
       color: "#ff2d55"
     },
     {
@@ -53290,7 +53349,7 @@ const calendarEN = {
       },
       hours: 9,
       minutes: 30,
-      title: "en",
+      title: "Public holiday Labor day",
       color: "#ff2d55"
     },
     {
@@ -53300,7 +53359,8 @@ const calendarEN = {
       },
       hours: 9,
       minutes: 30,
-      title: "en",
+      title: "National holiday The third of May",
+      description: "in memory of Constitution the 3rd of May 1791",
       color: "#ff2d55"
     },
     {
@@ -53310,7 +53370,8 @@ const calendarEN = {
       },
       hours: 9,
       minutes: 30,
-      title: "en",
+      title: "Assumption of The Blessed Virgin Mary",
+      description: "Day of Polish army",
       color: "#ff2d55"
     },
     {
@@ -53320,7 +53381,7 @@ const calendarEN = {
       },
       hours: 9,
       minutes: 30,
-      title: "en",
+      title: "All Saints Day",
       color: "#ff2d55"
     },
     {
@@ -53330,7 +53391,8 @@ const calendarEN = {
       },
       hours: 9,
       minutes: 30,
-      title: "en",
+      title: "National holiday of Independence",
+      description: "In memory of gaining the independence from Russian Empire, Austria and Prussia in 1918",
       color: "#ff2d55"
     },
     {
@@ -53340,7 +53402,7 @@ const calendarEN = {
       },
       hours: 9,
       minutes: 30,
-      title: "en",
+      title: "The first day of Christmas",
       color: "#ff2d55"
     },
     {
@@ -53350,7 +53412,8 @@ const calendarEN = {
       },
       hours: 9,
       minutes: 30,
-      title: "en",
+      title: "The second day of Christmas",
+      description: "The day of Saint Stephen first matyr, the beginning of witchcraft",
       color: "#ff2d55"
     }
   ]
@@ -53377,7 +53440,7 @@ const uiRU = {
     navAbout: "О нас"
   },
   langswitcher: {
-    title: "Выберите язык"
+    title: "Язык"
   },
   home: {
     navTitle: "Календарь праздников"
@@ -53402,15 +53465,11 @@ const uiRU = {
       "Ноябрь",
       "Декабрь"
     ],
-    days: [
-      "Пн",
-      "Вт",
-      "Ср",
-      "Чт",
-      "Пт",
-      "Сб",
-      "Вс"
-    ]
+    days: ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
+  },
+  wikipopup: {
+    title: "О празднике",
+    openedLinkText: "Подробнее..."
   }
 };
 const calendarRU = {
@@ -53452,7 +53511,8 @@ const calendarRU = {
       },
       hours: 9,
       minutes: 30,
-      title: "Национальный праздник Третьего мая (в память о Конституции 3 мая 1791г)",
+      title: "Национальный праздник Третьего мая",
+      description: "в память о Конституции 3 мая 1791г",
       color: "#ff2d55"
     },
     {
@@ -53463,6 +53523,7 @@ const calendarRU = {
       hours: 9,
       minutes: 30,
       title: "Вознесение Пресвятой Девы Марии",
+      description: "День войска Польского",
       color: "#ff2d55"
     },
     {
@@ -53483,6 +53544,7 @@ const calendarRU = {
       hours: 9,
       minutes: 30,
       title: "Национальный праздник независимости",
+      description: "В память о получении в 1918 году независимости от Российской империи, Австрии и Пруссии.",
       color: "#ff2d55"
     },
     {
@@ -53503,6 +53565,7 @@ const calendarRU = {
       hours: 9,
       minutes: 30,
       title: "Второй день Рождества",
+      description: "День святого Стефана Первомученика, начало колядований",
       color: "#ff2d55"
     }
   ]
@@ -53512,12 +53575,13 @@ const logEN = {
     langDefault: "default language:",
     onLanguageChangedMsg: "i18next onLanguageChanged:",
     app: {
-      localesChecking: "APP -> checking translations:"
+      localesChecking: "APP -> translation verification:"
     },
     calendar: {
-      dataFromLocales: "Calendar -> data from translations:",
-      eventAfterLangChanged: "Calendar -> Calendar events (after changing language):",
-      eventDefault: "Calendar -> Calendar events (normal state):"
+      dataFromLocales: "Calendar -> data from the translations:",
+      eventAfterLangChanged: "Calendar -> events of the Calendar (after the language change):",
+      eventDefault: "Calendar -> events of the Calendar (normal state):",
+      monthAfterLangChanged: "Calendar -> array with the months (after the language change):"
     }
   }
 };
@@ -53533,7 +53597,7 @@ const resources = {
     debugmsg: logRU
   }
 };
-instance$6.use(Browser).init({
+instance$7.use(Browser).init({
   debug: false,
   detection: {
     order: ["querystring", "localStorage", "navigator"],
@@ -53548,10 +53612,10 @@ instance$6.use(Browser).init({
     // not needed for svelte as it escapes by default
   }
 });
-const i18n = createI18nStore(instance$6);
+const i18n = createI18nStore(instance$7);
 function debug(msg, value2) {
 }
-function create_default_slot$5(ctx) {
+function create_default_slot$6(ctx) {
   let div;
   return {
     c() {
@@ -53569,14 +53633,14 @@ function create_default_slot$5(ctx) {
     }
   };
 }
-function create_fragment$5(ctx) {
+function create_fragment$6(ctx) {
   let block;
   let current;
   block = new Block({
     props: {
       strong: true,
       inset: true,
-      $$slots: { default: [create_default_slot$5] },
+      $$slots: { default: [create_default_slot$6] },
       $$scope: { ctx }
     }
   });
@@ -53610,7 +53674,7 @@ function create_fragment$5(ctx) {
     }
   };
 }
-function instance$5($$self, $$props, $$invalidate) {
+function instance$6($$self, $$props, $$invalidate) {
   let $i18n;
   const i18n2 = getContext("i18n");
   component_subscribe($$self, i18n2, (value2) => $$invalidate(2, $i18n = value2));
@@ -53627,6 +53691,7 @@ function instance$5($$self, $$props, $$invalidate) {
         hours: item.hours,
         minutes: item.minutes,
         title: item.title,
+        description: item.description,
         color: item.color
       });
     });
@@ -53661,16 +53726,16 @@ function instance$5($$self, $$props, $$invalidate) {
 class CalendarzSwiat extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$5, create_fragment$5, safe_not_equal, { events: 1 });
+    init(this, options, instance$6, create_fragment$6, safe_not_equal, { events: 1 });
   }
 }
-function get_each_context$2(ctx, list, i) {
+function get_each_context$3(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[1] = list[i];
   child_ctx[3] = i;
   return child_ctx;
 }
-function create_default_slot_5$1(ctx) {
+function create_default_slot_5$2(ctx) {
   let t2;
   return {
     c() {
@@ -53714,7 +53779,7 @@ function create_root_start_slot$1(ctx) {
     }
   };
 }
-function create_each_block$2(key_1, ctx) {
+function create_each_block$3(key_1, ctx) {
   let first;
   let listitem;
   let current;
@@ -53777,12 +53842,12 @@ function create_each_block$2(key_1, ctx) {
     }
   };
 }
-function create_if_block$1(ctx) {
+function create_if_block$2(ctx) {
   let listitem;
   let current;
   listitem = new List_item({
     props: {
-      $$slots: { default: [create_default_slot_4$3] },
+      $$slots: { default: [create_default_slot_4$4] },
       $$scope: { ctx }
     }
   });
@@ -53808,7 +53873,7 @@ function create_if_block$1(ctx) {
     }
   };
 }
-function create_default_slot_4$3(ctx) {
+function create_default_slot_4$4(ctx) {
   let t2;
   return {
     c() {
@@ -53824,7 +53889,7 @@ function create_default_slot_4$3(ctx) {
     }
   };
 }
-function create_default_slot_3$3(ctx) {
+function create_default_slot_3$4(ctx) {
   let each_blocks = [];
   let each_1_lookup = /* @__PURE__ */ new Map();
   let t2;
@@ -53839,13 +53904,13 @@ function create_default_slot_3$3(ctx) {
     ctx2[3]
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context$2(ctx, each_value, i);
+    let child_ctx = get_each_context$3(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block$2(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$3(key, child_ctx));
   }
   let if_block = (
     /*eventItems*/
-    ctx[0].length === 0 && create_if_block$1(ctx)
+    ctx[0].length === 0 && create_if_block$2(ctx)
   );
   return {
     c() {
@@ -53875,7 +53940,7 @@ function create_default_slot_3$3(ctx) {
           ctx2[0]
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, t2.parentNode, outro_and_destroy_block, create_each_block$2, t2, get_each_context$2);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, t2.parentNode, outro_and_destroy_block, create_each_block$3, t2, get_each_context$3);
         check_outros();
       }
       if (
@@ -53888,7 +53953,7 @@ function create_default_slot_3$3(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$1(ctx2);
+          if_block = create_if_block$2(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -53928,12 +53993,12 @@ function create_default_slot_3$3(ctx) {
     }
   };
 }
-function create_default_slot_2$3(ctx) {
+function create_default_slot_2$4(ctx) {
   let list;
   let current;
   list = new List({
     props: {
-      $$slots: { default: [create_default_slot_3$3] },
+      $$slots: { default: [create_default_slot_3$4] },
       $$scope: { ctx }
     }
   });
@@ -53967,7 +54032,7 @@ function create_default_slot_2$3(ctx) {
     }
   };
 }
-function create_default_slot_1$4(ctx) {
+function create_default_slot_1$5(ctx) {
   let blocktitle;
   let t2;
   let block;
@@ -53975,7 +54040,7 @@ function create_default_slot_1$4(ctx) {
   blocktitle = new Block_title({
     props: {
       large: true,
-      $$slots: { default: [create_default_slot_5$1] },
+      $$slots: { default: [create_default_slot_5$2] },
       $$scope: { ctx }
     }
   });
@@ -53983,7 +54048,7 @@ function create_default_slot_1$4(ctx) {
     props: {
       strongIos: true,
       outlineIos: true,
-      $$slots: { default: [create_default_slot_2$3] },
+      $$slots: { default: [create_default_slot_2$4] },
       $$scope: { ctx }
     }
   });
@@ -54052,14 +54117,14 @@ function create_fixed_slot(ctx) {
     }
   };
 }
-function create_default_slot$4(ctx) {
+function create_default_slot$5(ctx) {
   let page;
   let current;
   page = new Page({
     props: {
       $$slots: {
         fixed: [create_fixed_slot],
-        default: [create_default_slot_1$4]
+        default: [create_default_slot_1$5]
       },
       $$scope: { ctx }
     }
@@ -54094,7 +54159,7 @@ function create_default_slot$4(ctx) {
     }
   };
 }
-function create_fragment$4(ctx) {
+function create_fragment$5(ctx) {
   let popup;
   let current;
   popup = new Popup2({
@@ -54102,7 +54167,7 @@ function create_fragment$4(ctx) {
       class: "popup-notification",
       swipeToClose: "to-bottom",
       swipeHandler: ".swipe-handler",
-      $$slots: { default: [create_default_slot$4] },
+      $$slots: { default: [create_default_slot$5] },
       $$scope: { ctx }
     }
   });
@@ -54136,7 +54201,7 @@ function create_fragment$4(ctx) {
     }
   };
 }
-function instance$4($$self, $$props, $$invalidate) {
+function instance$5($$self, $$props, $$invalidate) {
   let { eventItems = [] } = $$props;
   $$self.$$set = ($$props2) => {
     if ("eventItems" in $$props2) $$invalidate(0, eventItems = $$props2.eventItems);
@@ -54146,16 +54211,16 @@ function instance$4($$self, $$props, $$invalidate) {
 class EventsNotificationPopup extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$4, create_fragment$4, safe_not_equal, { eventItems: 0 });
+    init(this, options, instance$5, create_fragment$5, safe_not_equal, { eventItems: 0 });
   }
 }
-function get_each_context$1(ctx, list, i) {
+function get_each_context$2(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[20] = list[i];
   child_ctx[22] = i;
   return child_ctx;
 }
-function create_default_slot_8(ctx) {
+function create_default_slot_9(ctx) {
   let linehorizontal3;
   let current;
   linehorizontal3 = new LineHorizontal3({
@@ -54186,13 +54251,13 @@ function create_default_slot_8(ctx) {
     }
   };
 }
-function create_default_slot_7(ctx) {
+function create_default_slot_8(ctx) {
   let button;
   let current;
   button = new Button({
     props: {
       panelOpen: "left",
-      $$slots: { default: [create_default_slot_8] },
+      $$slots: { default: [create_default_slot_9] },
       $$scope: { ctx }
     }
   });
@@ -54226,7 +54291,7 @@ function create_default_slot_7(ctx) {
     }
   };
 }
-function create_default_slot_6(ctx) {
+function create_default_slot_7(ctx) {
   let t_value = (
     /*$i18n*/
     ctx[1].t("ui:home:navTitle") + ""
@@ -54251,7 +54316,7 @@ function create_default_slot_6(ctx) {
     }
   };
 }
-function create_default_slot_5(ctx) {
+function create_default_slot_6(ctx) {
   let t_value = (
     /*eventItems*/
     ctx[0].length + ""
@@ -54276,7 +54341,7 @@ function create_default_slot_5(ctx) {
     }
   };
 }
-function create_default_slot_4$2(ctx) {
+function create_default_slot_5$1(ctx) {
   let bell;
   let t2;
   let badge;
@@ -54288,7 +54353,7 @@ function create_default_slot_4$2(ctx) {
     props: {
       class: "UI-badge",
       color: "red",
-      $$slots: { default: [create_default_slot_5] },
+      $$slots: { default: [create_default_slot_6] },
       $$scope: { ctx }
     }
   });
@@ -54332,14 +54397,14 @@ function create_default_slot_4$2(ctx) {
     }
   };
 }
-function create_default_slot_3$2(ctx) {
+function create_default_slot_4$3(ctx) {
   let button;
   let current;
   button = new Button({
     props: {
       class: "UI-btn-popup-notification",
       popupOpen: ".popup-notification",
-      $$slots: { default: [create_default_slot_4$2] },
+      $$slots: { default: [create_default_slot_5$1] },
       $$scope: { ctx }
     }
   });
@@ -54373,7 +54438,7 @@ function create_default_slot_3$2(ctx) {
     }
   };
 }
-function create_default_slot_2$2(ctx) {
+function create_default_slot_3$3(ctx) {
   let navleft;
   let t0;
   let navtitle;
@@ -54382,19 +54447,19 @@ function create_default_slot_2$2(ctx) {
   let current;
   navleft = new Nav_left({
     props: {
-      $$slots: { default: [create_default_slot_7] },
+      $$slots: { default: [create_default_slot_8] },
       $$scope: { ctx }
     }
   });
   navtitle = new Nav_title({
     props: {
-      $$slots: { default: [create_default_slot_6] },
+      $$slots: { default: [create_default_slot_7] },
       $$scope: { ctx }
     }
   });
   navright = new Nav_right({
     props: {
-      $$slots: { default: [create_default_slot_3$2] },
+      $$slots: { default: [create_default_slot_4$3] },
       $$scope: { ctx }
     }
   });
@@ -54458,6 +54523,125 @@ function create_default_slot_2$2(ctx) {
     }
   };
 }
+function create_if_block_1(ctx) {
+  let link;
+  let current;
+  link = new Link({
+    props: {
+      href: "/event-wiki-popup/",
+      routeProps: {
+        popupProps: {
+          collection: (
+            /*item*/
+            ctx[20].description
+          ),
+          iterable: false
+        }
+      },
+      text: (
+        /*$i18n*/
+        ctx[1].t("ui:wikipopup:openedLinkText")
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(link.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(link, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const link_changes = {};
+      if (dirty & /*eventItems*/
+      1) link_changes.routeProps = {
+        popupProps: {
+          collection: (
+            /*item*/
+            ctx2[20].description
+          ),
+          iterable: false
+        }
+      };
+      if (dirty & /*$i18n*/
+      2) link_changes.text = /*$i18n*/
+      ctx2[1].t("ui:wikipopup:openedLinkText");
+      link.$set(link_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(link.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(link.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(link, detaching);
+    }
+  };
+}
+function create_default_slot_2$3(ctx) {
+  let if_block_anchor;
+  let current;
+  let if_block = (
+    /*item*/
+    ctx[20].description !== void 0 && create_if_block_1(ctx)
+  );
+  return {
+    c() {
+      if (if_block) if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if (if_block) if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (
+        /*item*/
+        ctx2[20].description !== void 0
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & /*eventItems*/
+          1) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block_1(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (if_block) if_block.d(detaching);
+    }
+  };
+}
 function create_root_start_slot(ctx) {
   let div;
   let div_style_value;
@@ -54486,7 +54670,7 @@ function create_root_start_slot(ctx) {
     }
   };
 }
-function create_each_block$1(key_1, ctx) {
+function create_each_block$2(key_1, ctx) {
   let first;
   let listitem;
   let current;
@@ -54500,7 +54684,14 @@ function create_each_block$1(key_1, ctx) {
         /*item*/
         ctx[20].time
       ),
-      $$slots: { "root-start": [create_root_start_slot] },
+      subtitle: (
+        /*item*/
+        ctx[20].description
+      ),
+      $$slots: {
+        "root-start": [create_root_start_slot],
+        default: [create_default_slot_2$3]
+      },
       $$scope: { ctx }
     }
   });
@@ -54526,8 +54717,11 @@ function create_each_block$1(key_1, ctx) {
       if (dirty & /*eventItems*/
       1) listitem_changes.after = /*item*/
       ctx[20].time;
-      if (dirty & /*$$scope, eventItems*/
-      8388609) {
+      if (dirty & /*eventItems*/
+      1) listitem_changes.subtitle = /*item*/
+      ctx[20].description;
+      if (dirty & /*$$scope, eventItems, $i18n*/
+      8388611) {
         listitem_changes.$$scope = { dirty, ctx };
       }
       listitem.$set(listitem_changes);
@@ -54549,7 +54743,7 @@ function create_each_block$1(key_1, ctx) {
     }
   };
 }
-function create_if_block(ctx) {
+function create_if_block$1(ctx) {
   let listitem;
   let current;
   listitem = new List_item({
@@ -54600,7 +54794,7 @@ function create_title_slot(ctx) {
     }
   };
 }
-function create_default_slot_1$3(ctx) {
+function create_default_slot_1$4(ctx) {
   let each_blocks = [];
   let each_1_lookup = /* @__PURE__ */ new Map();
   let t2;
@@ -54615,13 +54809,13 @@ function create_default_slot_1$3(ctx) {
     ctx2[22]
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context$1(ctx, each_value, i);
+    let child_ctx = get_each_context$2(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block$1(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$2(key, child_ctx));
   }
   let if_block = (
     /*eventItems*/
-    ctx[0].length === 0 && create_if_block(ctx)
+    ctx[0].length === 0 && create_if_block$1(ctx)
   );
   return {
     c() {
@@ -54644,14 +54838,14 @@ function create_default_slot_1$3(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      if (dirty & /*eventItems*/
-      1) {
+      if (dirty & /*eventItems, $i18n, undefined*/
+      3) {
         each_value = ensure_array_like(
           /*eventItems*/
           ctx2[0]
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, t2.parentNode, outro_and_destroy_block, create_each_block$1, t2, get_each_context$1);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, t2.parentNode, outro_and_destroy_block, create_each_block$2, t2, get_each_context$2);
         check_outros();
       }
       if (
@@ -54664,7 +54858,7 @@ function create_default_slot_1$3(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block(ctx2);
+          if_block = create_if_block$1(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -54704,7 +54898,7 @@ function create_default_slot_1$3(ctx) {
     }
   };
 }
-function create_default_slot$3(ctx) {
+function create_default_slot$4(ctx) {
   let navbar;
   let t0;
   let calendarzswiat;
@@ -54715,7 +54909,7 @@ function create_default_slot$3(ctx) {
   let current;
   navbar = new Navbar({
     props: {
-      $$slots: { default: [create_default_slot_2$2] },
+      $$slots: { default: [create_default_slot_3$3] },
       $$scope: { ctx }
     }
   });
@@ -54725,9 +54919,13 @@ function create_default_slot$3(ctx) {
   ) } });
   list = new List({
     props: {
+      dividersIos: true,
+      mediaList: true,
+      outlineIos: true,
+      strongIos: true,
       id: "calendar-events",
       class: "no-margin no-safe-area-left",
-      $$slots: { default: [create_default_slot_1$3] },
+      $$slots: { default: [create_default_slot_1$4] },
       $$scope: { ctx }
     }
   });
@@ -54765,8 +54963,8 @@ function create_default_slot$3(ctx) {
       }
       navbar.$set(navbar_changes);
       const list_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      8388609) {
+      if (dirty & /*$$scope, eventItems, $i18n*/
+      8388611) {
         list_changes.$$scope = { dirty, ctx: ctx2 };
       }
       list.$set(list_changes);
@@ -54804,7 +55002,7 @@ function create_default_slot$3(ctx) {
     }
   };
 }
-function create_fragment$3(ctx) {
+function create_fragment$4(ctx) {
   let page;
   let current;
   page = new Page({
@@ -54818,7 +55016,7 @@ function create_fragment$3(ctx) {
         /*onPageBeforeRemove*/
         ctx[5]
       ),
-      $$slots: { default: [create_default_slot$3] },
+      $$slots: { default: [create_default_slot$4] },
       $$scope: { ctx }
     }
   });
@@ -54852,7 +55050,7 @@ function create_fragment$3(ctx) {
     }
   };
 }
-function instance$3($$self, $$props, $$invalidate) {
+function instance$4($$self, $$props, $$invalidate) {
   let $i18n;
   const i18n2 = getContext("i18n");
   component_subscribe($$self, i18n2, (value2) => $$invalidate(1, $i18n = value2));
@@ -54880,6 +55078,7 @@ function instance$3($$self, $$props, $$invalidate) {
         newEventItems.push({
           title: event.title,
           time: `${hours}:${minutes}`,
+          description: event.description,
           color: event.color
         });
       });
@@ -54986,10 +55185,10 @@ function instance$3($$self, $$props, $$invalidate) {
 class Home extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$3, create_fragment$3, safe_not_equal, {});
+    init(this, options, instance$4, create_fragment$4, safe_not_equal, {});
   }
 }
-function create_default_slot_4$1(ctx) {
+function create_default_slot_4$2(ctx) {
   let t_value = (
     /*$i18n*/
     ctx[0].t("ui:about:navTitle") + ""
@@ -55014,7 +55213,7 @@ function create_default_slot_4$1(ctx) {
     }
   };
 }
-function create_default_slot_3$1(ctx) {
+function create_default_slot_3$2(ctx) {
   let navleft;
   let t2;
   let navtitle;
@@ -55022,7 +55221,7 @@ function create_default_slot_3$1(ctx) {
   navleft = new Nav_left({ props: { backLink: "back" } });
   navtitle = new Nav_title({
     props: {
-      $$slots: { default: [create_default_slot_4$1] },
+      $$slots: { default: [create_default_slot_4$2] },
       $$scope: { ctx }
     }
   });
@@ -55066,7 +55265,7 @@ function create_default_slot_3$1(ctx) {
     }
   };
 }
-function create_default_slot_2$1(ctx) {
+function create_default_slot_2$2(ctx) {
   let t_value = (
     /*$i18n*/
     ctx[0].t("ui:about:blockTitle") + ""
@@ -55091,7 +55290,7 @@ function create_default_slot_2$1(ctx) {
     }
   };
 }
-function create_default_slot_1$2(ctx) {
+function create_default_slot_1$3(ctx) {
   let p;
   let t_value = (
     /*$i18n*/
@@ -55119,7 +55318,7 @@ function create_default_slot_1$2(ctx) {
     }
   };
 }
-function create_default_slot$2(ctx) {
+function create_default_slot$3(ctx) {
   let navbar;
   let t0;
   let blocktitle;
@@ -55128,14 +55327,14 @@ function create_default_slot$2(ctx) {
   let current;
   navbar = new Navbar({
     props: {
-      $$slots: { default: [create_default_slot_3$1] },
+      $$slots: { default: [create_default_slot_3$2] },
       $$scope: { ctx }
     }
   });
   blocktitle = new Block_title({
     props: {
       medium: true,
-      $$slots: { default: [create_default_slot_2$1] },
+      $$slots: { default: [create_default_slot_2$2] },
       $$scope: { ctx }
     }
   });
@@ -55143,7 +55342,7 @@ function create_default_slot$2(ctx) {
     props: {
       strongIos: true,
       outlineIos: true,
-      $$slots: { default: [create_default_slot_1$2] },
+      $$slots: { default: [create_default_slot_1$3] },
       $$scope: { ctx }
     }
   });
@@ -55207,13 +55406,13 @@ function create_default_slot$2(ctx) {
     }
   };
 }
-function create_fragment$2(ctx) {
+function create_fragment$3(ctx) {
   let page;
   let current;
   page = new Page({
     props: {
       name: "about",
-      $$slots: { default: [create_default_slot$2] },
+      $$slots: { default: [create_default_slot$3] },
       $$scope: { ctx }
     }
   });
@@ -55247,7 +55446,7 @@ function create_fragment$2(ctx) {
     }
   };
 }
-function instance$2($$self, $$props, $$invalidate) {
+function instance$3($$self, $$props, $$invalidate) {
   let $i18n;
   const i18n2 = getContext("i18n");
   component_subscribe($$self, i18n2, (value2) => $$invalidate(0, $i18n = value2));
@@ -55256,7 +55455,441 @@ function instance$2($$self, $$props, $$invalidate) {
 class About extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$2, create_fragment$2, safe_not_equal, {});
+    init(this, options, instance$3, create_fragment$3, safe_not_equal, {});
+  }
+}
+function get_each_context$1(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[3] = list[i];
+  return child_ctx;
+}
+function create_default_slot_5(ctx) {
+  let multiply;
+  let current;
+  multiply = new Multiply({});
+  return {
+    c() {
+      create_component(multiply.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(multiply, target, anchor);
+      current = true;
+    },
+    i(local) {
+      if (current) return;
+      transition_in(multiply.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(multiply.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(multiply, detaching);
+    }
+  };
+}
+function create_default_slot_4$1(ctx) {
+  let button;
+  let current;
+  button = new Button({
+    props: {
+      type: "button",
+      small: true,
+      tonal: true,
+      round: true,
+      popupClose: true,
+      $$slots: { default: [create_default_slot_5] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(button.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(button, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const button_changes = {};
+      if (dirty & /*$$scope*/
+      64) {
+        button_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button.$set(button_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(button.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(button.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(button, detaching);
+    }
+  };
+}
+function create_default_slot_3$1(ctx) {
+  let navright;
+  let current;
+  navright = new Nav_right({
+    props: {
+      $$slots: { default: [create_default_slot_4$1] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(navright.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(navright, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const navright_changes = {};
+      if (dirty & /*$$scope*/
+      64) {
+        navright_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navright.$set(navright_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(navright.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(navright.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(navright, detaching);
+    }
+  };
+}
+function create_else_block(ctx) {
+  let p;
+  let t_value = (
+    /*popupProps*/
+    ctx[0].collection + ""
+  );
+  let t2;
+  return {
+    c() {
+      p = element("p");
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, p, anchor);
+      append(p, t2);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*popupProps*/
+      1 && t_value !== (t_value = /*popupProps*/
+      ctx2[0].collection + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(p);
+      }
+    }
+  };
+}
+function create_if_block(ctx) {
+  let each_1_anchor;
+  let each_value = ensure_array_like(
+    /*popupProps*/
+    ctx[0].collection
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
+  }
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      each_1_anchor = empty();
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, each_1_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*popupProps*/
+      1) {
+        each_value = ensure_array_like(
+          /*popupProps*/
+          ctx2[0].collection
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context$1(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block$1(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(each_1_anchor);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function create_each_block$1(ctx) {
+  let p;
+  let t_value = (
+    /*item*/
+    ctx[3] + ""
+  );
+  let t2;
+  return {
+    c() {
+      p = element("p");
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, p, anchor);
+      append(p, t2);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*popupProps*/
+      1 && t_value !== (t_value = /*item*/
+      ctx2[3] + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(p);
+      }
+    }
+  };
+}
+function create_default_slot_2$1(ctx) {
+  let if_block_anchor;
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*popupProps*/
+      ctx2[0].iterable === true
+    ) return create_if_block;
+    return create_else_block;
+  }
+  let current_block_type = select_block_type(ctx);
+  let if_block = current_block_type(ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (current_block_type === (current_block_type = select_block_type(ctx2)) && if_block) {
+        if_block.p(ctx2, dirty);
+      } else {
+        if_block.d(1);
+        if_block = current_block_type(ctx2);
+        if (if_block) {
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_block.d(detaching);
+    }
+  };
+}
+function create_default_slot_1$2(ctx) {
+  let navbar;
+  let t2;
+  let block;
+  let current;
+  navbar = new Navbar({
+    props: {
+      title: (
+        /*$i18n*/
+        ctx[1].t("ui:wikipopup:title")
+      ),
+      $$slots: { default: [create_default_slot_3$1] },
+      $$scope: { ctx }
+    }
+  });
+  block = new Block({
+    props: {
+      strong: true,
+      $$slots: { default: [create_default_slot_2$1] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(navbar.$$.fragment);
+      t2 = space();
+      create_component(block.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(navbar, target, anchor);
+      insert(target, t2, anchor);
+      mount_component(block, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const navbar_changes = {};
+      if (dirty & /*$i18n*/
+      2) navbar_changes.title = /*$i18n*/
+      ctx2[1].t("ui:wikipopup:title");
+      if (dirty & /*$$scope*/
+      64) {
+        navbar_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navbar.$set(navbar_changes);
+      const block_changes = {};
+      if (dirty & /*$$scope, popupProps*/
+      65) {
+        block_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      block.$set(block_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(navbar.$$.fragment, local);
+      transition_in(block.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(navbar.$$.fragment, local);
+      transition_out(block.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+      destroy_component(navbar, detaching);
+      destroy_component(block, detaching);
+    }
+  };
+}
+function create_default_slot$2(ctx) {
+  let page;
+  let current;
+  page = new Page({
+    props: {
+      $$slots: { default: [create_default_slot_1$2] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(page.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(page, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const page_changes = {};
+      if (dirty & /*$$scope, popupProps, $i18n*/
+      67) {
+        page_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      page.$set(page_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(page.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(page.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(page, detaching);
+    }
+  };
+}
+function create_fragment$2(ctx) {
+  let popup;
+  let current;
+  popup = new Popup2({
+    props: {
+      swipeToClose: "to-bottom",
+      $$slots: { default: [create_default_slot$2] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(popup.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(popup, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const popup_changes = {};
+      if (dirty & /*$$scope, popupProps, $i18n*/
+      67) {
+        popup_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      popup.$set(popup_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(popup.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(popup.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(popup, detaching);
+    }
+  };
+}
+function instance$2($$self, $$props, $$invalidate) {
+  let $i18n;
+  const i18n2 = getContext("i18n");
+  component_subscribe($$self, i18n2, (value2) => $$invalidate(1, $i18n = value2));
+  let { popupProps = { collection: [], iterable: false } } = $$props;
+  console.log(popupProps);
+  $$self.$$set = ($$props2) => {
+    if ("popupProps" in $$props2) $$invalidate(0, popupProps = $$props2.popupProps);
+  };
+  return [popupProps, $i18n, i18n2];
+}
+class EventWikiPopup extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$2, create_fragment$2, safe_not_equal, { popupProps: 0 });
   }
 }
 const routes = [
@@ -55268,6 +55901,12 @@ const routes = [
   {
     path: "/about/",
     component: About
+  },
+  {
+    path: "/event-wiki-popup/",
+    popup: {
+      component: EventWikiPopup
+    }
   }
 ];
 function get_each_context(ctx, list, i) {
@@ -55770,9 +56409,18 @@ function create_default_slot(ctx) {
   let t2;
   let panel;
   let current;
-  view = new View2({ props: { main: true, url: "/" } });
+  view = new View2({
+    props: {
+      main: true,
+      browserHistory: true,
+      url: "/"
+    }
+  });
   panel = new Panel2({
     props: {
+      swipe: true,
+      swipeOnlyClose: true,
+      swipeNoFollow: true,
       left: true,
       floating: true,
       cover: true,
@@ -55892,7 +56540,16 @@ class App_1 extends SvelteComponent {
     init(this, options, instance, create_fragment, safe_not_equal, {});
   }
 }
-Framework7.use([Framework7Svelte, Popup$1, PopoverComponent, PopoverComponent, SmartSelectComponent, Panel$1, PickerComponent, Calendar2]);
+Framework7.use([
+  Framework7Svelte,
+  Popup$1,
+  PopoverComponent,
+  PopoverComponent,
+  SmartSelectComponent,
+  Panel$1,
+  PickerComponent,
+  Calendar2
+]);
 new App_1({
   target: document.getElementById("app")
 });
