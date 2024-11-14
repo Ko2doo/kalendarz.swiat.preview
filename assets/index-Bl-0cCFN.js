@@ -4870,8 +4870,8 @@ function parse(str, options) {
       result.push(path2);
       path2 = "";
     }
-    var open3 = tryConsume("OPEN");
-    if (open3) {
+    var open4 = tryConsume("OPEN");
+    if (open4) {
       var prefix = consumeText();
       var name_1 = tryConsume("NAME") || "";
       var pattern_1 = tryConsume("PATTERN") || "";
@@ -18676,6 +18676,122 @@ const SmartSelectComponent = {
     }
   }
 };
+const Accordion = {
+  toggleClicked($clickedEl) {
+    const app2 = this;
+    let $accordionItemEl = $clickedEl.closest(".accordion-item").eq(0);
+    if (!$accordionItemEl.length) $accordionItemEl = $clickedEl.parents("li").eq(0);
+    const $accordionContent = $clickedEl.parents(".accordion-item-content").eq(0);
+    if ($accordionContent.length) {
+      if ($accordionContent.parents($accordionItemEl).length) return;
+    }
+    if ($clickedEl.parents("li").length > 1 && $clickedEl.parents("li")[0] !== $accordionItemEl[0]) return;
+    app2.accordion.toggle($accordionItemEl);
+  },
+  open(el) {
+    const app2 = this;
+    const $el = $(el);
+    let prevented = false;
+    function prevent() {
+      prevented = true;
+    }
+    $el.trigger("accordion:beforeopen", {
+      prevent
+    }, prevent);
+    app2.emit("accordionBeforeOpen", $el[0], prevent);
+    if (prevented) return;
+    const $list = $el.parents(".accordion-list").eq(0);
+    let $contentEl = $el.children(".accordion-item-content");
+    $contentEl.removeAttr("aria-hidden");
+    if ($contentEl.length === 0) $contentEl = $el.find(".accordion-item-content");
+    if ($contentEl.length === 0) return;
+    const $openedItem = $list.length > 0 && $el.parent().children(".accordion-item-opened");
+    if ($openedItem.length > 0) {
+      app2.accordion.close($openedItem);
+    }
+    $contentEl.transitionEnd(() => {
+      if ($el.hasClass("accordion-item-opened")) {
+        $contentEl.transition(0);
+        $contentEl.css("height", "auto");
+        nextFrame$1(() => {
+          $contentEl.transition("");
+          $el.trigger("accordion:opened");
+          app2.emit("accordionOpened", $el[0]);
+        });
+      } else {
+        $contentEl.css("height", "");
+        $el.trigger("accordion:closed");
+        app2.emit("accordionClosed", $el[0]);
+      }
+    });
+    $contentEl.css("height", `${$contentEl[0].scrollHeight}px`);
+    $el.trigger("accordion:open");
+    $el.addClass("accordion-item-opened");
+    app2.emit("accordionOpen", $el[0]);
+  },
+  close(el) {
+    const app2 = this;
+    const $el = $(el);
+    let prevented = false;
+    function prevent() {
+      prevented = true;
+    }
+    $el.trigger("accordion:beforeclose", {
+      prevent
+    }, prevent);
+    app2.emit("accordionBeforeClose", $el[0], prevent);
+    if (prevented) return;
+    let $contentEl = $el.children(".accordion-item-content");
+    if ($contentEl.length === 0) $contentEl = $el.find(".accordion-item-content");
+    $el.removeClass("accordion-item-opened");
+    $contentEl.attr("aria-hidden", true);
+    $contentEl.transition(0);
+    $contentEl.css("height", `${$contentEl[0].scrollHeight}px`);
+    $contentEl.transitionEnd(() => {
+      if ($el.hasClass("accordion-item-opened")) {
+        $contentEl.transition(0);
+        $contentEl.css("height", "auto");
+        nextFrame$1(() => {
+          $contentEl.transition("");
+          $el.trigger("accordion:opened");
+          app2.emit("accordionOpened", $el[0]);
+        });
+      } else {
+        $contentEl.css("height", "");
+        $el.trigger("accordion:closed");
+        app2.emit("accordionClosed", $el[0]);
+      }
+    });
+    nextFrame$1(() => {
+      $contentEl.transition("");
+      $contentEl.css("height", "");
+      $el.trigger("accordion:close");
+      app2.emit("accordionClose", $el[0]);
+    });
+  },
+  toggle(el) {
+    const app2 = this;
+    const $el = $(el);
+    if ($el.length === 0) return;
+    if ($el.hasClass("accordion-item-opened")) app2.accordion.close(el);
+    else app2.accordion.open(el);
+  }
+};
+const AccordionComponent = {
+  name: "accordion",
+  create() {
+    const app2 = this;
+    bindMethods(app2, {
+      accordion: Accordion
+    });
+  },
+  clicks: {
+    ".accordion-item .item-link, .accordion-item-toggle, .links-list.accordion-list > ul > li > a": function open3($clickedEl) {
+      const app2 = this;
+      Accordion.toggleClicked.call(app2, $clickedEl);
+    }
+  }
+};
 function noUndefinedProps(obj) {
   const o = {};
   Object.keys(obj).forEach((key) => {
@@ -19689,7 +19805,7 @@ const get_default_slot_context$5 = (ctx) => ({ popup: (
   /*f7Popup*/
   ctx[2]
 ) });
-function create_fragment$A(ctx) {
+function create_fragment$C(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -19979,7 +20095,7 @@ class Popup2 extends SvelteComponent {
       this,
       options,
       instance_1$5,
-      create_fragment$A,
+      create_fragment$C,
       safe_not_equal,
       {
         class: 6,
@@ -20067,7 +20183,7 @@ const useTab = (getEl, emit) => {
     detachEvents();
   });
 };
-function create_fragment$z(ctx) {
+function create_fragment$B(ctx) {
   let current;
   const default_slot_template = (
     /*#slots*/
@@ -20129,7 +20245,7 @@ function create_fragment$z(ctx) {
     }
   };
 }
-function instance$v($$self, $$props, $$invalidate) {
+function instance$x($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { route = void 0 } = $$props;
   let { router = void 0 } = $$props;
@@ -20144,7 +20260,7 @@ function instance$v($$self, $$props, $$invalidate) {
 class Router_context_provider extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$v, create_fragment$z, safe_not_equal, { route: 0, router: 1 });
+    init(this, options, instance$x, create_fragment$B, safe_not_equal, { route: 0, router: 1 });
   }
 }
 function get_each_context$5(ctx, list, i) {
@@ -20158,7 +20274,7 @@ const get_default_slot_context$4 = (ctx) => ({ view: (
   /*f7View*/
   ctx[3]
 ) });
-function create_default_slot$d(ctx) {
+function create_default_slot$e(ctx) {
   let switch_instance;
   let t2;
   let current;
@@ -20257,7 +20373,7 @@ function create_each_block$5(key_1, ctx) {
         /*page*/
         ctx[31].props.f7router
       ),
-      $$slots: { default: [create_default_slot$d] },
+      $$slots: { default: [create_default_slot$e] },
       $$scope: { ctx }
     }
   });
@@ -20306,7 +20422,7 @@ function create_each_block$5(key_1, ctx) {
     }
   };
 }
-function create_fragment$y(ctx) {
+function create_fragment$A(ctx) {
   let div;
   let t2;
   let each_blocks = [];
@@ -20667,7 +20783,7 @@ class View2 extends SvelteComponent {
       this,
       options,
       instance_1$4,
-      create_fragment$y,
+      create_fragment$A,
       safe_not_equal,
       {
         id: 0,
@@ -20691,7 +20807,7 @@ const get_default_slot_context$3 = (ctx) => ({ loginScreen: (
   /*f7LoginScreen*/
   ctx[2]
 ) });
-function create_fragment$x(ctx) {
+function create_fragment$z(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -20907,7 +21023,7 @@ function instance_1$3($$self, $$props, $$invalidate) {
 class Login_screen extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance_1$3, create_fragment$x, safe_not_equal, {
+    init(this, options, instance_1$3, create_fragment$z, safe_not_equal, {
       class: 6,
       style: 0,
       opened: 5,
@@ -20938,7 +21054,7 @@ const get_fixed_slot_context$1 = (ctx) => ({ sheet: (
   /*f7Sheet*/
   ctx[3]
 ) });
-function create_fragment$w(ctx) {
+function create_fragment$y(ctx) {
   let div1;
   let t0;
   let div0;
@@ -21401,7 +21517,7 @@ class Sheet extends SvelteComponent {
       this,
       options,
       instance_1$2,
-      create_fragment$w,
+      create_fragment$y,
       safe_not_equal,
       {
         class: 7,
@@ -21457,7 +21573,7 @@ function create_if_block$g(ctx) {
     }
   };
 }
-function create_fragment$v(ctx) {
+function create_fragment$x(ctx) {
   let div1;
   let t2;
   let div0;
@@ -21748,7 +21864,7 @@ function instance_1$1($$self, $$props, $$invalidate) {
 class Popover2 extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance_1$1, create_fragment$v, safe_not_equal, {
+    init(this, options, instance_1$1, create_fragment$x, safe_not_equal, {
       class: 7,
       style: 0,
       opened: 6,
@@ -21792,7 +21908,7 @@ function create_if_block$f(ctx) {
     }
   };
 }
-function create_fragment$u(ctx) {
+function create_fragment$w(ctx) {
   let div;
   let t2;
   let current;
@@ -22208,7 +22324,7 @@ class Panel2 extends SvelteComponent {
       this,
       options,
       instance_1,
-      create_fragment$u,
+      create_fragment$w,
       safe_not_equal,
       {
         class: 7,
@@ -22349,7 +22465,7 @@ function create_if_block_3$4(ctx) {
         /*url*/
         ctx[1]
       ),
-      $$slots: { default: [create_default_slot_3$6] },
+      $$slots: { default: [create_default_slot_3$7] },
       $$scope: { ctx }
     }
   });
@@ -22386,7 +22502,7 @@ function create_if_block_3$4(ctx) {
     }
   };
 }
-function create_default_slot_3$6(ctx) {
+function create_default_slot_3$7(ctx) {
   let view;
   let current;
   view = new View2({
@@ -22434,7 +22550,7 @@ function create_default_slot_3$6(ctx) {
     }
   };
 }
-function create_if_block_2$6(ctx) {
+function create_if_block_2$7(ctx) {
   let sheet;
   let current;
   sheet = new Sheet({
@@ -22444,7 +22560,7 @@ function create_if_block_2$6(ctx) {
         /*url*/
         ctx[1]
       ),
-      $$slots: { default: [create_default_slot_2$7] },
+      $$slots: { default: [create_default_slot_2$8] },
       $$scope: { ctx }
     }
   });
@@ -22481,7 +22597,7 @@ function create_if_block_2$6(ctx) {
     }
   };
 }
-function create_default_slot_2$7(ctx) {
+function create_default_slot_2$8(ctx) {
   let view;
   let current;
   view = new View2({
@@ -22543,7 +22659,7 @@ function create_if_block_1$9(ctx) {
         /*url*/
         ctx[1]
       ),
-      $$slots: { default: [create_default_slot_1$9] },
+      $$slots: { default: [create_default_slot_1$a] },
       $$scope: { ctx }
     }
   });
@@ -22583,7 +22699,7 @@ function create_if_block_1$9(ctx) {
     }
   };
 }
-function create_default_slot_1$9(ctx) {
+function create_default_slot_1$a(ctx) {
   let view;
   let current;
   view = new View2({
@@ -22649,7 +22765,7 @@ function create_if_block$e(ctx) {
         /*url*/
         ctx[1]
       ),
-      $$slots: { default: [create_default_slot$c] },
+      $$slots: { default: [create_default_slot$d] },
       $$scope: { ctx }
     }
   });
@@ -22692,7 +22808,7 @@ function create_if_block$e(ctx) {
     }
   };
 }
-function create_default_slot$c(ctx) {
+function create_default_slot$d(ctx) {
   let view;
   let current;
   view = new View2({
@@ -22740,7 +22856,7 @@ function create_default_slot$c(ctx) {
     }
   };
 }
-function create_fragment$t(ctx) {
+function create_fragment$v(ctx) {
   let t0;
   let t1;
   let t2;
@@ -22761,7 +22877,7 @@ function create_fragment$t(ctx) {
   );
   let if_block2 = (
     /*openIn*/
-    ctx[0] === "sheet" && create_if_block_2$6(ctx)
+    ctx[0] === "sheet" && create_if_block_2$7(ctx)
   );
   let if_block3 = (
     /*openIn*/
@@ -22852,7 +22968,7 @@ function create_fragment$t(ctx) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block_2$6(ctx2);
+          if_block2 = create_if_block_2$7(ctx2);
           if_block2.c();
           transition_in(if_block2, 1);
           if_block2.m(t2.parentNode, t2);
@@ -22944,7 +23060,7 @@ function create_fragment$t(ctx) {
     }
   };
 }
-function instance$u($$self, $$props, $$invalidate) {
+function instance$w($$self, $$props, $$invalidate) {
   let { openIn } = $$props;
   let { url } = $$props;
   let { viewSelector } = $$props;
@@ -22964,7 +23080,7 @@ function instance$u($$self, $$props, $$invalidate) {
 class Router_open_in_component extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$u, create_fragment$t, safe_not_equal, {
+    init(this, options, instance$w, create_fragment$v, safe_not_equal, {
       openIn: 0,
       url: 1,
       viewSelector: 2,
@@ -23254,6 +23370,122 @@ const Framework7Svelte = {
     Framework72.Router.use(componentsRouter);
   }
 };
+function create_fragment$u(ctx) {
+  let div;
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[4].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[3],
+    null
+  );
+  let div_levels = [{ class: (
+    /*classes*/
+    ctx[0]
+  ) }, restProps(
+    /*$$restProps*/
+    ctx[1]
+  )];
+  let div_data = {};
+  for (let i = 0; i < div_levels.length; i += 1) {
+    div_data = assign(div_data, div_levels[i]);
+  }
+  return {
+    c() {
+      div = element("div");
+      if (default_slot) default_slot.c();
+      set_attributes(div, div_data);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      if (default_slot) {
+        default_slot.m(div, null);
+      }
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        8)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[3],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[3]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[3],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      set_attributes(div, div_data = get_spread_update(div_levels, [
+        (!current || dirty & /*classes*/
+        1) && { class: (
+          /*classes*/
+          ctx2[0]
+        ) },
+        dirty & /*$$restProps*/
+        2 && restProps(
+          /*$$restProps*/
+          ctx2[1]
+        )
+      ]));
+    },
+    i(local) {
+      if (current) return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      if (default_slot) default_slot.d(detaching);
+    }
+  };
+}
+function instance$v($$self, $$props, $$invalidate) {
+  let classes;
+  const omit_props_names = ["class"];
+  let $$restProps = compute_rest_props($$props, omit_props_names);
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { class: className = void 0 } = $$props;
+  $$self.$$set = ($$new_props) => {
+    $$invalidate(5, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
+    $$invalidate(1, $$restProps = compute_rest_props($$props, omit_props_names));
+    if ("class" in $$new_props) $$invalidate(2, className = $$new_props.class);
+    if ("$$scope" in $$new_props) $$invalidate(3, $$scope = $$new_props.$$scope);
+  };
+  $$self.$$.update = () => {
+    $$invalidate(0, classes = classNames(className, "accordion-item-content", colorClasses($$props)));
+  };
+  $$props = exclude_internal_props($$props);
+  return [classes, $$restProps, className, $$scope, slots];
+}
+class Accordion_content extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$v, create_fragment$u, safe_not_equal, { class: 2 });
+  }
+}
 function get_each_context$4(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[5] = list[i];
@@ -23352,7 +23584,7 @@ function create_each_block$4(key_1, ctx) {
     }
   };
 }
-function create_fragment$s(ctx) {
+function create_fragment$t(ctx) {
   let div;
   let each_blocks = [];
   let each_1_lookup = /* @__PURE__ */ new Map();
@@ -23424,7 +23656,7 @@ function create_fragment$s(ctx) {
     }
   };
 }
-function instance$t($$self, $$props, $$invalidate) {
+function instance$u($$self, $$props, $$invalidate) {
   let modals = [];
   let el;
   let routerData;
@@ -23460,10 +23692,10 @@ function instance$t($$self, $$props, $$invalidate) {
 class Routable_modals extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$t, create_fragment$s, safe_not_equal, {});
+    init(this, options, instance$u, create_fragment$t, safe_not_equal, {});
   }
 }
-function create_fragment$r(ctx) {
+function create_fragment$s(ctx) {
   let div;
   let t2;
   let routablemodals;
@@ -23558,7 +23790,7 @@ function create_fragment$r(ctx) {
     }
   };
 }
-function instance$s($$self, $$props, $$invalidate) {
+function instance$t($$self, $$props, $$invalidate) {
   let classes;
   let { $$slots: slots = {}, $$scope } = $$props;
   let { class: className = void 0 } = $$props;
@@ -23597,7 +23829,7 @@ function instance$s($$self, $$props, $$invalidate) {
 class App extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$s, create_fragment$r, safe_not_equal, { class: 2 });
+    init(this, options, instance$t, create_fragment$s, safe_not_equal, { class: 2 });
   }
 }
 const useTooltip = (el, props) => {
@@ -23644,7 +23876,7 @@ const useTooltip = (el, props) => {
     }
   };
 };
-function create_fragment$q(ctx) {
+function create_fragment$r(ctx) {
   let span;
   let useTooltip_action;
   let current;
@@ -23765,7 +23997,7 @@ function create_fragment$q(ctx) {
     }
   };
 }
-function instance$r($$self, $$props, $$invalidate) {
+function instance$s($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = ["class", "tooltip", "tooltipTrigger"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -23790,10 +24022,10 @@ function instance$r($$self, $$props, $$invalidate) {
 class Badge extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$r, create_fragment$q, safe_not_equal, { class: 4, tooltip: 0, tooltipTrigger: 1 });
+    init(this, options, instance$s, create_fragment$r, safe_not_equal, { class: 4, tooltip: 0, tooltipTrigger: 1 });
   }
 }
-function create_fragment$p(ctx) {
+function create_fragment$q(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -23885,7 +24117,7 @@ function create_fragment$p(ctx) {
     }
   };
 }
-function instance$q($$self, $$props, $$invalidate) {
+function instance$r($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = ["large", "medium", "class"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -23918,10 +24150,10 @@ function instance$q($$self, $$props, $$invalidate) {
 class Block_title extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$q, create_fragment$p, safe_not_equal, { large: 2, medium: 3, class: 4 });
+    init(this, options, instance$r, create_fragment$q, safe_not_equal, { large: 2, medium: 3, class: 4 });
   }
 }
-function create_fragment$o(ctx) {
+function create_fragment$p(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -24015,7 +24247,7 @@ function create_fragment$o(ctx) {
     }
   };
 }
-function instance$p($$self, $$props, $$invalidate) {
+function instance$q($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = [
     "inset",
@@ -24209,8 +24441,8 @@ class Block extends SvelteComponent {
     init(
       this,
       options,
-      instance$p,
-      create_fragment$o,
+      instance$q,
+      create_fragment$p,
       safe_not_equal,
       {
         inset: 3,
@@ -24311,7 +24543,7 @@ const useTheme = (set) => {
   }
   return t2;
 };
-function create_fragment$n(ctx) {
+function create_fragment$o(ctx) {
   let i;
   let t0_value = (
     /*iconText*/
@@ -24459,7 +24691,7 @@ function create_fragment$n(ctx) {
     }
   };
 }
-function instance$o($$self, $$props, $$invalidate) {
+function instance$p($$self, $$props, $$invalidate) {
   let iconClasses;
   let iconText;
   let iconSize;
@@ -24604,7 +24836,7 @@ function instance$o($$self, $$props, $$invalidate) {
 class Icon extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$o, create_fragment$n, safe_not_equal, {
+    init(this, options, instance$p, create_fragment$o, safe_not_equal, {
       style: 7,
       class: 8,
       material: 9,
@@ -24626,7 +24858,7 @@ function create_if_block$d(ctx) {
     ctx[0].badge.props
   ];
   let badge_props = {
-    $$slots: { default: [create_default_slot_1$8] },
+    $$slots: { default: [create_default_slot_1$9] },
     $$scope: { ctx }
   };
   for (let i = 0; i < badge_spread_levels.length; i += 1) {
@@ -24667,7 +24899,7 @@ function create_if_block$d(ctx) {
     }
   };
 }
-function create_default_slot_1$8(ctx) {
+function create_default_slot_1$9(ctx) {
   let t_value = (
     /*icon*/
     ctx[0].badge.content + ""
@@ -24692,7 +24924,7 @@ function create_default_slot_1$8(ctx) {
     }
   };
 }
-function create_default_slot$b(ctx) {
+function create_default_slot$c(ctx) {
   let if_block_anchor;
   let current;
   let if_block = (
@@ -24751,7 +24983,7 @@ function create_default_slot$b(ctx) {
     }
   };
 }
-function create_fragment$m(ctx) {
+function create_fragment$n(ctx) {
   let icon_1;
   let current;
   const icon_1_spread_levels = [
@@ -24759,7 +24991,7 @@ function create_fragment$m(ctx) {
     ctx[0].props
   ];
   let icon_1_props = {
-    $$slots: { default: [create_default_slot$b] },
+    $$slots: { default: [create_default_slot$c] },
     $$scope: { ctx }
   };
   for (let i = 0; i < icon_1_spread_levels.length; i += 1) {
@@ -24800,7 +25032,7 @@ function create_fragment$m(ctx) {
     }
   };
 }
-function instance$n($$self, $$props, $$invalidate) {
+function instance$o($$self, $$props, $$invalidate) {
   let { icon = void 0 } = $$props;
   $$self.$$set = ($$props2) => {
     if ("icon" in $$props2) $$invalidate(0, icon = $$props2.icon);
@@ -24810,7 +25042,7 @@ function instance$n($$self, $$props, $$invalidate) {
 class Use_icon extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$n, create_fragment$m, safe_not_equal, { icon: 0 });
+    init(this, options, instance$o, create_fragment$n, safe_not_equal, { icon: 0 });
   }
 }
 function create_else_block$5(ctx) {
@@ -24866,7 +25098,7 @@ function create_if_block$c(ctx) {
     }
   };
 }
-function create_fragment$l(ctx) {
+function create_fragment$m(ctx) {
   let span;
   function select_block_type(ctx2, dirty) {
     if (
@@ -24948,7 +25180,7 @@ function create_fragment$l(ctx) {
     }
   };
 }
-function instance$m($$self, $$props, $$invalidate) {
+function instance$n($$self, $$props, $$invalidate) {
   let sizeComputed;
   let preloaderStyle;
   let classes;
@@ -24993,7 +25225,7 @@ function instance$m($$self, $$props, $$invalidate) {
 class Preloader extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$m, create_fragment$l, safe_not_equal, { style: 4, class: 5, size: 6 });
+    init(this, options, instance$n, create_fragment$m, safe_not_equal, { style: 4, class: 5, size: 6 });
   }
 }
 function create_else_block_1$2(ctx) {
@@ -25831,7 +26063,7 @@ function create_if_block_1$7(ctx) {
     ctx[8] && create_if_block_3$3(ctx)
   );
   let if_block1 = typeof /*text*/
-  ctx[0] !== "undefined" && create_if_block_2$5(ctx);
+  ctx[0] !== "undefined" && create_if_block_2$6(ctx);
   const default_slot_template = (
     /*#slots*/
     ctx[45].default
@@ -25904,7 +26136,7 @@ function create_if_block_1$7(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block_2$5(ctx2);
+          if_block1 = create_if_block_2$6(ctx2);
           if_block1.c();
           if_block1.m(span, t2);
         }
@@ -26063,7 +26295,7 @@ function create_if_block_3$3(ctx) {
     }
   };
 }
-function create_if_block_2$5(ctx) {
+function create_if_block_2$6(ctx) {
   let span;
   let t_value = plainText(
     /*text*/
@@ -26093,7 +26325,7 @@ function create_if_block_2$5(ctx) {
     }
   };
 }
-function create_fragment$k(ctx) {
+function create_fragment$l(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
@@ -26158,7 +26390,7 @@ function create_fragment$k(ctx) {
     }
   };
 }
-function instance$l($$self, $$props, $$invalidate) {
+function instance$m($$self, $$props, $$invalidate) {
   let hrefComputed;
   let attrs;
   let classes;
@@ -26417,8 +26649,8 @@ class Button extends SvelteComponent {
     init(
       this,
       options,
-      instance$l,
-      create_fragment$k,
+      instance$m,
+      create_fragment$l,
       safe_not_equal,
       {
         class: 13,
@@ -26499,7 +26731,7 @@ const getReactiveContext = (name, setValue) => {
   });
   return value2;
 };
-function create_if_block_2$4(ctx) {
+function create_if_block_2$5(ctx) {
   let useicon;
   let current;
   useicon = new Use_icon({ props: { icon: (
@@ -26629,7 +26861,7 @@ function create_if_block_1$6(ctx) {
         /*badgeColor*/
         ctx[2]
       ),
-      $$slots: { default: [create_default_slot$a] },
+      $$slots: { default: [create_default_slot$b] },
       $$scope: { ctx }
     }
   });
@@ -26666,7 +26898,7 @@ function create_if_block_1$6(ctx) {
     }
   };
 }
-function create_default_slot$a(ctx) {
+function create_default_slot$b(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[1]
@@ -26693,7 +26925,7 @@ function create_default_slot$a(ctx) {
     }
   };
 }
-function create_fragment$j(ctx) {
+function create_fragment$k(ctx) {
   let a;
   let t0;
   let t1;
@@ -26704,7 +26936,7 @@ function create_fragment$j(ctx) {
   let dispose;
   let if_block0 = (
     /*icon*/
-    ctx[8] && create_if_block_2$4(ctx)
+    ctx[8] && create_if_block_2$5(ctx)
   );
   const default_slot_template = (
     /*#slots*/
@@ -26793,7 +27025,7 @@ function create_fragment$j(ctx) {
             transition_in(if_block0, 1);
           }
         } else {
-          if_block0 = create_if_block_2$4(ctx2);
+          if_block0 = create_if_block_2$5(ctx2);
           if_block0.c();
           transition_in(if_block0, 1);
           if_block0.m(a, t0);
@@ -26904,7 +27136,7 @@ function create_fragment$j(ctx) {
     }
   };
 }
-function instance$k($$self, $$props, $$invalidate) {
+function instance$l($$self, $$props, $$invalidate) {
   let isTabbarIcons;
   let hrefComputed;
   let attrs;
@@ -27075,8 +27307,8 @@ class Link extends SvelteComponent {
     init(
       this,
       options,
-      instance$k,
-      create_fragment$j,
+      instance$l,
+      create_fragment$k,
       safe_not_equal,
       {
         class: 12,
@@ -27495,7 +27727,7 @@ function create_else_block$3(ctx) {
   let if_block2 = (
     /*swipeout*/
     (ctx[13] || /*accordionItem*/
-    ctx[15]) && create_if_block_2$3(ctx)
+    ctx[15]) && create_if_block_2$4(ctx)
   );
   const root_slot_template = (
     /*#slots*/
@@ -27662,7 +27894,7 @@ function create_else_block$3(ctx) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block_2$3(ctx2);
+          if_block2 = create_if_block_2$4(ctx2);
           if_block2.c();
           transition_in(if_block2, 1);
           if_block2.m(li, t3);
@@ -31442,7 +31674,7 @@ function create_if_block_115(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_10] },
+      $$slots: { default: [create_default_slot_10$1] },
       $$scope: { ctx }
     }
   });
@@ -31480,7 +31712,7 @@ function create_if_block_115(ctx) {
     }
   };
 }
-function create_default_slot_10(ctx) {
+function create_default_slot_10$1(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -33202,7 +33434,7 @@ function create_if_block_101(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_9$1] },
+      $$slots: { default: [create_default_slot_9$2] },
       $$scope: { ctx }
     }
   });
@@ -33240,7 +33472,7 @@ function create_if_block_101(ctx) {
     }
   };
 }
-function create_default_slot_9$1(ctx) {
+function create_default_slot_9$2(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -33745,7 +33977,7 @@ function create_if_block_95(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_8$1] },
+      $$slots: { default: [create_default_slot_8$2] },
       $$scope: { ctx }
     }
   });
@@ -33783,7 +34015,7 @@ function create_if_block_95(ctx) {
     }
   };
 }
-function create_default_slot_8$1(ctx) {
+function create_default_slot_8$2(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -35505,7 +35737,7 @@ function create_if_block_80(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_7$1] },
+      $$slots: { default: [create_default_slot_7$2] },
       $$scope: { ctx }
     }
   });
@@ -35543,7 +35775,7 @@ function create_if_block_80(ctx) {
     }
   };
 }
-function create_default_slot_7$1(ctx) {
+function create_default_slot_7$2(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -36048,7 +36280,7 @@ function create_if_block_74(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_6$1] },
+      $$slots: { default: [create_default_slot_6$2] },
       $$scope: { ctx }
     }
   });
@@ -36086,7 +36318,7 @@ function create_if_block_74(ctx) {
     }
   };
 }
-function create_default_slot_6$1(ctx) {
+function create_default_slot_6$2(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -41461,7 +41693,7 @@ function create_if_block_39(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_3$5] },
+      $$slots: { default: [create_default_slot_3$6] },
       $$scope: { ctx }
     }
   });
@@ -41499,7 +41731,7 @@ function create_if_block_39(ctx) {
     }
   };
 }
-function create_default_slot_3$5(ctx) {
+function create_default_slot_3$6(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -42004,7 +42236,7 @@ function create_if_block_33(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_2$6] },
+      $$slots: { default: [create_default_slot_2$7] },
       $$scope: { ctx }
     }
   });
@@ -42042,7 +42274,7 @@ function create_if_block_33(ctx) {
     }
   };
 }
-function create_default_slot_2$6(ctx) {
+function create_default_slot_2$7(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -43764,7 +43996,7 @@ function create_if_block_18(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_1$7] },
+      $$slots: { default: [create_default_slot_1$8] },
       $$scope: { ctx }
     }
   });
@@ -43802,7 +44034,7 @@ function create_if_block_18(ctx) {
     }
   };
 }
-function create_default_slot_1$7(ctx) {
+function create_default_slot_1$8(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -44307,7 +44539,7 @@ function create_if_block_12(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot$9] },
+      $$slots: { default: [create_default_slot$a] },
       $$scope: { ctx }
     }
   });
@@ -44345,7 +44577,7 @@ function create_if_block_12(ctx) {
     }
   };
 }
-function create_default_slot$9(ctx) {
+function create_default_slot$a(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -44703,7 +44935,7 @@ function create_if_block_3$2(ctx) {
     }
   };
 }
-function create_if_block_2$3(ctx) {
+function create_if_block_2$4(ctx) {
   let current;
   const default_slot_template = (
     /*#slots*/
@@ -44792,7 +45024,7 @@ function fallback_block(ctx) {
     }
   };
 }
-function create_fragment$i(ctx) {
+function create_fragment$j(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
@@ -44861,7 +45093,7 @@ function create_fragment$i(ctx) {
     }
   };
 }
-function instance$j($$self, $$props, $$invalidate) {
+function instance$k($$self, $$props, $$invalidate) {
   let isMedia;
   let isSortable;
   let isSortableOpposite;
@@ -45454,8 +45686,8 @@ class List_item extends SvelteComponent {
     init(
       this,
       options,
-      instance$j,
-      create_fragment$i,
+      instance$k,
+      create_fragment$j,
       safe_not_equal,
       {
         class: 48,
@@ -45543,7 +45775,7 @@ function create_else_block_1(ctx) {
     ctx[55],
     get_before_list_slot_context_1
   );
-  const if_block_creators = [create_if_block_2$2, create_else_block_2];
+  const if_block_creators = [create_if_block_2$3, create_else_block_2];
   const if_blocks = [];
   function select_block_type_2(ctx2, dirty) {
     if (
@@ -45997,7 +46229,7 @@ function create_else_block_2(ctx) {
     }
   };
 }
-function create_if_block_2$2(ctx) {
+function create_if_block_2$3(ctx) {
   let ul_1;
   let t2;
   let current;
@@ -46283,7 +46515,7 @@ function create_if_block_1$4(ctx) {
     }
   };
 }
-function create_fragment$h(ctx) {
+function create_fragment$i(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
@@ -46348,7 +46580,7 @@ function create_fragment$h(ctx) {
     }
   };
 }
-function instance$i($$self, $$props, $$invalidate) {
+function instance$j($$self, $$props, $$invalidate) {
   let hasUlSlots;
   let classes;
   const omit_props_names = [
@@ -46722,8 +46954,8 @@ class List extends SvelteComponent {
     init(
       this,
       options,
-      instance$i,
-      create_fragment$h,
+      instance$j,
+      create_fragment$i,
       safe_not_equal,
       {
         class: 8,
@@ -46850,7 +47082,7 @@ function create_if_block$7(ctx) {
     }
   };
 }
-function create_fragment$g(ctx) {
+function create_fragment$h(ctx) {
   let div;
   let t2;
   let current;
@@ -46977,7 +47209,7 @@ function create_fragment$g(ctx) {
     }
   };
 }
-function instance$h($$self, $$props, $$invalidate) {
+function instance$i($$self, $$props, $$invalidate) {
   let classes;
   let needBackLinkText;
   let backLinkText;
@@ -47045,7 +47277,7 @@ function instance$h($$self, $$props, $$invalidate) {
 class Nav_left extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$h, create_fragment$g, safe_not_equal, {
+    init(this, options, instance$i, create_fragment$h, safe_not_equal, {
       class: 7,
       backLink: 0,
       backLinkUrl: 1,
@@ -47055,7 +47287,7 @@ class Nav_left extends SvelteComponent {
     });
   }
 }
-function create_fragment$f(ctx) {
+function create_fragment$g(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -47147,7 +47379,7 @@ function create_fragment$f(ctx) {
     }
   };
 }
-function instance$g($$self, $$props, $$invalidate) {
+function instance$h($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = ["class", "sliding"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -47170,7 +47402,7 @@ function instance$g($$self, $$props, $$invalidate) {
 class Nav_right extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$g, create_fragment$f, safe_not_equal, { class: 2, sliding: 3 });
+    init(this, options, instance$h, create_fragment$g, safe_not_equal, { class: 2, sliding: 3 });
   }
 }
 function create_if_block_1$3(ctx) {
@@ -47231,7 +47463,7 @@ function create_if_block$6(ctx) {
     }
   };
 }
-function create_fragment$e(ctx) {
+function create_fragment$f(ctx) {
   let div;
   let t0;
   let t1;
@@ -47365,7 +47597,7 @@ function create_fragment$e(ctx) {
     }
   };
 }
-function instance$f($$self, $$props, $$invalidate) {
+function instance$g($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = ["class", "title", "subtitle", "sliding"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -47392,7 +47624,7 @@ function instance$f($$self, $$props, $$invalidate) {
 class Nav_title extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$f, create_fragment$e, safe_not_equal, {
+    init(this, options, instance$g, create_fragment$f, safe_not_equal, {
       class: 4,
       title: 0,
       subtitle: 1,
@@ -47441,7 +47673,7 @@ function create_if_block_3$1(ctx) {
         /*onBackClick*/
         ctx[15]
       ),
-      $$slots: { default: [create_default_slot_2$5] },
+      $$slots: { default: [create_default_slot_2$6] },
       $$scope: { ctx }
     }
   });
@@ -47487,7 +47719,7 @@ function create_if_block_3$1(ctx) {
     }
   };
 }
-function create_default_slot_2$5(ctx) {
+function create_default_slot_2$6(ctx) {
   let t2;
   let current;
   const nav_left_slot_template = (
@@ -47596,7 +47828,7 @@ function create_default_slot_2$5(ctx) {
     }
   };
 }
-function create_if_block_2$1(ctx) {
+function create_if_block_2$2(ctx) {
   let navtitle;
   let current;
   navtitle = new Nav_title({
@@ -47609,7 +47841,7 @@ function create_if_block_2$1(ctx) {
         /*subtitle*/
         ctx[5]
       ),
-      $$slots: { default: [create_default_slot_1$6] },
+      $$slots: { default: [create_default_slot_1$7] },
       $$scope: { ctx }
     }
   });
@@ -47649,7 +47881,7 @@ function create_if_block_2$1(ctx) {
     }
   };
 }
-function create_default_slot_1$6(ctx) {
+function create_default_slot_1$7(ctx) {
   let current;
   const title_slot_template = (
     /*#slots*/
@@ -47716,7 +47948,7 @@ function create_if_block_1$2(ctx) {
   let current;
   navright = new Nav_right({
     props: {
-      $$slots: { default: [create_default_slot$8] },
+      $$slots: { default: [create_default_slot$9] },
       $$scope: { ctx }
     }
   });
@@ -47750,7 +47982,7 @@ function create_if_block_1$2(ctx) {
     }
   };
 }
-function create_default_slot$8(ctx) {
+function create_default_slot$9(ctx) {
   let t2;
   let current;
   const nav_right_slot_template = (
@@ -47947,7 +48179,7 @@ function create_if_block$5(ctx) {
     }
   };
 }
-function create_fragment$d(ctx) {
+function create_fragment$e(ctx) {
   let div2;
   let div0;
   let t0;
@@ -47979,7 +48211,7 @@ function create_fragment$d(ctx) {
     /*title*/
     (ctx[4] || /*subtitle*/
     ctx[5] || /*hasTitleSlots*/
-    ctx[12]) && create_if_block_2$1(ctx)
+    ctx[12]) && create_if_block_2$2(ctx)
   );
   let if_block2 = (
     /*hasRightSlots*/
@@ -48146,7 +48378,7 @@ function create_fragment$d(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block_2$1(ctx2);
+          if_block1 = create_if_block_2$2(ctx2);
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(div1, t3);
@@ -48314,7 +48546,7 @@ function create_fragment$d(ctx) {
     }
   };
 }
-function instance$e($$self, $$props, $$invalidate) {
+function instance$f($$self, $$props, $$invalidate) {
   let hasLeftSlots;
   let hasRightSlots;
   let hasTitleSlots;
@@ -48615,8 +48847,8 @@ class Navbar extends SvelteComponent {
     init(
       this,
       options,
-      instance$e,
-      create_fragment$d,
+      instance$f,
+      create_fragment$e,
       safe_not_equal,
       {
         class: 17,
@@ -48694,7 +48926,7 @@ function create_if_block_3(ctx) {
     }
   };
 }
-function create_if_block_2(ctx) {
+function create_if_block_2$1(ctx) {
   let preloader;
   let current;
   preloader = new Preloader({
@@ -48790,7 +49022,7 @@ function create_if_block$4(ctx) {
     }
   };
 }
-function create_fragment$c(ctx) {
+function create_fragment$d(ctx) {
   let div;
   let t0;
   let t1;
@@ -48809,7 +49041,7 @@ function create_fragment$c(ctx) {
     /*infinite*/
     ctx[5] && /*infiniteTop*/
     ctx[6] && /*infinitePreloader*/
-    ctx[8] && create_if_block_2()
+    ctx[8] && create_if_block_2$1()
   );
   const default_slot_template = (
     /*#slots*/
@@ -48929,7 +49161,7 @@ function create_fragment$c(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block_2();
+          if_block1 = create_if_block_2$1();
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(div, t1);
@@ -49072,7 +49304,7 @@ function create_fragment$c(ctx) {
     }
   };
 }
-function instance$d($$self, $$props, $$invalidate) {
+function instance$e($$self, $$props, $$invalidate) {
   let pageContentClasses;
   const omit_props_names = [
     "tab",
@@ -49253,8 +49485,8 @@ class Page_content extends SvelteComponent {
     init(
       this,
       options,
-      instance$d,
-      create_fragment$c,
+      instance$e,
+      create_fragment$d,
       safe_not_equal,
       {
         tab: 12,
@@ -49480,7 +49712,7 @@ function create_if_block$3(ctx) {
         /*onInfinite*/
         ctx[23]
       ),
-      $$slots: { default: [create_default_slot$7] },
+      $$slots: { default: [create_default_slot$8] },
       $$scope: { ctx }
     }
   });
@@ -49556,7 +49788,7 @@ function create_if_block$3(ctx) {
     }
   };
 }
-function create_default_slot$7(ctx) {
+function create_default_slot$8(ctx) {
   let t2;
   let current;
   const static_slot_template = (
@@ -49665,7 +49897,7 @@ function create_default_slot$7(ctx) {
     }
   };
 }
-function create_fragment$b(ctx) {
+function create_fragment$c(ctx) {
   let div;
   let t2;
   let current_block_type_index;
@@ -49812,7 +50044,7 @@ function create_fragment$b(ctx) {
     }
   };
 }
-function instance$c($$self, $$props, $$invalidate) {
+function instance$d($$self, $$props, $$invalidate) {
   let forceSubnavbar;
   let forceNavbarLarge;
   let classes;
@@ -50200,8 +50432,8 @@ class Page extends SvelteComponent {
     init(
       this,
       options,
-      instance$c,
-      create_fragment$b,
+      instance$d,
+      create_fragment$c,
       safe_not_equal,
       {
         name: 0,
@@ -50235,7 +50467,7 @@ class Page extends SvelteComponent {
     );
   }
 }
-function create_fragment$a(ctx) {
+function create_fragment$b(ctx) {
   let svg;
   let path2;
   let svg_levels = [
@@ -50283,7 +50515,7 @@ function create_fragment$a(ctx) {
     }
   };
 }
-function instance$b($$self, $$props, $$invalidate) {
+function instance$c($$self, $$props, $$invalidate) {
   const omit_props_names = [];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   $$self.$$set = ($$new_props) => {
@@ -50295,10 +50527,10 @@ function instance$b($$self, $$props, $$invalidate) {
 class Bell extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$b, create_fragment$a, safe_not_equal, {});
+    init(this, options, instance$c, create_fragment$b, safe_not_equal, {});
   }
 }
-function create_fragment$9(ctx) {
+function create_fragment$a(ctx) {
   let svg;
   let path2;
   let svg_levels = [
@@ -50346,7 +50578,7 @@ function create_fragment$9(ctx) {
     }
   };
 }
-function instance$a($$self, $$props, $$invalidate) {
+function instance$b($$self, $$props, $$invalidate) {
   const omit_props_names = [];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   $$self.$$set = ($$new_props) => {
@@ -50358,10 +50590,10 @@ function instance$a($$self, $$props, $$invalidate) {
 class LineHorizontal3 extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$a, create_fragment$9, safe_not_equal, {});
+    init(this, options, instance$b, create_fragment$a, safe_not_equal, {});
   }
 }
-function create_fragment$8(ctx) {
+function create_fragment$9(ctx) {
   let svg;
   let path2;
   let svg_levels = [
@@ -50409,7 +50641,7 @@ function create_fragment$8(ctx) {
     }
   };
 }
-function instance$9($$self, $$props, $$invalidate) {
+function instance$a($$self, $$props, $$invalidate) {
   const omit_props_names = [];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   $$self.$$set = ($$new_props) => {
@@ -50421,10 +50653,10 @@ function instance$9($$self, $$props, $$invalidate) {
 class Multiply extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$9, create_fragment$8, safe_not_equal, {});
+    init(this, options, instance$a, create_fragment$9, safe_not_equal, {});
   }
 }
-function create_fragment$7(ctx) {
+function create_fragment$8(ctx) {
   let svg;
   let path2;
   let svg_levels = [
@@ -50472,7 +50704,7 @@ function create_fragment$7(ctx) {
     }
   };
 }
-function instance$8($$self, $$props, $$invalidate) {
+function instance$9($$self, $$props, $$invalidate) {
   const omit_props_names = [];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   $$self.$$set = ($$new_props) => {
@@ -50484,9 +50716,3299 @@ function instance$8($$self, $$props, $$invalidate) {
 class Question extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$8, create_fragment$7, safe_not_equal, {});
+    init(this, options, instance$9, create_fragment$8, safe_not_equal, {});
   }
 }
+const uiEN = {
+  panel: {
+    title: "Menu",
+    navTitle: "Navigation",
+    navAbout: "About page"
+  },
+  langswitcher: {
+    title: "Language"
+  },
+  home: {
+    navTitle: "Holiday calendar"
+  },
+  about: {
+    navTitle: "About",
+    blockTitle: "Welcome to About page!",
+    description: "This page about of all us."
+  },
+  calendar: {
+    months: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+  },
+  wikipopup: {
+    title: "About the holiday",
+    openedLinkText: "More details..."
+  }
+};
+const calendarEN = {
+  govnonworkingday: [
+    {
+      date: {
+        month: 0,
+        day: 1
+      },
+      hours: 23,
+      minutes: 59,
+      title: "New Year",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 1,
+        day: 6
+      },
+      hours: 9,
+      minutes: 30,
+      title: "Epiphany",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 4,
+        day: 1
+      },
+      hours: 9,
+      minutes: 30,
+      title: "Public holiday Labor day",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 4,
+        day: 3
+      },
+      hours: 9,
+      minutes: 30,
+      title: "National holiday The third of May",
+      description: "in memory of Constitution the 3rd of May 1791",
+      wiki: [
+        {
+          heading: "title en",
+          content: "content en"
+        }
+      ],
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 7,
+        day: 15
+      },
+      hours: 9,
+      minutes: 30,
+      title: "Assumption of The Blessed Virgin Mary",
+      description: "Day of Polish army",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 10,
+        day: 1
+      },
+      hours: 9,
+      minutes: 30,
+      title: "All Saints Day",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 10,
+        day: 11
+      },
+      hours: 9,
+      minutes: 30,
+      title: "National holiday of Independence",
+      description: "In memory of gaining the independence from Russian Empire, Austria and Prussia in 1918",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 11,
+        day: 25
+      },
+      hours: 9,
+      minutes: 30,
+      title: "The first day of Christmas",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 11,
+        day: 26
+      },
+      hours: 9,
+      minutes: 30,
+      title: "The second day of Christmas",
+      description: "The day of Saint Stephen first matyr, the beginning of witchcraft",
+      color: "#ff2d55"
+    }
+  ]
+};
+const logRU = {
+  debug: {
+    langDefault: "язык по умолчанию:",
+    onLanguageChangedMsg: "i18next onLanguageChanged:",
+    app: {
+      localesChecking: "APP -> проверка переводов:"
+    },
+    calendar: {
+      dataFromLocales: "Calendar -> данные из переводов:",
+      eventAfterLangChanged: "Calendar -> События календаря (после смены языка):",
+      eventDefault: "Calendar -> События календаря (обычное состояние):",
+      monthAfterLangChanged: "Calendar -> Массив с месяцами (после смены языка):"
+    }
+  }
+};
+const uiRU = {
+  panel: {
+    title: "Меню",
+    navTitle: "Навигация",
+    navAbout: "О нас"
+  },
+  langswitcher: {
+    title: "Язык"
+  },
+  home: {
+    navTitle: "Календарь праздников"
+  },
+  about: {
+    navTitle: "О нас",
+    blockTitle: "Добро пожаловать на страницу О нас!",
+    description: "Тут будет описание прокета, и всех кто принимал участие в нём."
+  },
+  calendar: {
+    months: [
+      "Январь",
+      "Февраль",
+      "Март",
+      "Апрель",
+      "Май",
+      "Июнь",
+      "Июль",
+      "Август",
+      "Сентябрь",
+      "Октябрь",
+      "Ноябрь",
+      "Декабрь"
+    ],
+    days: ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
+  },
+  wikipopup: {
+    title: "О празднике",
+    openedLinkText: "Подробнее..."
+  }
+};
+const calendarRU = {
+  govnonworkingday: [
+    {
+      date: {
+        month: 0,
+        day: 1
+      },
+      hours: 23,
+      minutes: 59,
+      title: "Новый год",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 1,
+        day: 6
+      },
+      hours: 9,
+      minutes: 30,
+      title: "Богоявление",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 4,
+        day: 1
+      },
+      hours: 9,
+      minutes: 30,
+      title: "Государственный праздник день труда",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 4,
+        day: 3
+      },
+      hours: 9,
+      minutes: 30,
+      title: "Национальный праздник Третьего мая",
+      description: "в память о Конституции 3 мая 1791г",
+      wiki: [
+        {
+          heading: "Конституция 3 мая 1791 года",
+          content: "Конституция 3 мая 1791 года (пол. Konstytucja 3 maja) была принята Четырёхлетним сеймом, сословно-представительным органом Речи Посполитой — личной унии Королевства Польского и Великого княжества Литовского. Работа по составлению конституционного акта началась 6 октября 1788 года и продолжалась 32 месяца; документ, призванный ликвидировать недостатки политической системы страны, был принят под названием «Правительственный акт» (пол. Ustawa rządowa, «Устава государственная»). Действовавшие ранее принципы Золотой вольности или «Шляхетской демократии» наделяли шляхту особыми правами, что со временем нарушило работоспособность политических институтов. Принятию Конституции предшествовал период агитации и частичного внедрения реформ, начавшийся с деятельности конвокационного сейма 1764 года и выборов Станислава Августа Понятовского — как выяснилось позже, последнего монарха Речи Посполитой. <br><br> Конституция должна была урегулировать политический кризис, вызванный злоупотреблением шляхетскими привилегиями и поддерживавшийся некоторыми магнатами, и заменить их демократическими принципами конституционной монархии. Акт уравнял в некоторых политических правах дворян и горожан, а также провозгласил опеку государства над крестьянами, смягчив тем самым гнёт крепостничества. Конституция налагала запрет на действие некоторых парламентских институтов, подрывавших работу законодателей. Так, было упразднено право liberum veto, позволявшее любому депутату завершить обсуждение вопроса в сейме и работу сейма вообще, выразив несогласие. Соседи Речи Посполитой восприняли принятие Конституции с враждебностью. Прусский король Фридрих Вильгельм II расторг соглашение об альянсе с польско-литовским государством, после чего Речь Посполитая оказалась в состоянии войны с Российской империей Екатерины II и Тарговицкой конфедерацией, объединявшей выступавших против Конституции магнатов и безземельных дворян. В итоге король, ставший главным соавтором акта, потерпел поражение и капитулировал. <br><br> Таким образом, Конституция имела юридическую силу менее 19 месяцев. 23 ноября 1793 года её действие аннулировал Гродненский сейм. К 1795 году Речь Посполитая, претерпевшая Второй и Третий разделы, прекратила существование как независимое государство. На протяжении следующих 123 лет сторонники Конституции видели в ней образец успешных внутренних реформ и надежду на восстановление независимой Польши. По словам двух соавторов акта, Игнация Потоцкого и Гуго Коллонтая, Конституция была «последней волей и завещанием угасающей Отчизны». Британский историк Норман Дэвис назвал документ «первой конституцией такого рода в Европе». Другие специалисты отмечают, что акт стал второй в истории кодифицированной национальной конституцией после Конституции США."
+        },
+        {
+          heading: "Предпосылки",
+          content: "История польского конституционализма восходит ещё к XIII веку: уже тогда польское государство располагало правительством, принимавшим консенсусные решения и основанным на принципе представительности. Затем последовало возникновение парламентских органов, сейма и сеймиков. К XVII веку для правовой и политической традиции Польши были характерны следующие особенности: наличие парламентских институтов и системы сдержек и противовесов, которая, в свою очередь, ограничивалась принципом децентрализации; идея контрактного государства, что получило отражение в Генриковых артикулах и Pacta conventa; концепция личных свобод; наконец, мысль о том, что монарх имеет обязанности перед своим народом. Подобный уклад, приносивший выгоду в первую очередь дворянскому сословию, шляхте, в исторической литературе принято называть Золотой вольностью или «Шляхетской демократией»"
+        },
+        {
+          heading: "Деградация государственного аппарата",
+          content: "Конституция 1791 года стала ответом на ухудшавшееся положение дел в Речи Посполитой, ещё век назад считавшейся развитой европейской страной, и по-прежнему сохранявшей статус крупнейшего государства в этой части света. Ещё в 1590-х годах, в эпоху расцвета дворянской демократии, проповедник королевского двора Сигизмунда III — иезуит Пётр Скарга — отмечал и осуждал слабость государственного аппарата. В тот же период некоторые писатели и философы, например, Анджей Фрич-Моджевский или Вавжинец Госьлицкий, а также общественное движение Egzekucja praw («Исполнение законов») говорили о необходимости проведения политических реформ. В 1661 году сын Сигизмунда король Ян II Казимир, чьё правление сопровождалось разрушительными войнами и критикой со стороны дворянства, справедливо предположил, что Речи Посполитой грозит раздел между Русским царством, Бранденбург-Пруссией и Габсбургской монархией. <br><br> «Рейтан. Упадок Польши» Яна Матейко. В сентябре 1773 года Тадеуш Рейтан (внизу справа) попытался помешать ратификации Первого раздела Речи Посполитой, мешая другим депутатам сейма попасть в палату заседаний <br><br> Сейму не удавалось должным образом реформировать систему, и государственный аппарат становился всё менее работоспособным. Одной из главных причин кризиса стало право liberum veto («свободное вето»), использовавшееся с 1652 года, и позволявшее любому из депутатов парламента не дать принять любой из принятых коллегами законов. В результате работа сейма была парализована на более, чем сто лет: с одной стороны законотворчеству препятствовали коррумпированные депутаты, представлявшие интересы магнатов или зарубежных держав (как правило, России, Пруссии и Франции), с другой — те парламентарии, которые верили в то, что страна переживает «Золотой век», и новые законы лишь навредят Речи Посполитой. Дальнейшее пагубное действие liberum veto можно было остановить лишь с объявлением сейм конфедеративным, в котором право «свободного вето» отсутствовало. <br><br> В начале XVIII века польские и литовские магнаты полностью контролировали государство, препятствуя всяким реформам, которые могли бы ослабить их положение. Правление избранных в начале века королей-Веттинов Августа Сильного и Августа III было безуспешным как в целом, так и в решении данной проблемы. Веттины, привыкшие к абсолютизму в родной Саксонии, пытались править силой и устрашением, однако это привело к конфликтам между их сторонниками и противниками, в частности, Станиславом Лещинским — другим претендентом на польский трон. Выступления оппозиционеров часто происходили в форме конфедераций — дворянских актов неповиновения, узаконенных Золотой вольностью. Наиболее значительными из них стали Варшавская (1704), Сандомирская (1704), Тарногродская (1715), Дзиковская (1734) конфедерации, а также Война за польское наследство (1733—1735). За годы правления Августа II (1694—1733) сейм провёл 18 сессий, из которых лишь 8 завершились принятием законов. Правительство находилось на грани коллапса, благодаря чему появился термин «польская анархия». Реальная власть перешла провинциальным законодательным собраниям и магнатам. <br><br> В период правления Веттинов с инициативами реформ часто выступали такие деятели, как Станислав Дунин-Карвицкий, Станислав Антоний Щука, Казимеж Карвовский и Михаил Юзеф Масальский. Впрочем, их усилия были по большей части бесплодными."
+        },
+        {
+          heading: "Ранние реформы",
+          content: "Король Станислав II Август, ведущий соавтор Конституции. Год спустя он был вынужден прекратить её действие <br><br> Просвещение оказало существенное влияния на некоторые круги польско-литовского общества в годы правления Станислава II Августа (1764—1795). Станислав Август Понятовский, принадлежавший к «просвещённым» магнатам, был депутатом сейма нескольких созывов между 1750 и 1764 годами и, в отличие от предыдущих монархов, обладал более глубоким пониманием польской политики. Конвокационный сейм 1764 года, избравший Понятовского королём, контролировался реформистской партией «Фамилия», которая управлялась семейством Чарторыйских и поддерживалась приглашённой Чарторыйскими российской армией. В обмен на принятие удобных для России и Пруссии законов, эти государства позволили конфедерированному Конвокационному сейму санкционировать проведение нескольких реформ. В частности, парламентарии ослабили liberum veto и полностью отменили его действие в финансовых и экономических вопросах. Анджеем Замойским был представлен более обширный пакет реформ: среди прочего Замойский предлагал принимать все решения большинством голосов. Тем не менее, его амбициозная программа не была реализована, поскольку против неё выступили Пруссия, Россия и польское дворянство. Отчасти из-за того, что выборы, приведшие на трон Понятовского, были санкционированы императрицей Екатериной II, положение короля было слабым с самого начала. Он начал с осторожных реформ, учредив налоговое и военное министерства, а также введя национальный таможенный тариф. Последний, впрочем, был вскоре отменён ввиду недовольства со стороны прусского монарха Фридриха II. На тот момент указанные меры уже прошли фильтр Конвокационного сейма. Парламент 1764 года и последующие его созывы принимали и другие законы короля и «Фамилии», касавшиеся законодательной и исполнительной ветвей власти. <br><br> С момента своего избрания Станислав II Август работал над созданием исполнительного комитета правительства. В 1775 году по решению «Раздельного сейма» был создан Постоянный Совет — императрица Екатерина II сочла подобный орган полезным для российского государства <br><br> Магнаты Речи Посполитой воспринимали изменения с подозрением, в то время как соседние страны, удовлетворённые ослаблением польско-литовской державы, не желали видеть возрождающееся демократическое государство близ своих границ. Численность армии Речи Посполитой сократилась до 16 тысяч солдат, что побудило соседей открыто вторгнуться в пределы страны: Русская императорская армия насчитывала тогда 300 тысяч солдат, Прусская и Императорская австрийская армии — по 200 тысяч. <br><br> Екатерина II и Фридрих II спровоцировали конфликт между депутатами сейма и королём, причиной которого стали разногласия относительно прав религиозных меньшинств, в частности, протестантов и греко-православных. Положение малых конфессий, которые были уравнены в правах с католицизмом Варшавской конфедерацией 1573 года, с тех пор заметно ухудшилось. Екатерина и Фридрих выразили свою поддержку шляхте и её «вольностям», и к октябрю 1767 года близ Варшавы были собраны войска Русской императорской армии, готовые поддержать консервативную Радомскую конфедерацию. Лишённые выбора король и его сторонники приняли требования российской стороны. В ходе Сейма Репнина, получившего это неофициальное название в честь председательствовавшего на нём российского посла, король принял пять «вечных и неизменных принципов», которые Екатерина поклялась «защищать во все грядущие времена во имя польских вольностей»: выборность королей, право liberum veto, право отказа от верноподданства и поднятия восстания против короля («рокош»), исключительное право шляхты на занятие должностей и владение землёй и власть землевладельцев над своими крестьянами. Таким образом, все привилегии знати, сделавшие страну неуправляемой, были закреплены в форме квазиконституционных Кардинальных законов. Соблюдение этих законов, а также прав «религиозной оппозиции» лично гарантировалось Екатериной II — это стало первым случаем вмешательства России в конституционный строй Речи Посполитой. <br><br> В 1767 году в ходе заседаний сейма Репнин открыто пренебрегал мнением несогласных; по его приказу были заточены такие деятели, как Каетан Солтык, Юзеф Анджей Залуский, Вацлав Пётр Ржевуский и Северин Ржевуский — все они были противниками внешнего вмешательства в дела государства и, следовательно, отвергали происходившие тогда конституционные процессы. Тем временем Речь Посполитая как юридически, так и фактически стала протекторатом Российской империи. При этом часть проведённых реформ — например, наделение правами религиозных меньшинств — оказалась для государства полезной. Всё более популярной становилась мысль о необходимости продолжения изменений. <br><br> В 1791 году Четырёхлетний сейм (1788—1792) и Сенат утвердили Конституцию в варшавском Королевском дворце <br><br> Молчаливое согласие Станислава II Августа с российской интервенцией вызвало недовольство ряда влиятельных фигур. 29 февраля 1768 года группа магнатов, в том числе Юзеф Пулавский и его сын Казимир, поклялись противостоять российскому влиянию, объявили короля лакеем России и Екатерины и сформировали конфедерацию в городке Бар. Барская конфедерация ставила своей целью ограничение иностранного вмешательства и, являясь прокатолической, выступала по большей части против религиозной терпимости. Конфедерация объявила королю войну, однако её нерегулярные войска были разбиты Русской императорской армией в 1772 году. <br><br> Поражение Барской конфедерации обеспечило условия для Первого раздела Речи Посполитой, договор о котором был подписан Россией, Пруссией и Австрией 5 августа 1772 года в Санкт-Петербурге. Соглашение лишило польско-литовское государство трети его территории и населения, то есть более 200 тыс. км² и 4 млн человек. Все три стороны договора оправдывали присоединение территорий анархической ситуацией в Речи Посполитой и её отказом от сотрудничества во имя восстановления порядка. Станислав II Август принял требования соседей и потребовал созвать членов сейма. 19 апреля 1773 года заседание парламента, ставшее известным как «Раздельный сейм», посетили всего 102 депутата из 200 — остальные, зная о решении короля, отказались участвовать в процедуре. Несмотря на протесты со стороны ряда депутатов, в частности, Тадеуша Рейтана, документ был ратифицирован. <br><br> Первый из трёх последовательных разделов государства потряс его жителей. Интеллигенции же стало очевидно, что Речи Посполитой суждено либо измениться, либо погибнуть. Ещё за тридцать лет до принятия конституции интеллектуалы стали обсуждать возможную конституционную реформу. Перед Первым разделом польский дворянин Михаил Виельгорский был направлен Барской конфедерацией во Францию, где ему предстояло встретиться с философами Габриэлем Бонно де Мабли и Жан-Жаком Руссо и обсудить с ними проект новой конституции для Польши. Мабли представил свои рекомендации — Du gouvernement et des lois en Pologne — в 1770—1771 годах, в то время как Руссо завершил труд «Соображения о польском правительстве». в 1772 году, когда процедура раздела уже началась. Другие известные работы схожего толка были опубликованы и в самой Речи Посполитой, как-то: «О действенной форме проведения советов или о проведении ординарных сеймов» (1761—1763) Станислава Конарского, «Политические рассуждения о гражданских свободах» (1775) и «Патриотические письма» (1778—1778) Юзефа Выбицкого, «Анонимные письма Станиславу Малаховскому» (1788—1789) и «Политический закон польского народа» (1790) Гуго Коллонтая и «Замечания о жизни Яна Замойского» (1787) Станислава Сташица. Сатира Игнацы Красицкого, посвящённая временам Четырёхлетнего сейма, также считается одним из ключевых политических трудов, обеспечивших поддержку Конституции. <br><br> «Раздельный сейм» утвердил новый пакет реформ, одобренный прогрессивными магнатами, например, семьёй Чарторыйских, а также королём. Одним из главных изменений стало основание Эдукационной комиссии — первого в мире министерства образования — в 1773 году. В стране открылись новые школы, учебники стали печататься в соответствии с установленным стандартом, преподаватели стали получать лучшее образование, а бедные ученики стали получать стипендию. Вооружённые силы Речи Посполитой должны были претерпеть модернизацию и получить большее финансирование — ранее шляхта избегала увеличения военного бюджета. Кроме того, парламентарии приняли решение об увеличении численности постоянной армии. Некоторые изменения коснулись экономических и коммерческих вопросов: страна должна была покрыть возросшие военные расходы. Новое исполнительное собрание, Постоянный Совет, объединило пять министерств и получило ограниченные законодательные полномочия. Таким образом, государство получило орган власти, свободный от пагубного воздействия liberum veto: правом «свободного вето» обладали депутаты сейма, собиравшегося на некоторое время, Постоянный совет же действовал непрерывно. <br><br> В 1776 году сейм обязал бывшего советника Анджея Замойского составить проект нового правового кодекса. В 1780 году разработанный им и его помощниками документ — «Коллекция судебных законов» или «Кодекс Замойского» — увидел свет. Кодекс предполагал усиление королевской власти, вводил отчётность всех чиновников перед сеймом, помещал духовенство и все церковные финансы под государственное наблюдение и лишал безземельных шляхтичей многих аспектов правовой неприкосновенности. Кодекс также улучшал положение незнатных подданных — горожан и крестьян. Прогрессивный кодекс, содержавший элементы конституционного права, подвергся критике и консервативной шляхты, и иностранных государств. Сейм 1780 года не утвердил «Кодекс Замойского»"
+        },
+        {
+          heading: "Принятие",
+          content: "Возможность конституционной реформы появилась в ходе Четырёхлетнего сейма 1788—1792 годов, который был открыт при участии 181 депутата. В соответствии с преамбулой Конституции, с 1790 года количество парламентериев увеличилось на 171, почти вдвое. На второй день своей работы сейм стал конфедеративным, что позволило парламенту избежать действия liberum veto. В пользу реформистов складывались актуальные обстоятельства мировой политики: Россия и Австрия находились в состоянии войны с Османской империей, при этом Россия одновременно воевала со Швецией. Новый альянс с Пруссией должен был защитить польско-литовское государство от российской интервенции, и король Станислав II Август сблизился с реформистами из Патриотической партии. <br><br> За первые два года работы сейм провёл лишь несколько значимых реформ, следующие же два года привнесли в конституционное право Речи Посполитой существенные изменения. Одним из них стал Акт о вольных королевских городах, принятый в 1791 году и вошедший в итоговый текст Конституции. Данный документ регламентировал несколько важных городских вопросов и наделил горожан новыми правами, среди которых были и избирательные. Если большинство сейма представляло знать и духовенство, реформаторы поддерживались именно городскими жителями. Ещё в 1789 году горожане организовали «Чёрную процессию», требуя предоставления полных избирательных прав буржуазии. Акт о вольных королевских городах стал уступкой сейма горожанам: парламентарии опасались, что городская оппозиция, подобно французской, сделает протест насильственным. <br><br> Проект Конституции был составлен самим королём при участии Игнацы Потоцкого, Гуго Коллонтая и других деятелей. Принято считать, что король стал автором основных положений, Коллонтай же придал акту окончательный вид. Станислав II Август хотел, чтобы государство стало конституционной монархией с характерными чертами британской модели — сильным центральным правительством, которое опиралось бы на сильного монарха. Потоцкий желал видеть сильнейшей ветвью власти законодательную — сейм. Коллонтай же мечтал о «нежной», ненасильственной революции, которая предоставит электоральные права всем сословиям. <br><br> Предложенные изменения были отрицательно восприняты консерваторами, в частности, Гетманской партией. Испытывая угрозу насилия со стороны оппонентов, сторонники проекта Конституции начали обсуждать акт на два дня раньше, когда их противники находились на пасхальных каникулах. Следовательно, дебаты и последующее принятие Конституции были осуществлены в форме государственного квазипереворота. Оппоненты реформы не получили никаких уведомлений, в то время как её сторонники были приглашены на процедуру тайно. Королевская гвардия под командованием племянника Станислава II Юзефа, призванная защитить принятие Конституции, была размещена близ Королевского дворца, где заседал сейм. 3 мая на собрании сейма присутствовали 182 депутата — почти половина от общего их числа. После того, как акт был зачитан и принят подавляющим большинством голосов, собравшаяся вокруг здания толпа возликовала. На следующий день небольшая группа депутатов подала протест, однако 5 мая вопрос был решён окончательно, а апелляция оппонентов была отвергнута Конституционной Депутацией. Впервые за весь XVIII век в Речи Посполитой был издан конституционный акт, утверждённый без вмешательства иностранных государств. <br><br> Вскоре в стране появилась организация «Друзья Конституции», объединившая многих депутатов сейма и призванная защитить реформу, обеспечив условия для дальнейших преобразований. «Друзья Конституции» считаются первой политической партией Польши в современном понимании этого термина. С меньшим энтузиазмом Конституцию приняли в провинциях, где особым влиянием обладала Гетманская партия. Тем не менее, акт получил существенную поддержку среднего дворянства; большая часть провинциальных сеймиков, обсуждавших документ в 1791 году и начале 1792 года, также поддержали Конституцию, вплоть до вторжения Российской Империи в 1792."
+        },
+        {
+          heading: "Содержание",
+          content: "Конституция стала одним из документов, отразивших в себе влияние Эпохи Просвещения, в особенности — теорию общественного договора Руссо и идеи Монтескьё о разделении властей и двухпалатном парламенте. Согласно статье V, созданное правительство должно было гарантировать, что «целостность государств, гражданская свобода и общественный порядок всегда будут находиться в равновесии». Польско-американский историк Яцек Ендрух отмечал, что с либеральной точки зрения Конституция немного уступает французской, опережает канадскую, прусскую же оставляет далеко позади, однако состязаться с американской не может. Король говорил, что Конституция «была принципиально основана на конституциях Англии и Соединённых Штатов Америки, однако избежала их недостатков и ошибок и адаптировала их к частным обстоятельствам страны настолько, насколько это возможно». Политолог Джордж Сэнфорд писал, что документ формировал «конституционную монархию, близкую к английской модели того времени». <br><br> Статья I Конституции утверждала римско-католическую веру в качестве «доминирующей религии», гарантируя при этом терпимость и свободу для всех конфессий. Данное положение стало менее прогрессивным, чем Варшавская конфедерация XVI века, и откровенным образом включало Польшу в сферу влияния католицизма. Статья II подтверждала многие старые шляхетские привилегии; там же отмечалось, что все дворяне обладают равными правами, должны располагать личной безопасностью и правом на собственность. В статье III заявлялось, что Акт о вольных королевских городах — неотъемлемая часть Конституции. Личная безопасность — neminem captivabimus, польский аналог habeas corpus — распространялась на всех горожан, в том числе и на евреев. Кроме того, мещане получали право приобретать землю в собственность и занимать военные и гражданские должности. За ними были зарезервированы места в сейме и исполнительных комиссиях по делам казны, полиции и судебной власти. Наконец, была упрощена процедура получения дворянского титула городскими жителями. <br><br> Поскольку в стране насчитывалось около полумиллиона горожан, распределение власти стало более равномерным. Менее политически активным слоям общества, например, евреям или крестьянам, Конституция не давала почти ничего. Хотя статья IV помещала крестьянство под защиту национальных законов, деревенские жители по-прежнему обладали незначительными правами. Конституция не содержала положений об отмене крепостного права, продолжив тем самым угнетение наиболее многочисленного сословия Речи Посполитой. Лишь после Второго раздела Речи Посполитой и Поланецкого универсала Тадеуша Костюшко (1794) власти государства начали ликвидировать институт крепостничества. <br><br> В статье V постулировалось, что «всякая власть в гражданском обществе должна происходить из воли людей». Текст Конституции был обращён к «гражданам», к числу которых теперь относились горожане и крестьяне. Преамбула Конституции и 11 её статей основывались на принципах народного суверенитета, применимого в данном случае к знати и горожанам, и разделении властей на законодательную (двухпалатный сейм), исполнительную (Король и Блюстители) и судебную ветви. Другой демократической особенностью акта стало ограничение избыточных аспектов правового иммунитета и политических прерогатив, которыми обладала безземельная знать. <br><br> Законодательная власть, согласно статье VI, принадлежала двухпалатному парламенту — избираемым депутатам и назначаемым сенаторам — и королю. Сейм собирался в «очередном» порядке каждые два года и во «внеочередном» в случаях, когда того требовала ситуация в стране. Нижняя палата — Палата депутатов — объединяла 204 парламентариев (по 2 из каждого повята, то есть по 68 из провинций Великая Польша, Малая Польша и Великого княжества Литовского) и 21 полномочного представителя из королевских городов (по 7 из каждой провинции). Королевская канцелярия должна была извещать сеймики о тех законопроектах, которые она планировала предложить — это давало депутатам дополнительное время на подготовку обсуждений. Верхняя палата — Палата сенаторов — включала от 130 до 132 членов: воевод, кастелянов и епископов, а также министров из правительства, не имевших права голоса. Председателем сената был король, обладавший одним голосом: он мог быть использован для разрешения тех ситуаций, когда в голосовании наблюдается равенство сторон. Король и каждый из депутатов могли выступить с законодательной инициативой. Принятие большинства решений, выносившихся на голосование, — т. н. «общих законов»: конституционных, гражданских, уголовных и законов, касавшихся установления бессрочных налогов — требовало простого большинства, сначала в нижней палате, затем — в верхней. Принятие более редких «резолюций» — вопросов заключения военных альянсов, объявления войны и мира, пожалования дворянства и повышения государственного долга — требовало большинства при совместном голосовании обеих палат. В отличие от короля, сенат обладал правом отлагательного вето на законы, одобренные сеймом. Данное право применялось до следующей сессии сейма, после чего могло быть признано недействительным. <br><br> В статье VI также признаётся «Закон о сеймиках», принятый 24 марта 1791 года и регулировавший деятельность региональных законодательных собраний. Помимо сокращения политических привилегий шляхты данный закон существенным образом редактировал электоральное постановление. Ранее правом голоса в сеймике обладали все дворяне, и многие бедные, безземельные представители знати — «клиентела» магнатов — de facto голосовали в соответствии с требованиями магнатов. Теперь же право голоса ограничивалось имущественным цензом: участник голосования должен был владеть землёй или сдавать её в аренду и платить налоги; в противном случае он должен был быть близким такого человека — при несоблюдении этих условий дворянин лишался возможности участвовать в голосовании. От 300 000 до 700 000 дворян были поражены в указанном праве, что вызвало их недовольство. С другой стороны, право голоса вновь получили землевладельцы, находившиеся на военной службе — они утратили данное право в 1775 году. Отныне в голосовании могли принимать участие мужчины возрастом не менее 18 лет. Избиратели определяли депутатов повятовых сеймиков, те же отбирали депутатов для общегосударственного сейма. <br><br> Наконец, статья VI упраздняла некоторые институциональные источники возникшей в стране анархии: это и liberum veto, заменённое правилом простого большинства, и конфедерации, и избыточное влияние сеймиков, которое основывалось на обязательной процедуре инструктирования депутатов при направлении их в центральный сейм. Конфедерации были объявлены «противоречащими духу данной конституции, губительными для правительства и разрушительными для общества». Так, Конституция укрепила власть сейма, приблизив страну к модели конституционной монархии. <br><br> Исполнительная власть, согласно статьям V и VII, находилась в руках «короля в его совете» — кабинета министров под названием «Блюстители законов». Министерства не могли создавать законы или вмешиваться в процесс их создания, поэтому все акты внешнеполитического ведомства были временными и требовали одобрения сейма. Король возглавлял совет, в который входили римско-католический примас Польши, также возглавлявший Эдукационную комиссию, и пять министров, назначаемых королём: министр полиции, министр печати (ведомство внутренних дел), министр иностранных сношений, министр belli (военное ведомство) и министр казны. Без права голоса в совет входили кронпринц, Маршал сейма и двое секретарей. Данный совет унаследовал особенности двух институтов: королевских советов, созывавшихся со времён Генриковых артикулов (1573) и современного Постоянного совета. Акты короля должны были контрассигноваться соответствующим министром. Министр должен был поставить подпись по требованию короля; если же он отказывался сделать это, и его возражение было поддержано всеми другими министрами, король мог отозвать акт или вынести его на парламентское обсуждение. Положение о том, что король «ничего не делая самостоятельно, … ни в чём не должен нести ответственность перед страной» перекликается с британским конституционным принципом «Король не может ошибаться»; в обеих странах соответствующий министр был ответственен за акты короля. Конституция предполагала подотчётность министров сейму, который мог освободить их от должности вотумом недоверия, требовавшим двух третей голосов в обеих палатах. Министры могли быть привлечены к ответственности Сеймовым судом; простого большинства голосов было достаточно для начала процедуры импичмента. Король являлся верховным главнокомандующим армиями, институт же гетмана, в роли которого выступал высокопоставленный военный чиновник, в Конституции не упоминался. Король также обладал правом помилования, однако на обвинённых в государственной измене данное право не распространялось. Решения королевского совета выполнялись комиссиями, в том числе уже упомянутой Эдукационной комиссией, а также новыми комиссиями по делами полиции, войны и казны, чей состав определялся сеймом. <br><br> Если ранее форма правления Речью Посполитой могла быть описана как выборная монархия, то новая Конституция закрепила принципы наследственной монархии. Предполагалось, что это лишит соперничающие европейские державы возможности влиять на исход выборов короля. В случае угасания королевской династии новую должен был выбрать «Народ». Король занимал трон «по благодати Божией и воле Народной», и «всякая власть его происходила от воли Народа». Институт pacta conventa был сохранён. После смерти Станислава II Августа польский трон должен был стать наследственным и перейти к Фридриху Августу I из рода Веттинов — именно ему принадлежали двое предшественников Понятовского. Данное решение зависело от согласия самого Фридриха Августа, однако он отклонил предложение, сделанное ему Адамом Чарторыйским. <br><br> Рассматриваемая в статье VIII судебная система была отделена от двух других ветвей власти. Одним из основных её принципов должна была стать выборность судей. Суды первой инстанции действовали в каждом воеводстве и работали непрерывно. Состав работавших в них судей определялся региональными сеймиками. В провинциях были созданы апелляционные трибуналы, унаследовавшие некоторые традиции Коронного трибунала и Трибунала ВКЛ. Сеймовые судьи определялись парламентом из числа депутатов; в наши дни институциональными преемником Сеймового суда является Государственный трибунал Польши. Дела крестьянства рассматривались в референдарных судах, созданных в каждой провинции. Дополняли судебную систему и муниципальные суды, описанные в законе о городах. <br><br> Статья IX определяла характер регентства, которое должно было осуществляться либо советом Блюстителей во главе с королевой, либо, в её отсутствие, примасом. В статье X отмечалась важность образования королевских детей; данная ответственность возлагалась на Эдукационную комиссию. Последняя статья Конституции, XI, касалась постоянной армии государства. Конституция определяет эту армию как «силы обороны», необходимые «только лишь для защиты народа». Указывалось, что её численность должна составлять 100 тысяч солдат. <br><br> Дабы укрепить целостность и безопасность государства, Конституция упраздняла былой принцип унии в пользу унитаризма. Становлению унитарного государства, в пользу которого выступали Станислав II Август и Коллонтай, оппонировали литовские депутаты. В порядке компромисса Великому княжеству Литовскому были предложены многочисленные привилегии, которые должны были поддерживать его существование. Соответствующее решение было формализовано в двух документах: Декларации объединённых государств от 5 мая 1791 года и Взаимной гарантии обоих народов от 22 октября 1791 года, в которых единое общее государство называлось «Речь Посполита Польска». Первый документ подтверждал принятие Правительственного акта, принятого двумя днями ранее, второй — единство и неделимость Польши и Великого княжества в рамках единого государства, а также их равное представительство в органах государственного управления. Взаимная гарантия усилила польско-литовскую унию, сохранив многие федеральные отношения. Ни Конституция, ни Взаимная гарантия не были переведены на литовский язык в XVIII веке: имеется только рукописный перевод, созданный в начале XIX века. <br><br> Конституция находилась в стадии разработки до самого момента принятия. Некоторые её положения были детализированы в законах, изданных в мае и июне того же года: 13 мая были опубликованы два акта о Сеймовых судах, 1 июня — о Блюстителях законов, 17 июня — о комиссии (министерстве) по делам полиции, 24 июня — о муниципальном управлении. Конституция допускала принятие поправок, которые должны были утверждаться внеочередными собраниями сейма каждые 25 лет. Гуго Коллонтай тогда объявил, что работа ведётся над «экономической конституцией,… которая будет гарантировать каждому право собственности и обеспечивать защиту и почёт всякому виду труда…». Он также упоминал о третьем основном законе, «моральной конституции», которая, вероятно, должна была стать аналогом американского Билля о правах и французской Декларации прав человека и гражданина. Предполагалось подготовить новые гражданский и уголовный кодексы; документ получил рабочее название «Кодекс Станислава Августа». Король также планировал реформу, которая улучшала бы положение евреев."
+        },
+        {
+          heading: "Последствия: война и два раздела",
+          content: "Конституция находилась в действии чуть больше года, после чего была низвержена российскими войсками вместе со шляхтой в ходе Русско-польской войны 1792 года (альтернативное название — «Война в защиту Конституции»). Завершив войны с Турцией и со Швецией, императрица Всероссийская Екатерина II обратила внимание на Речь Посполитую. Польская конституция привела её в ярость, поскольку она видела в ней угрозу российскому влиянию в стране. Российская сторона рассматривала польско-литовское государство как протекторат de facto. Узнав о принятии Правительственного акта, один из ведущих творцов российской внешней политики Александр Андреевич Безбородко сказал: «Худшие из возможных новостей прибыли из Варшавы: польский король стал почти суверенным». Связи польских реформистов с французской революционной Национальной ассамблеей рассматривались соседями Польши как доказательство революционного заговора и угроза абсолютизму. Страхи европейских консерваторов выразил прусский государственный деятель Эвальд Фридрих фон Герцберг: «Проголосовав за Конституцию, поляки нанесли прусской монархии coup de grâce». Он подразумевал, что усилившаяся Речь Посполитая, вероятно, потребует от Пруссии вернуть те земли, которые были отторгнуты ею в ходе Первого раздела. <br><br> Магнаты, противостоявшие проекту Конституции с самого начала, — Франциск Ксаверий Браницкий, Станислав Щенсный Потоцкий, Северин Ржевуский, Шимон и Юзеф Коссаковские — просили Екатерину вмешаться и восстановить их привилегии, закреплённые в отменённых тогда Кардинальных законах. С этой целью магнаты сформировали Тарговицкую конфедерацию; её провозглашение состоялось в январе 1792 года в Санкт-Петербурге. Конфедерация критиковала Конституцию как «рассадник демократических идей», следующий «смертоносному образцу Парижа». Сторонники конфедерации утверждали, что «Парламент… сломил все фундаментальные законы, смёл все свободы дворянства и 3 мая 1791 года превратился в революционный и заговорщицкий». Конфедераты выразили намерение преодолеть эту «революцию». Они писали, что «не могут сделать ничего, кроме доверчивого обращения к царице Екатерине, выдающейся и справедливой императрице, нашему соседствующему другу и союзнику», которая «уважает потребность народа в благоденствии и всегда предлагает руку помощи». <br><br> 18—19 мая 1792 года российская армия вошла в пределы Речи Посполитой. Сейм проголосовал за увеличение численности армии до 100 тысяч солдат. Тем не менее, государство не обладало достаточным количеством средств и времени, поэтому данное невыполнимое решение парламента было вскоре отменено. Король и реформисты могли выставить лишь 37 тысяч военных, многие из которых были неопытными рекрутами. Эта армия под командованием Юзефа Понятовского и Тадеуша Костюшко достигала локальных успехов, однако её общее поражение было неизбежным. Несмотря на запросы поляков, Пруссия отказалась выполнить обязательства союзника. Попытки Станислава II Августа вступить с Россией в переговоры были тщетны. Линия фронта продолжала смещаться на запад, и уже в июле 1792 года Варшава была доступна российской армии для осады. Понимая, что победа над более многочисленной армией неприятеля невозможна, польский король решил, что капитуляция может быть единственной альтернативой полному поражению. Получив от российского посла Якова Ивановича Булгакова гарантии территориальной целостности своего государства, король вынес вопрос о капитуляции на заседание Блюстителей законов; кабинет поддержал решение (8:4). 24 июля того же года король присоединился к Тарговицкой конфедерации по требованию императрицы Всероссийской. <br><br> Многие лидеры реформистов, веря, что изменения ещё возможны, отправились в добровольное изгнание. Некоторые надеялись, что Станислав II Август сможет найти удобный для страны компромисс с Россией, поскольку ему удавалось это в прошлом. Впрочем, сохранить государство не удалось ни королю, ни конфедерации, которая управляла Речью Посполитой на протяжении некоторого времени. К удивлению польских патриотов, Гродненский сейм, подкупленный или запуганный российскими войсками, принял акт о Втором разделе государства. 23 ноября 1793 года находившийся под принуждением сейм отменил действие Конституции и присоединился к соглашениям о Втором разделе. Россия получила 250 тыс. км² территории, Пруссии же достались 58 тыс. км². Польско-литовское государство теперь располагалось на менее, чем 215 тыс. км². По сути, Речь Посполитая стала маленьким буферным государством с марионеточным королём, российские гарнизоны теперь контролировали сокращённую в численности польскую армию. <br><br> На протяжении полутора лет польские патриоты выжидали удобный момент, одновременно планируя сценарий восстания. 24 марта 1794 года Тадеуш Костюшко сделал официальное заявление в Кракове, положившее начало восстанию, названному впоследствии его именем. 7 мая он выпустил Поланецкий универсал, в котором гарантировалась свобода крестьян и право на землю для всех тех, кто принял бы участие в восстании. Революционные трибуналы осуществляли упрощённое судопроизводство в отношении тех, кто считался предателем государства. После первых успехов — победы в битве под Рацлавицами (4 апреля), захвата Варшавы (18 апреля) и восстания в Вильно (22 апреля) — восстание Костюшко было разгромлено общими усилиями российской, австрийской и прусской армий. Историки считают поражение польско-литовского восстания предрешённым, поскольку все три страны-противника обладали многократно превосходящими войсками и ресурсами. В 1795 году состоялся Третий и последний раздел Речи Посполитой."
+        },
+        {
+          heading: "Историческое значение",
+          content: "Незавершённый Храм Провидения Божия в варшавском Ботаническом саду на Уяздовской аллее; его первый камень был заложен королём Станиславом II Августом и братом короля примасом Михаилом Ежи Понятовским 3 мая 1792 года, в первую годовщину принятия Конституции <br><br> Конституция идеализировалась с одной стороны и критиковалась с другой: одни считали её составителей нерешительными, другие — чрезмерно радикальными. Так или иначе, Конституция находилась в силе всего 18 месяцев и 3 недели, что существенно ограничило её историческое влияние. Для многих поколений Конституция, признанная учёными прогрессивной для своего времени, символизировала надежду на независимость Польши и создание в ней справедливого общества. Польский исследователь конституционного права Бронислав Дембиньский век спустя писал: «Чудо Конституции не спасло государство, но спасло народ». Поляки мифологизировали Конституцию, считая её национальным символом и кульминацией Просвещения в рамках польской истории и культуры. Начиная с 1918 года, когда Польша вновь обрела независимость, день Конституции считается главным гражданским праздником страны. <br><br> Конституция стала вехой в истории права и становления демократии. Ирландский государственный деятель Эдмунд Бёрк назвал её «благороднейшей пользой из полученных среди всех народов и времён… Станислав II заслужил место среди величайших королей и государственных мужей истории». Польская Конституция стала первым документом такого рода, принятым после ратификации Конституции США в 1788 году. Несмотря на отдалённость этих двух государств, они продемонстрировали схожий подход к организации политических систем; Конституция 3 мая называется второй конституцией во всей мировой истории. Именно такую точку зрения выразил американский эксперт по конституционному праву Альберт Пол Блаустайн, а его соотечественник, журналист Билл Мойерс отзывался о ней как о «первой кодифицированной национальной конституции Европы (и второй старейшей в мире)». В том же ключе высказался и британский историк Норман Дэвис. И Четырёхлетний сейм, и Конституция стали предметом множества исследований польских учёных в XIX (Валериан Калинка, Владислав Смоленьский) и XX (Богуслав Лесьнодорский) веках. <br><br> Официальное название документа — «Правительственный акт» или, по-польски, «Устава Жондова» (пол. Ustawa Rządowa). Слово «правительственный» в данном контексте обозначало тип политической системы. Слово «конституция» (пол. konstytucja) в Речи Посполитой обозначало все законодательные акты любого характера, изданные сеймом. <br><br> 17 октября 2014 года Конституция 3 мая была внесена в Польский государственный список программы ЮНЕСКО «Память мира». <br><br> 15 апреля 2015 года в Брюсселе, столице Евросоюза, Конституция 3 мая была торжественно внесена в Список Европейского наследия по решению Европейской Комиссии. Всего список насчитывал 29 объектов, вместе с Конституцией 3 мая. 27 апреля 2015 в Брюсселе, во время официальной церемонии, доктор Губерт Вайс (директор Главного архива древних актов, в котором хранится оригинал Конституции 3 мая) получил Сертификат Европейского наследия (European Heritage Label) для Конституции 3 мая. В Польше официальные торжества по данному случаю прошли 3 июня 2015 в Варшаве, возле дворца Рачинских, который является офисом Главного архива древних актов."
+        },
+        {
+          heading: "Праздник",
+          content: "3 мая 1791 года день принятия Конституции был объявлен праздником (пол. Święto Konstytucji 3 Maja). <br><br> По причине снятия запрета дворянскому сословию заниматься ремеслами и торговлей согласно Закону о городах (от 18.04.1791 г.), который стал частью Конституции, среди зажиточного дворянства стало популярным записываться в мещанское сословие. Мечник ВКЛ Михаил Клеофас Огинский, приближенный короля Станислава Августа, в знак поддержки реформ и демонстрации прогрессивных взглядов в ратуше Вильно торжественно записал себя 16.04.1792 г. в книги муниципалитета, тем самым приняв для себя «более низкое» городское право и формально став мещанином. В качестве делегата муниципалитета Вильно Огинский участвовал в торжествах по случаю первой годовщины принятия Конституции, которые прошли 3 мая 1792 г. в Варшаве. <br><br> В ходе разделов Речи Посполитой праздник был запрещён. <br><br> 20 апреля 1917 года (по старому стилю; 3 мая — по новому) в Минске, когда у власти находилось Временное правительство, прошло празднование Дня Конституции 3 мая — с согласия Минского гражданского коменданта и одновременно Минского губернского комиссара Бориса Самойленки. Инициатива празднования была проявлена многочисленными польскими беженцами и белорусским католическим населением. Празднование началось утром праздничной мессой во всех католических храмах. После мессы участники праздника построились в колонну по 8 человек в ряд и прошли по улицам Минска. Во главе колонны были подняты транспаранты с надписями «Свобода, ровность, братство» и «За нашу и вашу свободу». Колонну сопровождали оркестры, которые исполняли «Марсельезу» и гимн Польши со словами «Еще Польша не погибла». Среди демонстрантов находился Минский губернский комиссар Борис Самойленко с заместителями, Минский городской голова Станислав Хржонстовский с членами городской думы, делегаты военного съезда, представители духовенства. <br><br> В апреле 1919 года руководством Второй Речи Посполитой празднование Дня Конституции было официально узаконено. Этот день стал первым праздником получившей независимость страны. Нацистская Германия и СССР, занимавшие территории Польши во Второй мировой войне, также объявили празднование этого дня незаконным. Начиная с мая 1945 года праздник отмечался в польских городах, как правило, спонтанно. В результате антикоммунистических демонстраций 1946 года польские коммунисты стали относиться к празднику негативно, стремясь привлечь большее внимание к Дню труда. 3 мая было объявлено праздником Демократической партии, а к 1951 году и вовсе лишено статуса национального праздника. До 1989 года 3 мая часто становилось днём проведения антиправительственных и антикоммунистических акций. В апреле 1990 года после падения коммунизма праздник вновь получил статус национального. <br><br> В этот день проходят акции польских американцев. С 1982 года в Чикаго ежегодно проходит Парад в честь Дня польской Конституции."
+        }
+      ],
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 7,
+        day: 15
+      },
+      hours: 9,
+      minutes: 30,
+      title: "Вознесение Пресвятой Девы Марии",
+      description: "День войска Польского",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 10,
+        day: 1
+      },
+      hours: 9,
+      minutes: 30,
+      title: "День всех святых",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 10,
+        day: 11
+      },
+      hours: 9,
+      minutes: 30,
+      title: "Национальный праздник независимости",
+      description: "В память о получении в 1918 году независимости от Российской империи, Австрии и Пруссии.",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 11,
+        day: 25
+      },
+      hours: 9,
+      minutes: 30,
+      title: "Первый день Рождества",
+      color: "#ff2d55"
+    },
+    {
+      date: {
+        month: 11,
+        day: 26
+      },
+      hours: 9,
+      minutes: 30,
+      title: "Второй день Рождества",
+      description: "День святого Стефана Первомученика, начало колядований",
+      color: "#ff2d55"
+    }
+  ]
+};
+const logEN = {
+  debug: {
+    langDefault: "default language:",
+    onLanguageChangedMsg: "i18next onLanguageChanged:",
+    app: {
+      localesChecking: "APP -> translation verification:"
+    },
+    calendar: {
+      dataFromLocales: "Calendar -> data from the translations:",
+      eventAfterLangChanged: "Calendar -> events of the Calendar (after the language change):",
+      eventDefault: "Calendar -> events of the Calendar (normal state):",
+      monthAfterLangChanged: "Calendar -> array with the months (after the language change):"
+    }
+  }
+};
+const resources = {
+  en: {
+    ui: uiEN,
+    calendar: calendarEN,
+    debugmsg: logEN
+  },
+  ru: {
+    ui: uiRU,
+    calendar: calendarRU,
+    debugmsg: logRU
+  }
+};
+function debug(msg, value2) {
+}
+function create_default_slot$7(ctx) {
+  let div;
+  return {
+    c() {
+      div = element("div");
+      attr(div, "id", "calendar-container");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+    },
+    p: noop$1,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+    }
+  };
+}
+function create_fragment$7(ctx) {
+  let block;
+  let current;
+  block = new Block({
+    props: {
+      strong: true,
+      inset: true,
+      $$slots: { default: [create_default_slot$7] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(block.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(block, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const block_changes = {};
+      if (dirty & /*$$scope*/
+      1024) {
+        block_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      block.$set(block_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(block.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(block.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(block, detaching);
+    }
+  };
+}
+function instance$8($$self, $$props, $$invalidate) {
+  let $i18n;
+  const i18n2 = getContext("i18n");
+  component_subscribe($$self, i18n2, (value2) => $$invalidate(2, $i18n = value2));
+  let lng = $i18n.language;
+  $i18n.t("debugmsg:debug:langDefault");
+  const date = /* @__PURE__ */ new Date();
+  const year = date.getFullYear();
+  let { events = [] } = $$props;
+  function renderLocalesCollection(array2) {
+    array2.forEach((item) => {
+      $i18n.t("debugmsg:debug:calendar:dataFromLocales");
+      events.push({
+        date: new Date(year, item.date.month, item.date.day),
+        hours: item.hours,
+        minutes: item.minutes,
+        title: item.title,
+        description: item.description,
+        wiki: item.wiki,
+        color: item.color
+      });
+    });
+  }
+  function dynamicArrayGeneration(value2 = lng) {
+    switch (value2) {
+      case "ru":
+        events.splice(0, events.length);
+        renderLocalesCollection(resources.ru.calendar.govnonworkingday);
+        break;
+      case "en":
+        events.splice(0, events.length);
+        renderLocalesCollection(resources.en.calendar.govnonworkingday);
+        break;
+      default:
+        events.splice(0, events.length);
+        renderLocalesCollection(resources.ru.calendar.govnonworkingday);
+    }
+    $i18n.on("languageChanged", (changed) => {
+      $i18n.t("debugmsg:debug:onLanguageChangedMsg");
+      dynamicArrayGeneration(changed);
+      $i18n.t("debugmsg:debug:calendar:eventAfterLangChanged");
+    });
+  }
+  $i18n.t("debugmsg:debug:calendar:eventDefault");
+  dynamicArrayGeneration();
+  $$self.$$set = ($$props2) => {
+    if ("events" in $$props2) $$invalidate(1, events = $$props2.events);
+  };
+  return [i18n2, events];
+}
+class CalendarzSwiat extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$8, create_fragment$7, safe_not_equal, { events: 1 });
+  }
+}
+function get_each_context$3(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[1] = list[i];
+  child_ctx[3] = i;
+  return child_ctx;
+}
+function create_default_slot_5$2(ctx) {
+  let t2;
+  return {
+    c() {
+      t2 = text("Notification");
+    },
+    m(target, anchor) {
+      insert(target, t2, anchor);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+    }
+  };
+}
+function create_root_start_slot$1(ctx) {
+  let div;
+  let div_style_value;
+  return {
+    c() {
+      div = element("div");
+      attr(div, "class", "event-color");
+      attr(div, "style", div_style_value = `background-color: ${/*item*/
+      ctx[1].color}`);
+      attr(div, "slot", "root-start");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*eventItems*/
+      1 && div_style_value !== (div_style_value = `background-color: ${/*item*/
+      ctx2[1].color}`)) {
+        attr(div, "style", div_style_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+    }
+  };
+}
+function create_each_block$3(key_1, ctx) {
+  let first;
+  let listitem;
+  let current;
+  listitem = new List_item({
+    props: {
+      title: (
+        /*item*/
+        ctx[1].title
+      ),
+      after: (
+        /*item*/
+        ctx[1].time
+      ),
+      $$slots: { "root-start": [create_root_start_slot$1] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      first = empty();
+      create_component(listitem.$$.fragment);
+      this.first = first;
+    },
+    m(target, anchor) {
+      insert(target, first, anchor);
+      mount_component(listitem, target, anchor);
+      current = true;
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      const listitem_changes = {};
+      if (dirty & /*eventItems*/
+      1) listitem_changes.title = /*item*/
+      ctx[1].title;
+      if (dirty & /*eventItems*/
+      1) listitem_changes.after = /*item*/
+      ctx[1].time;
+      if (dirty & /*$$scope, eventItems*/
+      17) {
+        listitem_changes.$$scope = { dirty, ctx };
+      }
+      listitem.$set(listitem_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(listitem.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(listitem.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(first);
+      }
+      destroy_component(listitem, detaching);
+    }
+  };
+}
+function create_if_block$2(ctx) {
+  let listitem;
+  let current;
+  listitem = new List_item({
+    props: {
+      $$slots: { default: [create_default_slot_4$4] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(listitem.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(listitem, target, anchor);
+      current = true;
+    },
+    i(local) {
+      if (current) return;
+      transition_in(listitem.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(listitem.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(listitem, detaching);
+    }
+  };
+}
+function create_default_slot_4$4(ctx) {
+  let t2;
+  return {
+    c() {
+      t2 = text("Оповещения отсутствуют.");
+    },
+    m(target, anchor) {
+      insert(target, t2, anchor);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+    }
+  };
+}
+function create_default_slot_3$5(ctx) {
+  let each_blocks = [];
+  let each_1_lookup = /* @__PURE__ */ new Map();
+  let t2;
+  let if_block_anchor;
+  let current;
+  let each_value = ensure_array_like(
+    /*eventItems*/
+    ctx[0]
+  );
+  const get_key = (ctx2) => (
+    /*index*/
+    ctx2[3]
+  );
+  for (let i = 0; i < each_value.length; i += 1) {
+    let child_ctx = get_each_context$3(ctx, each_value, i);
+    let key = get_key(child_ctx);
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$3(key, child_ctx));
+  }
+  let if_block = (
+    /*eventItems*/
+    ctx[0].length === 0 && create_if_block$2(ctx)
+  );
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      t2 = space();
+      if (if_block) if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, t2, anchor);
+      if (if_block) if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*eventItems*/
+      1) {
+        each_value = ensure_array_like(
+          /*eventItems*/
+          ctx2[0]
+        );
+        group_outros();
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, t2.parentNode, outro_and_destroy_block, create_each_block$3, t2, get_each_context$3);
+        check_outros();
+      }
+      if (
+        /*eventItems*/
+        ctx2[0].length === 0
+      ) {
+        if (if_block) {
+          if (dirty & /*eventItems*/
+          1) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block$2(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+        detach(if_block_anchor);
+      }
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].d(detaching);
+      }
+      if (if_block) if_block.d(detaching);
+    }
+  };
+}
+function create_default_slot_2$5(ctx) {
+  let list;
+  let current;
+  list = new List({
+    props: {
+      $$slots: { default: [create_default_slot_3$5] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(list.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(list, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const list_changes = {};
+      if (dirty & /*$$scope, eventItems*/
+      17) {
+        list_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      list.$set(list_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(list.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(list.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(list, detaching);
+    }
+  };
+}
+function create_default_slot_1$6(ctx) {
+  let blocktitle;
+  let t2;
+  let block;
+  let current;
+  blocktitle = new Block_title({
+    props: {
+      large: true,
+      $$slots: { default: [create_default_slot_5$2] },
+      $$scope: { ctx }
+    }
+  });
+  block = new Block({
+    props: {
+      strongIos: true,
+      outlineIos: true,
+      $$slots: { default: [create_default_slot_2$5] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(blocktitle.$$.fragment);
+      t2 = space();
+      create_component(block.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(blocktitle, target, anchor);
+      insert(target, t2, anchor);
+      mount_component(block, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const blocktitle_changes = {};
+      if (dirty & /*$$scope*/
+      16) {
+        blocktitle_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      blocktitle.$set(blocktitle_changes);
+      const block_changes = {};
+      if (dirty & /*$$scope, eventItems*/
+      17) {
+        block_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      block.$set(block_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(blocktitle.$$.fragment, local);
+      transition_in(block.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(blocktitle.$$.fragment, local);
+      transition_out(block.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+      destroy_component(blocktitle, detaching);
+      destroy_component(block, detaching);
+    }
+  };
+}
+function create_fixed_slot(ctx) {
+  let button;
+  return {
+    c() {
+      button = element("button");
+      attr(button, "slot", "fixed");
+      attr(button, "class", "UI-swipe-handler swipe-handler");
+    },
+    m(target, anchor) {
+      insert(target, button, anchor);
+    },
+    p: noop$1,
+    d(detaching) {
+      if (detaching) {
+        detach(button);
+      }
+    }
+  };
+}
+function create_default_slot$6(ctx) {
+  let page;
+  let current;
+  page = new Page({
+    props: {
+      $$slots: {
+        fixed: [create_fixed_slot],
+        default: [create_default_slot_1$6]
+      },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(page.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(page, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const page_changes = {};
+      if (dirty & /*$$scope, eventItems*/
+      17) {
+        page_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      page.$set(page_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(page.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(page.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(page, detaching);
+    }
+  };
+}
+function create_fragment$6(ctx) {
+  let popup;
+  let current;
+  popup = new Popup2({
+    props: {
+      class: "popup-notification",
+      swipeToClose: "to-bottom",
+      swipeHandler: ".swipe-handler",
+      $$slots: { default: [create_default_slot$6] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(popup.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(popup, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const popup_changes = {};
+      if (dirty & /*$$scope, eventItems*/
+      17) {
+        popup_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      popup.$set(popup_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(popup.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(popup.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(popup, detaching);
+    }
+  };
+}
+function instance$7($$self, $$props, $$invalidate) {
+  let { eventItems = [] } = $$props;
+  $$self.$$set = ($$props2) => {
+    if ("eventItems" in $$props2) $$invalidate(0, eventItems = $$props2.eventItems);
+  };
+  return [eventItems];
+}
+class EventsNotificationPopup extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$7, create_fragment$6, safe_not_equal, { eventItems: 0 });
+  }
+}
+function get_each_context$2(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[20] = list[i];
+  child_ctx[22] = i;
+  return child_ctx;
+}
+function create_default_slot_9$1(ctx) {
+  let linehorizontal3;
+  let current;
+  linehorizontal3 = new LineHorizontal3({
+    props: {
+      class: "UI-nav-icons icon-menu-horizontal"
+    }
+  });
+  return {
+    c() {
+      create_component(linehorizontal3.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(linehorizontal3, target, anchor);
+      current = true;
+    },
+    p: noop$1,
+    i(local) {
+      if (current) return;
+      transition_in(linehorizontal3.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(linehorizontal3.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(linehorizontal3, detaching);
+    }
+  };
+}
+function create_default_slot_8$1(ctx) {
+  let button;
+  let current;
+  button = new Button({
+    props: {
+      panelOpen: "left",
+      $$slots: { default: [create_default_slot_9$1] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(button.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(button, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const button_changes = {};
+      if (dirty & /*$$scope*/
+      8388608) {
+        button_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button.$set(button_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(button.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(button.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(button, detaching);
+    }
+  };
+}
+function create_default_slot_7$1(ctx) {
+  let t_value = (
+    /*$i18n*/
+    ctx[1].t("ui:home:navTitle") + ""
+  );
+  let t2;
+  return {
+    c() {
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, t2, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$i18n*/
+      2 && t_value !== (t_value = /*$i18n*/
+      ctx2[1].t("ui:home:navTitle") + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+    }
+  };
+}
+function create_default_slot_6$1(ctx) {
+  let t_value = (
+    /*eventItems*/
+    ctx[0].length + ""
+  );
+  let t2;
+  return {
+    c() {
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, t2, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*eventItems*/
+      1 && t_value !== (t_value = /*eventItems*/
+      ctx2[0].length + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+    }
+  };
+}
+function create_default_slot_5$1(ctx) {
+  let bell;
+  let t2;
+  let badge;
+  let current;
+  bell = new Bell({
+    props: { class: "UI-nav-icons icon-bell" }
+  });
+  badge = new Badge({
+    props: {
+      class: "UI-badge",
+      color: "red",
+      $$slots: { default: [create_default_slot_6$1] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(bell.$$.fragment);
+      t2 = space();
+      create_component(badge.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(bell, target, anchor);
+      insert(target, t2, anchor);
+      mount_component(badge, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const badge_changes = {};
+      if (dirty & /*$$scope, eventItems*/
+      8388609) {
+        badge_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      badge.$set(badge_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(bell.$$.fragment, local);
+      transition_in(badge.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(bell.$$.fragment, local);
+      transition_out(badge.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+      destroy_component(bell, detaching);
+      destroy_component(badge, detaching);
+    }
+  };
+}
+function create_default_slot_4$3(ctx) {
+  let button;
+  let current;
+  button = new Button({
+    props: {
+      class: "UI-btn-popup-notification",
+      popupOpen: ".popup-notification",
+      $$slots: { default: [create_default_slot_5$1] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(button.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(button, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const button_changes = {};
+      if (dirty & /*$$scope, eventItems*/
+      8388609) {
+        button_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button.$set(button_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(button.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(button.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(button, detaching);
+    }
+  };
+}
+function create_default_slot_3$4(ctx) {
+  let navleft;
+  let t0;
+  let navtitle;
+  let t1;
+  let navright;
+  let current;
+  navleft = new Nav_left({
+    props: {
+      $$slots: { default: [create_default_slot_8$1] },
+      $$scope: { ctx }
+    }
+  });
+  navtitle = new Nav_title({
+    props: {
+      $$slots: { default: [create_default_slot_7$1] },
+      $$scope: { ctx }
+    }
+  });
+  navright = new Nav_right({
+    props: {
+      $$slots: { default: [create_default_slot_4$3] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(navleft.$$.fragment);
+      t0 = space();
+      create_component(navtitle.$$.fragment);
+      t1 = space();
+      create_component(navright.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(navleft, target, anchor);
+      insert(target, t0, anchor);
+      mount_component(navtitle, target, anchor);
+      insert(target, t1, anchor);
+      mount_component(navright, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const navleft_changes = {};
+      if (dirty & /*$$scope*/
+      8388608) {
+        navleft_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navleft.$set(navleft_changes);
+      const navtitle_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      8388610) {
+        navtitle_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navtitle.$set(navtitle_changes);
+      const navright_changes = {};
+      if (dirty & /*$$scope, eventItems*/
+      8388609) {
+        navright_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navright.$set(navright_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(navleft.$$.fragment, local);
+      transition_in(navtitle.$$.fragment, local);
+      transition_in(navright.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(navleft.$$.fragment, local);
+      transition_out(navtitle.$$.fragment, local);
+      transition_out(navright.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t0);
+        detach(t1);
+      }
+      destroy_component(navleft, detaching);
+      destroy_component(navtitle, detaching);
+      destroy_component(navright, detaching);
+    }
+  };
+}
+function create_if_block_2(ctx) {
+  let link;
+  let current;
+  link = new Link({
+    props: {
+      href: "/event-wiki-popup/",
+      routeProps: {
+        popupProps: {
+          title: (
+            /*item*/
+            ctx[20].title
+          ),
+          description: (
+            /*item*/
+            ctx[20].description
+          ),
+          iterable: false
+        }
+      },
+      text: (
+        /*$i18n*/
+        ctx[1].t("ui:wikipopup:openedLinkText")
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(link.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(link, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const link_changes = {};
+      if (dirty & /*eventItems*/
+      1) link_changes.routeProps = {
+        popupProps: {
+          title: (
+            /*item*/
+            ctx2[20].title
+          ),
+          description: (
+            /*item*/
+            ctx2[20].description
+          ),
+          iterable: false
+        }
+      };
+      if (dirty & /*$i18n*/
+      2) link_changes.text = /*$i18n*/
+      ctx2[1].t("ui:wikipopup:openedLinkText");
+      link.$set(link_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(link.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(link.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(link, detaching);
+    }
+  };
+}
+function create_if_block_1(ctx) {
+  let link;
+  let current;
+  link = new Link({
+    props: {
+      href: "/event-wiki-popup/",
+      routeProps: {
+        popupProps: {
+          title: (
+            /*item*/
+            ctx[20].title
+          ),
+          description: (
+            /*item*/
+            ctx[20].description
+          ),
+          wiki: (
+            /*item*/
+            ctx[20].wiki
+          ),
+          iterable: false
+        }
+      },
+      text: (
+        /*$i18n*/
+        ctx[1].t("ui:wikipopup:openedLinkText")
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(link.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(link, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const link_changes = {};
+      if (dirty & /*eventItems*/
+      1) link_changes.routeProps = {
+        popupProps: {
+          title: (
+            /*item*/
+            ctx2[20].title
+          ),
+          description: (
+            /*item*/
+            ctx2[20].description
+          ),
+          wiki: (
+            /*item*/
+            ctx2[20].wiki
+          ),
+          iterable: false
+        }
+      };
+      if (dirty & /*$i18n*/
+      2) link_changes.text = /*$i18n*/
+      ctx2[1].t("ui:wikipopup:openedLinkText");
+      link.$set(link_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(link.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(link.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(link, detaching);
+    }
+  };
+}
+function create_default_slot_2$4(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block_1, create_if_block_2];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*item*/
+      ctx2[20].wiki !== void 0
+    ) return 0;
+    if (
+      /*item*/
+      ctx2[20].description !== void 0
+    ) return 1;
+    return -1;
+  }
+  if (~(current_block_type_index = select_block_type(ctx))) {
+    if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  }
+  return {
+    c() {
+      if (if_block) if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if (~current_block_type_index) {
+        if_blocks[current_block_type_index].m(target, anchor);
+      }
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2);
+      if (current_block_type_index === previous_block_index) {
+        if (~current_block_type_index) {
+          if_blocks[current_block_type_index].p(ctx2, dirty);
+        }
+      } else {
+        if (if_block) {
+          group_outros();
+          transition_out(if_blocks[previous_block_index], 1, 1, () => {
+            if_blocks[previous_block_index] = null;
+          });
+          check_outros();
+        }
+        if (~current_block_type_index) {
+          if_block = if_blocks[current_block_type_index];
+          if (!if_block) {
+            if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+            if_block.c();
+          } else {
+            if_block.p(ctx2, dirty);
+          }
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        } else {
+          if_block = null;
+        }
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (~current_block_type_index) {
+        if_blocks[current_block_type_index].d(detaching);
+      }
+    }
+  };
+}
+function create_root_start_slot(ctx) {
+  let div;
+  let div_style_value;
+  return {
+    c() {
+      div = element("div");
+      attr(div, "class", "event-color");
+      attr(div, "style", div_style_value = `background-color: ${/*item*/
+      ctx[20].color}`);
+      attr(div, "slot", "root-start");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*eventItems*/
+      1 && div_style_value !== (div_style_value = `background-color: ${/*item*/
+      ctx2[20].color}`)) {
+        attr(div, "style", div_style_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+    }
+  };
+}
+function create_each_block$2(key_1, ctx) {
+  let first;
+  let listitem;
+  let current;
+  listitem = new List_item({
+    props: {
+      title: (
+        /*item*/
+        ctx[20].title
+      ),
+      after: (
+        /*item*/
+        ctx[20].time
+      ),
+      subtitle: (
+        /*item*/
+        ctx[20].description
+      ),
+      $$slots: {
+        "root-start": [create_root_start_slot],
+        default: [create_default_slot_2$4]
+      },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      first = empty();
+      create_component(listitem.$$.fragment);
+      this.first = first;
+    },
+    m(target, anchor) {
+      insert(target, first, anchor);
+      mount_component(listitem, target, anchor);
+      current = true;
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      const listitem_changes = {};
+      if (dirty & /*eventItems*/
+      1) listitem_changes.title = /*item*/
+      ctx[20].title;
+      if (dirty & /*eventItems*/
+      1) listitem_changes.after = /*item*/
+      ctx[20].time;
+      if (dirty & /*eventItems*/
+      1) listitem_changes.subtitle = /*item*/
+      ctx[20].description;
+      if (dirty & /*$$scope, eventItems, $i18n*/
+      8388611) {
+        listitem_changes.$$scope = { dirty, ctx };
+      }
+      listitem.$set(listitem_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(listitem.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(listitem.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(first);
+      }
+      destroy_component(listitem, detaching);
+    }
+  };
+}
+function create_if_block$1(ctx) {
+  let listitem;
+  let current;
+  listitem = new List_item({
+    props: {
+      $$slots: { title: [create_title_slot] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(listitem.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(listitem, target, anchor);
+      current = true;
+    },
+    i(local) {
+      if (current) return;
+      transition_in(listitem.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(listitem.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(listitem, detaching);
+    }
+  };
+}
+function create_title_slot(ctx) {
+  let span;
+  return {
+    c() {
+      span = element("span");
+      span.textContent = "Сегодня нет никаких событий.";
+      attr(span, "class", "text-color-gray");
+      attr(span, "slot", "title");
+    },
+    m(target, anchor) {
+      insert(target, span, anchor);
+    },
+    p: noop$1,
+    d(detaching) {
+      if (detaching) {
+        detach(span);
+      }
+    }
+  };
+}
+function create_default_slot_1$5(ctx) {
+  let each_blocks = [];
+  let each_1_lookup = /* @__PURE__ */ new Map();
+  let t2;
+  let if_block_anchor;
+  let current;
+  let each_value = ensure_array_like(
+    /*eventItems*/
+    ctx[0]
+  );
+  const get_key = (ctx2) => (
+    /*index*/
+    ctx2[22]
+  );
+  for (let i = 0; i < each_value.length; i += 1) {
+    let child_ctx = get_each_context$2(ctx, each_value, i);
+    let key = get_key(child_ctx);
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$2(key, child_ctx));
+  }
+  let if_block = (
+    /*eventItems*/
+    ctx[0].length === 0 && create_if_block$1(ctx)
+  );
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      t2 = space();
+      if (if_block) if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, t2, anchor);
+      if (if_block) if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*eventItems, $i18n, undefined*/
+      3) {
+        each_value = ensure_array_like(
+          /*eventItems*/
+          ctx2[0]
+        );
+        group_outros();
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, t2.parentNode, outro_and_destroy_block, create_each_block$2, t2, get_each_context$2);
+        check_outros();
+      }
+      if (
+        /*eventItems*/
+        ctx2[0].length === 0
+      ) {
+        if (if_block) {
+          if (dirty & /*eventItems*/
+          1) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block$1(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+        detach(if_block_anchor);
+      }
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].d(detaching);
+      }
+      if (if_block) if_block.d(detaching);
+    }
+  };
+}
+function create_default_slot$5(ctx) {
+  let navbar;
+  let t0;
+  let calendarzswiat;
+  let t1;
+  let list;
+  let t2;
+  let eventsnotificationpopup;
+  let current;
+  navbar = new Navbar({
+    props: {
+      $$slots: { default: [create_default_slot_3$4] },
+      $$scope: { ctx }
+    }
+  });
+  calendarzswiat = new CalendarzSwiat({ props: { events: (
+    /*events*/
+    ctx[3]
+  ) } });
+  list = new List({
+    props: {
+      dividersIos: true,
+      mediaList: true,
+      outlineIos: true,
+      strongIos: true,
+      id: "calendar-events",
+      class: "no-margin no-safe-area-left",
+      $$slots: { default: [create_default_slot_1$5] },
+      $$scope: { ctx }
+    }
+  });
+  eventsnotificationpopup = new EventsNotificationPopup({
+    props: { eventItems: (
+      /*eventItems*/
+      ctx[0]
+    ) }
+  });
+  return {
+    c() {
+      create_component(navbar.$$.fragment);
+      t0 = space();
+      create_component(calendarzswiat.$$.fragment);
+      t1 = space();
+      create_component(list.$$.fragment);
+      t2 = space();
+      create_component(eventsnotificationpopup.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(navbar, target, anchor);
+      insert(target, t0, anchor);
+      mount_component(calendarzswiat, target, anchor);
+      insert(target, t1, anchor);
+      mount_component(list, target, anchor);
+      insert(target, t2, anchor);
+      mount_component(eventsnotificationpopup, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const navbar_changes = {};
+      if (dirty & /*$$scope, eventItems, $i18n*/
+      8388611) {
+        navbar_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navbar.$set(navbar_changes);
+      const list_changes = {};
+      if (dirty & /*$$scope, eventItems, $i18n*/
+      8388611) {
+        list_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      list.$set(list_changes);
+      const eventsnotificationpopup_changes = {};
+      if (dirty & /*eventItems*/
+      1) eventsnotificationpopup_changes.eventItems = /*eventItems*/
+      ctx2[0];
+      eventsnotificationpopup.$set(eventsnotificationpopup_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(navbar.$$.fragment, local);
+      transition_in(calendarzswiat.$$.fragment, local);
+      transition_in(list.$$.fragment, local);
+      transition_in(eventsnotificationpopup.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(navbar.$$.fragment, local);
+      transition_out(calendarzswiat.$$.fragment, local);
+      transition_out(list.$$.fragment, local);
+      transition_out(eventsnotificationpopup.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t0);
+        detach(t1);
+        detach(t2);
+      }
+      destroy_component(navbar, detaching);
+      destroy_component(calendarzswiat, detaching);
+      destroy_component(list, detaching);
+      destroy_component(eventsnotificationpopup, detaching);
+    }
+  };
+}
+function create_fragment$5(ctx) {
+  let page;
+  let current;
+  page = new Page({
+    props: {
+      name: "home",
+      onPageInit: (
+        /*onPageInit*/
+        ctx[4]
+      ),
+      onPageBeforeRemove: (
+        /*onPageBeforeRemove*/
+        ctx[5]
+      ),
+      $$slots: { default: [create_default_slot$5] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(page.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(page, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const page_changes = {};
+      if (dirty & /*$$scope, eventItems, $i18n*/
+      8388611) {
+        page_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      page.$set(page_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(page.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(page.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(page, detaching);
+    }
+  };
+}
+function instance$6($$self, $$props, $$invalidate) {
+  let $i18n;
+  const i18n2 = getContext("i18n");
+  component_subscribe($$self, i18n2, (value2) => $$invalidate(1, $i18n = value2));
+  let lng = $i18n.language;
+  $i18n.t("debugmsg:debug:langDefault");
+  const date = /* @__PURE__ */ new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+  const today = new Date(year, month, day);
+  let events = [];
+  let eventItems = [];
+  let monthNames = [];
+  let daysNames = [];
+  let SPEventsCalendar;
+  function renderEvents(SPEventsCalendar2) {
+    const currentDate = SPEventsCalendar2.value[0];
+    const currentEvents = events.filter((event) => event.date.getTime() >= currentDate.getTime() && event.date.getTime() < currentDate.getTime() + 24 * 60 * 60 * 1e3);
+    const newEventItems = [];
+    if (currentEvents.length) {
+      currentEvents.forEach((event) => {
+        const hours = event.hours;
+        let minutes = event.minutes;
+        if (minutes < 10) minutes = `0${minutes}`;
+        newEventItems.push({
+          title: event.title,
+          time: `${hours}:${minutes}`,
+          description: event.description,
+          wiki: event.wiki,
+          color: event.color
+        });
+      });
+    }
+    $$invalidate(0, eventItems = newEventItems);
+    $i18n.on("languageChanged", (changed) => {
+      if (changed) {
+        eventItems.splice(0, eventItems.length);
+        renderEvents(SPEventsCalendar2);
+      }
+    });
+  }
+  function renderMonthNameLocales(arr) {
+    let newArrCollection = [];
+    arr.forEach((obj) => {
+      newArrCollection.push(obj);
+    });
+    monthNames = [...newArrCollection];
+  }
+  function renderDaysNameLocales(arr) {
+    let newArrCollection = [];
+    arr.forEach((obj) => {
+      newArrCollection.push(obj);
+    });
+    daysNames = [...newArrCollection];
+  }
+  function dynamicDateGenerator(value2 = lng) {
+    switch (value2) {
+      case "ru":
+        renderMonthNameLocales(resources.ru.ui.calendar.months);
+        renderDaysNameLocales(resources.ru.ui.calendar.days);
+        break;
+      case "en":
+        renderMonthNameLocales(resources.en.ui.calendar.months);
+        renderDaysNameLocales(resources.en.ui.calendar.days);
+        break;
+      default:
+        renderMonthNameLocales(resources.ru.ui.calendar.months);
+        renderDaysNameLocales(resources.ru.ui.calendar.days);
+    }
+    $i18n.on("languageChanged", (changed) => {
+      $i18n.t("debugmsg:debug:onLanguageChangedMsg");
+      dynamicDateGenerator(changed);
+      $i18n.t("debugmsg:debug:calendar:monthAfterLangChanged");
+    });
+  }
+  dynamicDateGenerator();
+  function onPageInit() {
+    const $$ = f7.$;
+    SPEventsCalendar = f7.calendar.create({
+      containerEl: "#calendar-container",
+      locale: lng,
+      firstDay: 1,
+      value: [today],
+      events,
+      renderToolbar() {
+        return `
+          <div class="toolbar calendar-custom-toolbar">
+            <div class="toolbar-inner">
+              <div class="left">
+                <a  class="link icon-only"><i class="icon icon-back"></i></a>
+              </div>
+              <div class="center"></div>
+              <div class="right">
+                <a  class="link icon-only"><i class="icon icon-forward"></i></a>
+              </div>
+            </div>
+          </div>
+        `.trim();
+      },
+      on: {
+        init(SPEventsCalendar2) {
+          $$(".calendar-custom-toolbar .center").text(`${monthNames[SPEventsCalendar2.currentMonth]}, ${SPEventsCalendar2.currentYear}`);
+          $$(".calendar-custom-toolbar .left .link").on("click", () => {
+            SPEventsCalendar2.prevMonth(300);
+          });
+          $$(".calendar-custom-toolbar .right .link").on("click", () => {
+            SPEventsCalendar2.nextMonth(300);
+          });
+          $i18n.on("languageChanged", (changed) => {
+            if (changed) {
+              $$(".calendar-custom-toolbar .center").text(`${monthNames[SPEventsCalendar2.currentMonth]}, ${SPEventsCalendar2.currentYear}`);
+              $$(".calendar-week-day").forEach((el, index2) => {
+                el.innerText = daysNames[index2];
+              });
+            }
+          });
+          renderEvents(SPEventsCalendar2);
+        },
+        monthYearChangeStart(SPEventsCalendar2) {
+          $$(".calendar-custom-toolbar .center").text(`${monthNames[SPEventsCalendar2.currentMonth]}, ${SPEventsCalendar2.currentYear}`);
+        },
+        change(SPEventsCalendar2) {
+          renderEvents(SPEventsCalendar2);
+        }
+      }
+    });
+  }
+  function onPageBeforeRemove() {
+    SPEventsCalendar.destroy();
+  }
+  return [eventItems, $i18n, i18n2, events, onPageInit, onPageBeforeRemove];
+}
+class Home extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$6, create_fragment$5, safe_not_equal, {});
+  }
+}
+function create_default_slot_4$2(ctx) {
+  let t_value = (
+    /*$i18n*/
+    ctx[0].t("ui:about:navTitle") + ""
+  );
+  let t2;
+  return {
+    c() {
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, t2, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$i18n*/
+      1 && t_value !== (t_value = /*$i18n*/
+      ctx2[0].t("ui:about:navTitle") + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+    }
+  };
+}
+function create_default_slot_3$3(ctx) {
+  let navleft;
+  let t2;
+  let navtitle;
+  let current;
+  navleft = new Nav_left({ props: { backLink: "back" } });
+  navtitle = new Nav_title({
+    props: {
+      $$slots: { default: [create_default_slot_4$2] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(navleft.$$.fragment);
+      t2 = space();
+      create_component(navtitle.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(navleft, target, anchor);
+      insert(target, t2, anchor);
+      mount_component(navtitle, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const navtitle_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      5) {
+        navtitle_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navtitle.$set(navtitle_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(navleft.$$.fragment, local);
+      transition_in(navtitle.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(navleft.$$.fragment, local);
+      transition_out(navtitle.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+      destroy_component(navleft, detaching);
+      destroy_component(navtitle, detaching);
+    }
+  };
+}
+function create_default_slot_2$3(ctx) {
+  let t_value = (
+    /*$i18n*/
+    ctx[0].t("ui:about:blockTitle") + ""
+  );
+  let t2;
+  return {
+    c() {
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, t2, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$i18n*/
+      1 && t_value !== (t_value = /*$i18n*/
+      ctx2[0].t("ui:about:blockTitle") + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+    }
+  };
+}
+function create_default_slot_1$4(ctx) {
+  let p;
+  let t_value = (
+    /*$i18n*/
+    ctx[0].t("ui:about:description") + ""
+  );
+  let t2;
+  return {
+    c() {
+      p = element("p");
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, p, anchor);
+      append(p, t2);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$i18n*/
+      1 && t_value !== (t_value = /*$i18n*/
+      ctx2[0].t("ui:about:description") + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(p);
+      }
+    }
+  };
+}
+function create_default_slot$4(ctx) {
+  let navbar;
+  let t0;
+  let blocktitle;
+  let t1;
+  let block;
+  let current;
+  navbar = new Navbar({
+    props: {
+      $$slots: { default: [create_default_slot_3$3] },
+      $$scope: { ctx }
+    }
+  });
+  blocktitle = new Block_title({
+    props: {
+      medium: true,
+      $$slots: { default: [create_default_slot_2$3] },
+      $$scope: { ctx }
+    }
+  });
+  block = new Block({
+    props: {
+      strongIos: true,
+      outlineIos: true,
+      $$slots: { default: [create_default_slot_1$4] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(navbar.$$.fragment);
+      t0 = space();
+      create_component(blocktitle.$$.fragment);
+      t1 = space();
+      create_component(block.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(navbar, target, anchor);
+      insert(target, t0, anchor);
+      mount_component(blocktitle, target, anchor);
+      insert(target, t1, anchor);
+      mount_component(block, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const navbar_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      5) {
+        navbar_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navbar.$set(navbar_changes);
+      const blocktitle_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      5) {
+        blocktitle_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      blocktitle.$set(blocktitle_changes);
+      const block_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      5) {
+        block_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      block.$set(block_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(navbar.$$.fragment, local);
+      transition_in(blocktitle.$$.fragment, local);
+      transition_in(block.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(navbar.$$.fragment, local);
+      transition_out(blocktitle.$$.fragment, local);
+      transition_out(block.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t0);
+        detach(t1);
+      }
+      destroy_component(navbar, detaching);
+      destroy_component(blocktitle, detaching);
+      destroy_component(block, detaching);
+    }
+  };
+}
+function create_fragment$4(ctx) {
+  let page;
+  let current;
+  page = new Page({
+    props: {
+      name: "about",
+      $$slots: { default: [create_default_slot$4] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(page.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(page, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const page_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      5) {
+        page_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      page.$set(page_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(page.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(page.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(page, detaching);
+    }
+  };
+}
+function instance$5($$self, $$props, $$invalidate) {
+  let $i18n;
+  const i18n2 = getContext("i18n");
+  component_subscribe($$self, i18n2, (value2) => $$invalidate(0, $i18n = value2));
+  return [$i18n, i18n2];
+}
+class About extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$5, create_fragment$4, safe_not_equal, {});
+  }
+}
+function get_each_context$1(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[1] = list[i];
+  return child_ctx;
+}
+function create_default_slot_3$2(ctx) {
+  let p;
+  let raw_value = (
+    /*item*/
+    ctx[1].content + ""
+  );
+  return {
+    c() {
+      p = element("p");
+    },
+    m(target, anchor) {
+      insert(target, p, anchor);
+      p.innerHTML = raw_value;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*accordionData*/
+      1 && raw_value !== (raw_value = /*item*/
+      ctx2[1].content + "")) p.innerHTML = raw_value;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(p);
+      }
+    }
+  };
+}
+function create_default_slot_2$2(ctx) {
+  let block;
+  let current;
+  block = new Block({
+    props: {
+      $$slots: { default: [create_default_slot_3$2] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(block.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(block, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const block_changes = {};
+      if (dirty & /*$$scope, accordionData*/
+      17) {
+        block_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      block.$set(block_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(block.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(block.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(block, detaching);
+    }
+  };
+}
+function create_default_slot_1$3(ctx) {
+  let accordioncontent;
+  let t2;
+  let current;
+  accordioncontent = new Accordion_content({
+    props: {
+      $$slots: { default: [create_default_slot_2$2] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(accordioncontent.$$.fragment);
+      t2 = space();
+    },
+    m(target, anchor) {
+      mount_component(accordioncontent, target, anchor);
+      insert(target, t2, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const accordioncontent_changes = {};
+      if (dirty & /*$$scope, accordionData*/
+      17) {
+        accordioncontent_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      accordioncontent.$set(accordioncontent_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(accordioncontent.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(accordioncontent.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+      destroy_component(accordioncontent, detaching);
+    }
+  };
+}
+function create_each_block$1(ctx) {
+  let listitem;
+  let current;
+  listitem = new List_item({
+    props: {
+      accordionItem: true,
+      title: (
+        /*item*/
+        ctx[1].heading
+      ),
+      $$slots: { default: [create_default_slot_1$3] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(listitem.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(listitem, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const listitem_changes = {};
+      if (dirty & /*accordionData*/
+      1) listitem_changes.title = /*item*/
+      ctx2[1].heading;
+      if (dirty & /*$$scope, accordionData*/
+      17) {
+        listitem_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      listitem.$set(listitem_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(listitem.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(listitem.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(listitem, detaching);
+    }
+  };
+}
+function create_default_slot$3(ctx) {
+  let each_1_anchor;
+  let current;
+  let each_value = ensure_array_like(
+    /*accordionData*/
+    ctx[0]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
+  }
+  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  });
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      each_1_anchor = empty();
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, each_1_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*accordionData*/
+      1) {
+        each_value = ensure_array_like(
+          /*accordionData*/
+          ctx2[0]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context$1(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block$1(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+          }
+        }
+        group_outros();
+        for (i = each_value.length; i < each_blocks.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(each_1_anchor);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function create_fragment$3(ctx) {
+  let article;
+  let list;
+  let current;
+  list = new List({
+    props: {
+      strong: true,
+      outlineIos: true,
+      dividersIos: true,
+      insetMd: true,
+      accordionList: true,
+      $$slots: { default: [create_default_slot$3] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      article = element("article");
+      create_component(list.$$.fragment);
+    },
+    m(target, anchor) {
+      insert(target, article, anchor);
+      mount_component(list, article, null);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const list_changes = {};
+      if (dirty & /*$$scope, accordionData*/
+      17) {
+        list_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      list.$set(list_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(list.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(list.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(article);
+      }
+      destroy_component(list);
+    }
+  };
+}
+function instance$4($$self, $$props, $$invalidate) {
+  let { accordionData = [] } = $$props;
+  $$self.$$set = ($$props2) => {
+    if ("accordionData" in $$props2) $$invalidate(0, accordionData = $$props2.accordionData);
+  };
+  return [accordionData];
+}
+class AccordionDefault extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$4, create_fragment$3, safe_not_equal, { accordionData: 0 });
+  }
+}
+function create_else_block(ctx) {
+  let navbar;
+  let t2;
+  let block;
+  let current;
+  navbar = new Navbar({
+    props: {
+      title: (
+        /*$i18n*/
+        ctx[1].t("ui:wikipopup:title")
+      ),
+      $$slots: { default: [create_default_slot_8] },
+      $$scope: { ctx }
+    }
+  });
+  block = new Block({
+    props: {
+      $$slots: { default: [create_default_slot_6] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(navbar.$$.fragment);
+      t2 = space();
+      create_component(block.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(navbar, target, anchor);
+      insert(target, t2, anchor);
+      mount_component(block, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const navbar_changes = {};
+      if (dirty & /*$i18n*/
+      2) navbar_changes.title = /*$i18n*/
+      ctx2[1].t("ui:wikipopup:title");
+      if (dirty & /*$$scope*/
+      8) {
+        navbar_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navbar.$set(navbar_changes);
+      const block_changes = {};
+      if (dirty & /*$$scope, popupProps*/
+      9) {
+        block_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      block.$set(block_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(navbar.$$.fragment, local);
+      transition_in(block.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(navbar.$$.fragment, local);
+      transition_out(block.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+      destroy_component(navbar, detaching);
+      destroy_component(block, detaching);
+    }
+  };
+}
+function create_if_block(ctx) {
+  let navbar;
+  let t2;
+  let block;
+  let current;
+  navbar = new Navbar({
+    props: {
+      title: (
+        /*popupProps*/
+        ctx[0].title
+      ),
+      subtitle: (
+        /*popupProps*/
+        ctx[0].description
+      ),
+      $$slots: { default: [create_default_slot_3$1] },
+      $$scope: { ctx }
+    }
+  });
+  block = new Block({
+    props: {
+      $$slots: { default: [create_default_slot_2$1] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(navbar.$$.fragment);
+      t2 = space();
+      create_component(block.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(navbar, target, anchor);
+      insert(target, t2, anchor);
+      mount_component(block, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const navbar_changes = {};
+      if (dirty & /*popupProps*/
+      1) navbar_changes.title = /*popupProps*/
+      ctx2[0].title;
+      if (dirty & /*popupProps*/
+      1) navbar_changes.subtitle = /*popupProps*/
+      ctx2[0].description;
+      if (dirty & /*$$scope*/
+      8) {
+        navbar_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navbar.$set(navbar_changes);
+      const block_changes = {};
+      if (dirty & /*$$scope, popupProps*/
+      9) {
+        block_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      block.$set(block_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(navbar.$$.fragment, local);
+      transition_in(block.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(navbar.$$.fragment, local);
+      transition_out(block.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+      destroy_component(navbar, detaching);
+      destroy_component(block, detaching);
+    }
+  };
+}
+function create_default_slot_10(ctx) {
+  let multiply;
+  let current;
+  multiply = new Multiply({});
+  return {
+    c() {
+      create_component(multiply.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(multiply, target, anchor);
+      current = true;
+    },
+    i(local) {
+      if (current) return;
+      transition_in(multiply.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(multiply.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(multiply, detaching);
+    }
+  };
+}
+function create_default_slot_9(ctx) {
+  let button;
+  let current;
+  button = new Button({
+    props: {
+      type: "button",
+      small: true,
+      tonal: true,
+      round: true,
+      popupClose: true,
+      $$slots: { default: [create_default_slot_10] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(button.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(button, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const button_changes = {};
+      if (dirty & /*$$scope*/
+      8) {
+        button_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button.$set(button_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(button.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(button.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(button, detaching);
+    }
+  };
+}
+function create_default_slot_8(ctx) {
+  let navright;
+  let current;
+  navright = new Nav_right({
+    props: {
+      $$slots: { default: [create_default_slot_9] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(navright.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(navright, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const navright_changes = {};
+      if (dirty & /*$$scope*/
+      8) {
+        navright_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navright.$set(navright_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(navright.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(navright.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(navright, detaching);
+    }
+  };
+}
+function create_default_slot_7(ctx) {
+  let t_value = (
+    /*popupProps*/
+    ctx[0].title + ""
+  );
+  let t2;
+  return {
+    c() {
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, t2, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*popupProps*/
+      1 && t_value !== (t_value = /*popupProps*/
+      ctx2[0].title + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+    }
+  };
+}
+function create_default_slot_6(ctx) {
+  let blocktitle;
+  let t0;
+  let p;
+  let t1_value = (
+    /*popupProps*/
+    ctx[0].description + ""
+  );
+  let t1;
+  let current;
+  blocktitle = new Block_title({
+    props: {
+      $$slots: { default: [create_default_slot_7] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(blocktitle.$$.fragment);
+      t0 = space();
+      p = element("p");
+      t1 = text(t1_value);
+    },
+    m(target, anchor) {
+      mount_component(blocktitle, target, anchor);
+      insert(target, t0, anchor);
+      insert(target, p, anchor);
+      append(p, t1);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const blocktitle_changes = {};
+      if (dirty & /*$$scope, popupProps*/
+      9) {
+        blocktitle_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      blocktitle.$set(blocktitle_changes);
+      if ((!current || dirty & /*popupProps*/
+      1) && t1_value !== (t1_value = /*popupProps*/
+      ctx2[0].description + "")) set_data(t1, t1_value);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(blocktitle.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(blocktitle.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t0);
+        detach(p);
+      }
+      destroy_component(blocktitle, detaching);
+    }
+  };
+}
+function create_default_slot_5(ctx) {
+  let multiply;
+  let current;
+  multiply = new Multiply({});
+  return {
+    c() {
+      create_component(multiply.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(multiply, target, anchor);
+      current = true;
+    },
+    i(local) {
+      if (current) return;
+      transition_in(multiply.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(multiply.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(multiply, detaching);
+    }
+  };
+}
+function create_default_slot_4$1(ctx) {
+  let button;
+  let current;
+  button = new Button({
+    props: {
+      type: "button",
+      small: true,
+      tonal: true,
+      round: true,
+      popupClose: true,
+      $$slots: { default: [create_default_slot_5] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(button.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(button, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const button_changes = {};
+      if (dirty & /*$$scope*/
+      8) {
+        button_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button.$set(button_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(button.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(button.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(button, detaching);
+    }
+  };
+}
+function create_default_slot_3$1(ctx) {
+  let navright;
+  let current;
+  navright = new Nav_right({
+    props: {
+      $$slots: { default: [create_default_slot_4$1] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(navright.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(navright, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const navright_changes = {};
+      if (dirty & /*$$scope*/
+      8) {
+        navright_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navright.$set(navright_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(navright.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(navright.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(navright, detaching);
+    }
+  };
+}
+function create_default_slot_2$1(ctx) {
+  let accordiondefault;
+  let current;
+  accordiondefault = new AccordionDefault({
+    props: {
+      accordionData: (
+        /*popupProps*/
+        ctx[0].wiki
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(accordiondefault.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(accordiondefault, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const accordiondefault_changes = {};
+      if (dirty & /*popupProps*/
+      1) accordiondefault_changes.accordionData = /*popupProps*/
+      ctx2[0].wiki;
+      accordiondefault.$set(accordiondefault_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(accordiondefault.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(accordiondefault.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(accordiondefault, detaching);
+    }
+  };
+}
+function create_default_slot_1$2(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block, create_else_block];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*popupProps*/
+      ctx2[0].wiki !== void 0
+    ) return 0;
+    return 1;
+  }
+  current_block_type_index = select_block_type(ctx);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(if_block_anchor.parentNode, if_block_anchor);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_blocks[current_block_type_index].d(detaching);
+    }
+  };
+}
+function create_default_slot$2(ctx) {
+  let page;
+  let current;
+  page = new Page({
+    props: {
+      $$slots: { default: [create_default_slot_1$2] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(page.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(page, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const page_changes = {};
+      if (dirty & /*$$scope, popupProps, $i18n*/
+      11) {
+        page_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      page.$set(page_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(page.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(page.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(page, detaching);
+    }
+  };
+}
+function create_fragment$2(ctx) {
+  let popup;
+  let current;
+  popup = new Popup2({
+    props: {
+      swipeToClose: "to-bottom",
+      $$slots: { default: [create_default_slot$2] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(popup.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(popup, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const popup_changes = {};
+      if (dirty & /*$$scope, popupProps, $i18n*/
+      11) {
+        popup_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      popup.$set(popup_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(popup.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(popup.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(popup, detaching);
+    }
+  };
+}
+function instance$3($$self, $$props, $$invalidate) {
+  let $i18n;
+  const i18n2 = getContext("i18n");
+  component_subscribe($$self, i18n2, (value2) => $$invalidate(1, $i18n = value2));
+  let { popupProps = {
+    title: "",
+    description: "",
+    wiki: [],
+    iterable: false
+  } } = $$props;
+  console.log(popupProps);
+  $$self.$$set = ($$props2) => {
+    if ("popupProps" in $$props2) $$invalidate(0, popupProps = $$props2.popupProps);
+  };
+  return [popupProps, $i18n, i18n2];
+}
+class EventWikiPopup extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$3, create_fragment$2, safe_not_equal, { popupProps: 0 });
+  }
+}
+const routes = [
+  {
+    path: "/",
+    component: Home,
+    master: true
+  },
+  {
+    path: "/about/",
+    component: About
+  },
+  {
+    path: "/event-wiki-popup/",
+    popup: {
+      component: EventWikiPopup
+    }
+  }
+];
 const consoleLogger = {
   type: "logger",
   log(args) {
@@ -52833,22 +56355,22 @@ class I18n extends EventEmitter {
     };
   }
 }
-const instance$7 = I18n.createInstance();
-instance$7.createInstance = I18n.createInstance;
-instance$7.createInstance;
-instance$7.dir;
-instance$7.init;
-instance$7.loadResources;
-instance$7.reloadResources;
-instance$7.use;
-instance$7.changeLanguage;
-instance$7.getFixedT;
-instance$7.t;
-instance$7.exists;
-instance$7.setDefaultNamespace;
-instance$7.hasLoadedNamespace;
-instance$7.loadNamespaces;
-instance$7.loadLanguages;
+const instance$2 = I18n.createInstance();
+instance$2.createInstance = I18n.createInstance;
+instance$2.createInstance;
+instance$2.dir;
+instance$2.init;
+instance$2.loadResources;
+instance$2.reloadResources;
+instance$2.use;
+instance$2.changeLanguage;
+instance$2.getFixedT;
+instance$2.t;
+instance$2.exists;
+instance$2.setDefaultNamespace;
+instance$2.hasLoadedNamespace;
+instance$2.loadNamespaces;
+instance$2.loadLanguages;
 const subscriber_queue = [];
 function writable(value2, start = noop$1) {
   let stop2;
@@ -53281,323 +56803,7 @@ class Browser {
   }
 }
 Browser.type = "languageDetector";
-const uiEN = {
-  panel: {
-    title: "Menu",
-    navTitle: "Navigation",
-    navAbout: "About page"
-  },
-  langswitcher: {
-    title: "Language"
-  },
-  home: {
-    navTitle: "Holiday calendar"
-  },
-  about: {
-    navTitle: "About",
-    blockTitle: "Welcome to About page!",
-    description: "This page about of all us."
-  },
-  calendar: {
-    months: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December"
-    ],
-    days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-  },
-  wikipopup: {
-    title: "About the holiday",
-    openedLinkText: "More details..."
-  }
-};
-const calendarEN = {
-  govnonworkingday: [
-    {
-      date: {
-        month: 0,
-        day: 1
-      },
-      hours: 23,
-      minutes: 59,
-      title: "New Year",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 1,
-        day: 6
-      },
-      hours: 9,
-      minutes: 30,
-      title: "Epiphany",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 4,
-        day: 1
-      },
-      hours: 9,
-      minutes: 30,
-      title: "Public holiday Labor day",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 4,
-        day: 3
-      },
-      hours: 9,
-      minutes: 30,
-      title: "National holiday The third of May",
-      description: "in memory of Constitution the 3rd of May 1791",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 7,
-        day: 15
-      },
-      hours: 9,
-      minutes: 30,
-      title: "Assumption of The Blessed Virgin Mary",
-      description: "Day of Polish army",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 10,
-        day: 1
-      },
-      hours: 9,
-      minutes: 30,
-      title: "All Saints Day",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 10,
-        day: 11
-      },
-      hours: 9,
-      minutes: 30,
-      title: "National holiday of Independence",
-      description: "In memory of gaining the independence from Russian Empire, Austria and Prussia in 1918",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 11,
-        day: 25
-      },
-      hours: 9,
-      minutes: 30,
-      title: "The first day of Christmas",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 11,
-        day: 26
-      },
-      hours: 9,
-      minutes: 30,
-      title: "The second day of Christmas",
-      description: "The day of Saint Stephen first matyr, the beginning of witchcraft",
-      color: "#ff2d55"
-    }
-  ]
-};
-const logRU = {
-  debug: {
-    langDefault: "язык по умолчанию:",
-    onLanguageChangedMsg: "i18next onLanguageChanged:",
-    app: {
-      localesChecking: "APP -> проверка переводов:"
-    },
-    calendar: {
-      dataFromLocales: "Calendar -> данные из переводов:",
-      eventAfterLangChanged: "Calendar -> События календаря (после смены языка):",
-      eventDefault: "Calendar -> События календаря (обычное состояние):",
-      monthAfterLangChanged: "Calendar -> Массив с месяцами (после смены языка):"
-    }
-  }
-};
-const uiRU = {
-  panel: {
-    title: "Меню",
-    navTitle: "Навигация",
-    navAbout: "О нас"
-  },
-  langswitcher: {
-    title: "Язык"
-  },
-  home: {
-    navTitle: "Календарь праздников"
-  },
-  about: {
-    navTitle: "О нас",
-    blockTitle: "Добро пожаловать на страницу О нас!",
-    description: "Тут будет описание прокета, и всех кто принимал участие в нём."
-  },
-  calendar: {
-    months: [
-      "Январь",
-      "Февраль",
-      "Март",
-      "Апрель",
-      "Май",
-      "Июнь",
-      "Июль",
-      "Август",
-      "Сентябрь",
-      "Октябрь",
-      "Ноябрь",
-      "Декабрь"
-    ],
-    days: ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
-  },
-  wikipopup: {
-    title: "О празднике",
-    openedLinkText: "Подробнее..."
-  }
-};
-const calendarRU = {
-  govnonworkingday: [
-    {
-      date: {
-        month: 0,
-        day: 1
-      },
-      hours: 23,
-      minutes: 59,
-      title: "Новый год",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 1,
-        day: 6
-      },
-      hours: 9,
-      minutes: 30,
-      title: "Богоявление",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 4,
-        day: 1
-      },
-      hours: 9,
-      minutes: 30,
-      title: "Государственный праздник день труда",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 4,
-        day: 3
-      },
-      hours: 9,
-      minutes: 30,
-      title: "Национальный праздник Третьего мая",
-      description: "в память о Конституции 3 мая 1791г",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 7,
-        day: 15
-      },
-      hours: 9,
-      minutes: 30,
-      title: "Вознесение Пресвятой Девы Марии",
-      description: "День войска Польского",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 10,
-        day: 1
-      },
-      hours: 9,
-      minutes: 30,
-      title: "День всех святых",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 10,
-        day: 11
-      },
-      hours: 9,
-      minutes: 30,
-      title: "Национальный праздник независимости",
-      description: "В память о получении в 1918 году независимости от Российской империи, Австрии и Пруссии.",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 11,
-        day: 25
-      },
-      hours: 9,
-      minutes: 30,
-      title: "Первый день Рождества",
-      color: "#ff2d55"
-    },
-    {
-      date: {
-        month: 11,
-        day: 26
-      },
-      hours: 9,
-      minutes: 30,
-      title: "Второй день Рождества",
-      description: "День святого Стефана Первомученика, начало колядований",
-      color: "#ff2d55"
-    }
-  ]
-};
-const logEN = {
-  debug: {
-    langDefault: "default language:",
-    onLanguageChangedMsg: "i18next onLanguageChanged:",
-    app: {
-      localesChecking: "APP -> translation verification:"
-    },
-    calendar: {
-      dataFromLocales: "Calendar -> data from the translations:",
-      eventAfterLangChanged: "Calendar -> events of the Calendar (after the language change):",
-      eventDefault: "Calendar -> events of the Calendar (normal state):",
-      monthAfterLangChanged: "Calendar -> array with the months (after the language change):"
-    }
-  }
-};
-const resources = {
-  en: {
-    ui: uiEN,
-    calendar: calendarEN,
-    debugmsg: logEN
-  },
-  ru: {
-    ui: uiRU,
-    calendar: calendarRU,
-    debugmsg: logRU
-  }
-};
-instance$7.use(Browser).init({
+instance$2.use(Browser).init({
   debug: false,
   detection: {
     order: ["querystring", "localStorage", "navigator"],
@@ -53612,2303 +56818,7 @@ instance$7.use(Browser).init({
     // not needed for svelte as it escapes by default
   }
 });
-const i18n = createI18nStore(instance$7);
-function debug(msg, value2) {
-}
-function create_default_slot$6(ctx) {
-  let div;
-  return {
-    c() {
-      div = element("div");
-      attr(div, "id", "calendar-container");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-    },
-    p: noop$1,
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-    }
-  };
-}
-function create_fragment$6(ctx) {
-  let block;
-  let current;
-  block = new Block({
-    props: {
-      strong: true,
-      inset: true,
-      $$slots: { default: [create_default_slot$6] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(block.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(block, target, anchor);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      const block_changes = {};
-      if (dirty & /*$$scope*/
-      1024) {
-        block_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      block.$set(block_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(block.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(block.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(block, detaching);
-    }
-  };
-}
-function instance$6($$self, $$props, $$invalidate) {
-  let $i18n;
-  const i18n2 = getContext("i18n");
-  component_subscribe($$self, i18n2, (value2) => $$invalidate(2, $i18n = value2));
-  let lng = $i18n.language;
-  $i18n.t("debugmsg:debug:langDefault");
-  const date = /* @__PURE__ */ new Date();
-  const year = date.getFullYear();
-  let { events = [] } = $$props;
-  function renderLocalesCollection(array2) {
-    array2.forEach((item) => {
-      $i18n.t("debugmsg:debug:calendar:dataFromLocales");
-      events.push({
-        date: new Date(year, item.date.month, item.date.day),
-        hours: item.hours,
-        minutes: item.minutes,
-        title: item.title,
-        description: item.description,
-        color: item.color
-      });
-    });
-  }
-  function dynamicArrayGeneration(value2 = lng) {
-    switch (value2) {
-      case "ru":
-        events.splice(0, events.length);
-        renderLocalesCollection(resources.ru.calendar.govnonworkingday);
-        break;
-      case "en":
-        events.splice(0, events.length);
-        renderLocalesCollection(resources.en.calendar.govnonworkingday);
-        break;
-      default:
-        events.splice(0, events.length);
-        renderLocalesCollection(resources.ru.calendar.govnonworkingday);
-    }
-    $i18n.on("languageChanged", (changed) => {
-      $i18n.t("debugmsg:debug:onLanguageChangedMsg");
-      dynamicArrayGeneration(changed);
-      $i18n.t("debugmsg:debug:calendar:eventAfterLangChanged");
-    });
-  }
-  $i18n.t("debugmsg:debug:calendar:eventDefault");
-  dynamicArrayGeneration();
-  $$self.$$set = ($$props2) => {
-    if ("events" in $$props2) $$invalidate(1, events = $$props2.events);
-  };
-  return [i18n2, events];
-}
-class CalendarzSwiat extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance$6, create_fragment$6, safe_not_equal, { events: 1 });
-  }
-}
-function get_each_context$3(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[1] = list[i];
-  child_ctx[3] = i;
-  return child_ctx;
-}
-function create_default_slot_5$2(ctx) {
-  let t2;
-  return {
-    c() {
-      t2 = text("Notification");
-    },
-    m(target, anchor) {
-      insert(target, t2, anchor);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-    }
-  };
-}
-function create_root_start_slot$1(ctx) {
-  let div;
-  let div_style_value;
-  return {
-    c() {
-      div = element("div");
-      attr(div, "class", "event-color");
-      attr(div, "style", div_style_value = `background-color: ${/*item*/
-      ctx[1].color}`);
-      attr(div, "slot", "root-start");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*eventItems*/
-      1 && div_style_value !== (div_style_value = `background-color: ${/*item*/
-      ctx2[1].color}`)) {
-        attr(div, "style", div_style_value);
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-    }
-  };
-}
-function create_each_block$3(key_1, ctx) {
-  let first;
-  let listitem;
-  let current;
-  listitem = new List_item({
-    props: {
-      title: (
-        /*item*/
-        ctx[1].title
-      ),
-      after: (
-        /*item*/
-        ctx[1].time
-      ),
-      $$slots: { "root-start": [create_root_start_slot$1] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    key: key_1,
-    first: null,
-    c() {
-      first = empty();
-      create_component(listitem.$$.fragment);
-      this.first = first;
-    },
-    m(target, anchor) {
-      insert(target, first, anchor);
-      mount_component(listitem, target, anchor);
-      current = true;
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      const listitem_changes = {};
-      if (dirty & /*eventItems*/
-      1) listitem_changes.title = /*item*/
-      ctx[1].title;
-      if (dirty & /*eventItems*/
-      1) listitem_changes.after = /*item*/
-      ctx[1].time;
-      if (dirty & /*$$scope, eventItems*/
-      17) {
-        listitem_changes.$$scope = { dirty, ctx };
-      }
-      listitem.$set(listitem_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(listitem.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(listitem.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(first);
-      }
-      destroy_component(listitem, detaching);
-    }
-  };
-}
-function create_if_block$2(ctx) {
-  let listitem;
-  let current;
-  listitem = new List_item({
-    props: {
-      $$slots: { default: [create_default_slot_4$4] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(listitem.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(listitem, target, anchor);
-      current = true;
-    },
-    i(local) {
-      if (current) return;
-      transition_in(listitem.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(listitem.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(listitem, detaching);
-    }
-  };
-}
-function create_default_slot_4$4(ctx) {
-  let t2;
-  return {
-    c() {
-      t2 = text("Оповещения отсутствуют.");
-    },
-    m(target, anchor) {
-      insert(target, t2, anchor);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-    }
-  };
-}
-function create_default_slot_3$4(ctx) {
-  let each_blocks = [];
-  let each_1_lookup = /* @__PURE__ */ new Map();
-  let t2;
-  let if_block_anchor;
-  let current;
-  let each_value = ensure_array_like(
-    /*eventItems*/
-    ctx[0]
-  );
-  const get_key = (ctx2) => (
-    /*index*/
-    ctx2[3]
-  );
-  for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context$3(ctx, each_value, i);
-    let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block$3(key, child_ctx));
-  }
-  let if_block = (
-    /*eventItems*/
-    ctx[0].length === 0 && create_if_block$2(ctx)
-  );
-  return {
-    c() {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      t2 = space();
-      if (if_block) if_block.c();
-      if_block_anchor = empty();
-    },
-    m(target, anchor) {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(target, anchor);
-        }
-      }
-      insert(target, t2, anchor);
-      if (if_block) if_block.m(target, anchor);
-      insert(target, if_block_anchor, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*eventItems*/
-      1) {
-        each_value = ensure_array_like(
-          /*eventItems*/
-          ctx2[0]
-        );
-        group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, t2.parentNode, outro_and_destroy_block, create_each_block$3, t2, get_each_context$3);
-        check_outros();
-      }
-      if (
-        /*eventItems*/
-        ctx2[0].length === 0
-      ) {
-        if (if_block) {
-          if (dirty & /*eventItems*/
-          1) {
-            transition_in(if_block, 1);
-          }
-        } else {
-          if_block = create_if_block$2(ctx2);
-          if_block.c();
-          transition_in(if_block, 1);
-          if_block.m(if_block_anchor.parentNode, if_block_anchor);
-        }
-      } else if (if_block) {
-        group_outros();
-        transition_out(if_block, 1, 1, () => {
-          if_block = null;
-        });
-        check_outros();
-      }
-    },
-    i(local) {
-      if (current) return;
-      for (let i = 0; i < each_value.length; i += 1) {
-        transition_in(each_blocks[i]);
-      }
-      transition_in(if_block);
-      current = true;
-    },
-    o(local) {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        transition_out(each_blocks[i]);
-      }
-      transition_out(if_block);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-        detach(if_block_anchor);
-      }
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].d(detaching);
-      }
-      if (if_block) if_block.d(detaching);
-    }
-  };
-}
-function create_default_slot_2$4(ctx) {
-  let list;
-  let current;
-  list = new List({
-    props: {
-      $$slots: { default: [create_default_slot_3$4] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(list.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(list, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const list_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      17) {
-        list_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      list.$set(list_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(list.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(list.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(list, detaching);
-    }
-  };
-}
-function create_default_slot_1$5(ctx) {
-  let blocktitle;
-  let t2;
-  let block;
-  let current;
-  blocktitle = new Block_title({
-    props: {
-      large: true,
-      $$slots: { default: [create_default_slot_5$2] },
-      $$scope: { ctx }
-    }
-  });
-  block = new Block({
-    props: {
-      strongIos: true,
-      outlineIos: true,
-      $$slots: { default: [create_default_slot_2$4] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(blocktitle.$$.fragment);
-      t2 = space();
-      create_component(block.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(blocktitle, target, anchor);
-      insert(target, t2, anchor);
-      mount_component(block, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const blocktitle_changes = {};
-      if (dirty & /*$$scope*/
-      16) {
-        blocktitle_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      blocktitle.$set(blocktitle_changes);
-      const block_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      17) {
-        block_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      block.$set(block_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(blocktitle.$$.fragment, local);
-      transition_in(block.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(blocktitle.$$.fragment, local);
-      transition_out(block.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-      destroy_component(blocktitle, detaching);
-      destroy_component(block, detaching);
-    }
-  };
-}
-function create_fixed_slot(ctx) {
-  let button;
-  return {
-    c() {
-      button = element("button");
-      attr(button, "slot", "fixed");
-      attr(button, "class", "UI-swipe-handler swipe-handler");
-    },
-    m(target, anchor) {
-      insert(target, button, anchor);
-    },
-    p: noop$1,
-    d(detaching) {
-      if (detaching) {
-        detach(button);
-      }
-    }
-  };
-}
-function create_default_slot$5(ctx) {
-  let page;
-  let current;
-  page = new Page({
-    props: {
-      $$slots: {
-        fixed: [create_fixed_slot],
-        default: [create_default_slot_1$5]
-      },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(page.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(page, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const page_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      17) {
-        page_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      page.$set(page_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(page.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(page.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(page, detaching);
-    }
-  };
-}
-function create_fragment$5(ctx) {
-  let popup;
-  let current;
-  popup = new Popup2({
-    props: {
-      class: "popup-notification",
-      swipeToClose: "to-bottom",
-      swipeHandler: ".swipe-handler",
-      $$slots: { default: [create_default_slot$5] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(popup.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(popup, target, anchor);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      const popup_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      17) {
-        popup_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      popup.$set(popup_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(popup.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(popup.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(popup, detaching);
-    }
-  };
-}
-function instance$5($$self, $$props, $$invalidate) {
-  let { eventItems = [] } = $$props;
-  $$self.$$set = ($$props2) => {
-    if ("eventItems" in $$props2) $$invalidate(0, eventItems = $$props2.eventItems);
-  };
-  return [eventItems];
-}
-class EventsNotificationPopup extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance$5, create_fragment$5, safe_not_equal, { eventItems: 0 });
-  }
-}
-function get_each_context$2(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[20] = list[i];
-  child_ctx[22] = i;
-  return child_ctx;
-}
-function create_default_slot_9(ctx) {
-  let linehorizontal3;
-  let current;
-  linehorizontal3 = new LineHorizontal3({
-    props: {
-      class: "UI-nav-icons icon-menu-horizontal"
-    }
-  });
-  return {
-    c() {
-      create_component(linehorizontal3.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(linehorizontal3, target, anchor);
-      current = true;
-    },
-    p: noop$1,
-    i(local) {
-      if (current) return;
-      transition_in(linehorizontal3.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(linehorizontal3.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(linehorizontal3, detaching);
-    }
-  };
-}
-function create_default_slot_8(ctx) {
-  let button;
-  let current;
-  button = new Button({
-    props: {
-      panelOpen: "left",
-      $$slots: { default: [create_default_slot_9] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(button.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(button, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const button_changes = {};
-      if (dirty & /*$$scope*/
-      8388608) {
-        button_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button.$set(button_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(button.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(button.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(button, detaching);
-    }
-  };
-}
-function create_default_slot_7(ctx) {
-  let t_value = (
-    /*$i18n*/
-    ctx[1].t("ui:home:navTitle") + ""
-  );
-  let t2;
-  return {
-    c() {
-      t2 = text(t_value);
-    },
-    m(target, anchor) {
-      insert(target, t2, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*$i18n*/
-      2 && t_value !== (t_value = /*$i18n*/
-      ctx2[1].t("ui:home:navTitle") + "")) set_data(t2, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-    }
-  };
-}
-function create_default_slot_6(ctx) {
-  let t_value = (
-    /*eventItems*/
-    ctx[0].length + ""
-  );
-  let t2;
-  return {
-    c() {
-      t2 = text(t_value);
-    },
-    m(target, anchor) {
-      insert(target, t2, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*eventItems*/
-      1 && t_value !== (t_value = /*eventItems*/
-      ctx2[0].length + "")) set_data(t2, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-    }
-  };
-}
-function create_default_slot_5$1(ctx) {
-  let bell;
-  let t2;
-  let badge;
-  let current;
-  bell = new Bell({
-    props: { class: "UI-nav-icons icon-bell" }
-  });
-  badge = new Badge({
-    props: {
-      class: "UI-badge",
-      color: "red",
-      $$slots: { default: [create_default_slot_6] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(bell.$$.fragment);
-      t2 = space();
-      create_component(badge.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(bell, target, anchor);
-      insert(target, t2, anchor);
-      mount_component(badge, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const badge_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      8388609) {
-        badge_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      badge.$set(badge_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(bell.$$.fragment, local);
-      transition_in(badge.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(bell.$$.fragment, local);
-      transition_out(badge.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-      destroy_component(bell, detaching);
-      destroy_component(badge, detaching);
-    }
-  };
-}
-function create_default_slot_4$3(ctx) {
-  let button;
-  let current;
-  button = new Button({
-    props: {
-      class: "UI-btn-popup-notification",
-      popupOpen: ".popup-notification",
-      $$slots: { default: [create_default_slot_5$1] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(button.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(button, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const button_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      8388609) {
-        button_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button.$set(button_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(button.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(button.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(button, detaching);
-    }
-  };
-}
-function create_default_slot_3$3(ctx) {
-  let navleft;
-  let t0;
-  let navtitle;
-  let t1;
-  let navright;
-  let current;
-  navleft = new Nav_left({
-    props: {
-      $$slots: { default: [create_default_slot_8] },
-      $$scope: { ctx }
-    }
-  });
-  navtitle = new Nav_title({
-    props: {
-      $$slots: { default: [create_default_slot_7] },
-      $$scope: { ctx }
-    }
-  });
-  navright = new Nav_right({
-    props: {
-      $$slots: { default: [create_default_slot_4$3] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(navleft.$$.fragment);
-      t0 = space();
-      create_component(navtitle.$$.fragment);
-      t1 = space();
-      create_component(navright.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(navleft, target, anchor);
-      insert(target, t0, anchor);
-      mount_component(navtitle, target, anchor);
-      insert(target, t1, anchor);
-      mount_component(navright, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const navleft_changes = {};
-      if (dirty & /*$$scope*/
-      8388608) {
-        navleft_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      navleft.$set(navleft_changes);
-      const navtitle_changes = {};
-      if (dirty & /*$$scope, $i18n*/
-      8388610) {
-        navtitle_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      navtitle.$set(navtitle_changes);
-      const navright_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      8388609) {
-        navright_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      navright.$set(navright_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(navleft.$$.fragment, local);
-      transition_in(navtitle.$$.fragment, local);
-      transition_in(navright.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(navleft.$$.fragment, local);
-      transition_out(navtitle.$$.fragment, local);
-      transition_out(navright.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t0);
-        detach(t1);
-      }
-      destroy_component(navleft, detaching);
-      destroy_component(navtitle, detaching);
-      destroy_component(navright, detaching);
-    }
-  };
-}
-function create_if_block_1(ctx) {
-  let link;
-  let current;
-  link = new Link({
-    props: {
-      href: "/event-wiki-popup/",
-      routeProps: {
-        popupProps: {
-          collection: (
-            /*item*/
-            ctx[20].description
-          ),
-          iterable: false
-        }
-      },
-      text: (
-        /*$i18n*/
-        ctx[1].t("ui:wikipopup:openedLinkText")
-      )
-    }
-  });
-  return {
-    c() {
-      create_component(link.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(link, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const link_changes = {};
-      if (dirty & /*eventItems*/
-      1) link_changes.routeProps = {
-        popupProps: {
-          collection: (
-            /*item*/
-            ctx2[20].description
-          ),
-          iterable: false
-        }
-      };
-      if (dirty & /*$i18n*/
-      2) link_changes.text = /*$i18n*/
-      ctx2[1].t("ui:wikipopup:openedLinkText");
-      link.$set(link_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(link.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(link.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(link, detaching);
-    }
-  };
-}
-function create_default_slot_2$3(ctx) {
-  let if_block_anchor;
-  let current;
-  let if_block = (
-    /*item*/
-    ctx[20].description !== void 0 && create_if_block_1(ctx)
-  );
-  return {
-    c() {
-      if (if_block) if_block.c();
-      if_block_anchor = empty();
-    },
-    m(target, anchor) {
-      if (if_block) if_block.m(target, anchor);
-      insert(target, if_block_anchor, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (
-        /*item*/
-        ctx2[20].description !== void 0
-      ) {
-        if (if_block) {
-          if_block.p(ctx2, dirty);
-          if (dirty & /*eventItems*/
-          1) {
-            transition_in(if_block, 1);
-          }
-        } else {
-          if_block = create_if_block_1(ctx2);
-          if_block.c();
-          transition_in(if_block, 1);
-          if_block.m(if_block_anchor.parentNode, if_block_anchor);
-        }
-      } else if (if_block) {
-        group_outros();
-        transition_out(if_block, 1, 1, () => {
-          if_block = null;
-        });
-        check_outros();
-      }
-    },
-    i(local) {
-      if (current) return;
-      transition_in(if_block);
-      current = true;
-    },
-    o(local) {
-      transition_out(if_block);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(if_block_anchor);
-      }
-      if (if_block) if_block.d(detaching);
-    }
-  };
-}
-function create_root_start_slot(ctx) {
-  let div;
-  let div_style_value;
-  return {
-    c() {
-      div = element("div");
-      attr(div, "class", "event-color");
-      attr(div, "style", div_style_value = `background-color: ${/*item*/
-      ctx[20].color}`);
-      attr(div, "slot", "root-start");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*eventItems*/
-      1 && div_style_value !== (div_style_value = `background-color: ${/*item*/
-      ctx2[20].color}`)) {
-        attr(div, "style", div_style_value);
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-    }
-  };
-}
-function create_each_block$2(key_1, ctx) {
-  let first;
-  let listitem;
-  let current;
-  listitem = new List_item({
-    props: {
-      title: (
-        /*item*/
-        ctx[20].title
-      ),
-      after: (
-        /*item*/
-        ctx[20].time
-      ),
-      subtitle: (
-        /*item*/
-        ctx[20].description
-      ),
-      $$slots: {
-        "root-start": [create_root_start_slot],
-        default: [create_default_slot_2$3]
-      },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    key: key_1,
-    first: null,
-    c() {
-      first = empty();
-      create_component(listitem.$$.fragment);
-      this.first = first;
-    },
-    m(target, anchor) {
-      insert(target, first, anchor);
-      mount_component(listitem, target, anchor);
-      current = true;
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      const listitem_changes = {};
-      if (dirty & /*eventItems*/
-      1) listitem_changes.title = /*item*/
-      ctx[20].title;
-      if (dirty & /*eventItems*/
-      1) listitem_changes.after = /*item*/
-      ctx[20].time;
-      if (dirty & /*eventItems*/
-      1) listitem_changes.subtitle = /*item*/
-      ctx[20].description;
-      if (dirty & /*$$scope, eventItems, $i18n*/
-      8388611) {
-        listitem_changes.$$scope = { dirty, ctx };
-      }
-      listitem.$set(listitem_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(listitem.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(listitem.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(first);
-      }
-      destroy_component(listitem, detaching);
-    }
-  };
-}
-function create_if_block$1(ctx) {
-  let listitem;
-  let current;
-  listitem = new List_item({
-    props: {
-      $$slots: { title: [create_title_slot] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(listitem.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(listitem, target, anchor);
-      current = true;
-    },
-    i(local) {
-      if (current) return;
-      transition_in(listitem.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(listitem.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(listitem, detaching);
-    }
-  };
-}
-function create_title_slot(ctx) {
-  let span;
-  return {
-    c() {
-      span = element("span");
-      span.textContent = "Сегодня нет никаких событий.";
-      attr(span, "class", "text-color-gray");
-      attr(span, "slot", "title");
-    },
-    m(target, anchor) {
-      insert(target, span, anchor);
-    },
-    p: noop$1,
-    d(detaching) {
-      if (detaching) {
-        detach(span);
-      }
-    }
-  };
-}
-function create_default_slot_1$4(ctx) {
-  let each_blocks = [];
-  let each_1_lookup = /* @__PURE__ */ new Map();
-  let t2;
-  let if_block_anchor;
-  let current;
-  let each_value = ensure_array_like(
-    /*eventItems*/
-    ctx[0]
-  );
-  const get_key = (ctx2) => (
-    /*index*/
-    ctx2[22]
-  );
-  for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context$2(ctx, each_value, i);
-    let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block$2(key, child_ctx));
-  }
-  let if_block = (
-    /*eventItems*/
-    ctx[0].length === 0 && create_if_block$1(ctx)
-  );
-  return {
-    c() {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      t2 = space();
-      if (if_block) if_block.c();
-      if_block_anchor = empty();
-    },
-    m(target, anchor) {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(target, anchor);
-        }
-      }
-      insert(target, t2, anchor);
-      if (if_block) if_block.m(target, anchor);
-      insert(target, if_block_anchor, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*eventItems, $i18n, undefined*/
-      3) {
-        each_value = ensure_array_like(
-          /*eventItems*/
-          ctx2[0]
-        );
-        group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, t2.parentNode, outro_and_destroy_block, create_each_block$2, t2, get_each_context$2);
-        check_outros();
-      }
-      if (
-        /*eventItems*/
-        ctx2[0].length === 0
-      ) {
-        if (if_block) {
-          if (dirty & /*eventItems*/
-          1) {
-            transition_in(if_block, 1);
-          }
-        } else {
-          if_block = create_if_block$1(ctx2);
-          if_block.c();
-          transition_in(if_block, 1);
-          if_block.m(if_block_anchor.parentNode, if_block_anchor);
-        }
-      } else if (if_block) {
-        group_outros();
-        transition_out(if_block, 1, 1, () => {
-          if_block = null;
-        });
-        check_outros();
-      }
-    },
-    i(local) {
-      if (current) return;
-      for (let i = 0; i < each_value.length; i += 1) {
-        transition_in(each_blocks[i]);
-      }
-      transition_in(if_block);
-      current = true;
-    },
-    o(local) {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        transition_out(each_blocks[i]);
-      }
-      transition_out(if_block);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-        detach(if_block_anchor);
-      }
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].d(detaching);
-      }
-      if (if_block) if_block.d(detaching);
-    }
-  };
-}
-function create_default_slot$4(ctx) {
-  let navbar;
-  let t0;
-  let calendarzswiat;
-  let t1;
-  let list;
-  let t2;
-  let eventsnotificationpopup;
-  let current;
-  navbar = new Navbar({
-    props: {
-      $$slots: { default: [create_default_slot_3$3] },
-      $$scope: { ctx }
-    }
-  });
-  calendarzswiat = new CalendarzSwiat({ props: { events: (
-    /*events*/
-    ctx[3]
-  ) } });
-  list = new List({
-    props: {
-      dividersIos: true,
-      mediaList: true,
-      outlineIos: true,
-      strongIos: true,
-      id: "calendar-events",
-      class: "no-margin no-safe-area-left",
-      $$slots: { default: [create_default_slot_1$4] },
-      $$scope: { ctx }
-    }
-  });
-  eventsnotificationpopup = new EventsNotificationPopup({
-    props: { eventItems: (
-      /*eventItems*/
-      ctx[0]
-    ) }
-  });
-  return {
-    c() {
-      create_component(navbar.$$.fragment);
-      t0 = space();
-      create_component(calendarzswiat.$$.fragment);
-      t1 = space();
-      create_component(list.$$.fragment);
-      t2 = space();
-      create_component(eventsnotificationpopup.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(navbar, target, anchor);
-      insert(target, t0, anchor);
-      mount_component(calendarzswiat, target, anchor);
-      insert(target, t1, anchor);
-      mount_component(list, target, anchor);
-      insert(target, t2, anchor);
-      mount_component(eventsnotificationpopup, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const navbar_changes = {};
-      if (dirty & /*$$scope, eventItems, $i18n*/
-      8388611) {
-        navbar_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      navbar.$set(navbar_changes);
-      const list_changes = {};
-      if (dirty & /*$$scope, eventItems, $i18n*/
-      8388611) {
-        list_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      list.$set(list_changes);
-      const eventsnotificationpopup_changes = {};
-      if (dirty & /*eventItems*/
-      1) eventsnotificationpopup_changes.eventItems = /*eventItems*/
-      ctx2[0];
-      eventsnotificationpopup.$set(eventsnotificationpopup_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(navbar.$$.fragment, local);
-      transition_in(calendarzswiat.$$.fragment, local);
-      transition_in(list.$$.fragment, local);
-      transition_in(eventsnotificationpopup.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(navbar.$$.fragment, local);
-      transition_out(calendarzswiat.$$.fragment, local);
-      transition_out(list.$$.fragment, local);
-      transition_out(eventsnotificationpopup.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t0);
-        detach(t1);
-        detach(t2);
-      }
-      destroy_component(navbar, detaching);
-      destroy_component(calendarzswiat, detaching);
-      destroy_component(list, detaching);
-      destroy_component(eventsnotificationpopup, detaching);
-    }
-  };
-}
-function create_fragment$4(ctx) {
-  let page;
-  let current;
-  page = new Page({
-    props: {
-      name: "home",
-      onPageInit: (
-        /*onPageInit*/
-        ctx[4]
-      ),
-      onPageBeforeRemove: (
-        /*onPageBeforeRemove*/
-        ctx[5]
-      ),
-      $$slots: { default: [create_default_slot$4] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(page.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(page, target, anchor);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      const page_changes = {};
-      if (dirty & /*$$scope, eventItems, $i18n*/
-      8388611) {
-        page_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      page.$set(page_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(page.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(page.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(page, detaching);
-    }
-  };
-}
-function instance$4($$self, $$props, $$invalidate) {
-  let $i18n;
-  const i18n2 = getContext("i18n");
-  component_subscribe($$self, i18n2, (value2) => $$invalidate(1, $i18n = value2));
-  let lng = $i18n.language;
-  $i18n.t("debugmsg:debug:langDefault");
-  const date = /* @__PURE__ */ new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDate();
-  const today = new Date(year, month, day);
-  let events = [];
-  let eventItems = [];
-  let monthNames = [];
-  let daysNames = [];
-  let SPEventsCalendar;
-  function renderEvents(SPEventsCalendar2) {
-    const currentDate = SPEventsCalendar2.value[0];
-    const currentEvents = events.filter((event) => event.date.getTime() >= currentDate.getTime() && event.date.getTime() < currentDate.getTime() + 24 * 60 * 60 * 1e3);
-    const newEventItems = [];
-    if (currentEvents.length) {
-      currentEvents.forEach((event) => {
-        const hours = event.hours;
-        let minutes = event.minutes;
-        if (minutes < 10) minutes = `0${minutes}`;
-        newEventItems.push({
-          title: event.title,
-          time: `${hours}:${minutes}`,
-          description: event.description,
-          color: event.color
-        });
-      });
-    }
-    $$invalidate(0, eventItems = newEventItems);
-    $i18n.on("languageChanged", (changed) => {
-      if (changed) {
-        eventItems.splice(0, eventItems.length);
-        renderEvents(SPEventsCalendar2);
-      }
-    });
-  }
-  function renderMonthNameLocales(arr) {
-    let newArrCollection = [];
-    arr.forEach((obj) => {
-      newArrCollection.push(obj);
-    });
-    monthNames = [...newArrCollection];
-  }
-  function renderDaysNameLocales(arr) {
-    let newArrCollection = [];
-    arr.forEach((obj) => {
-      newArrCollection.push(obj);
-    });
-    daysNames = [...newArrCollection];
-  }
-  function dynamicDateGenerator(value2 = lng) {
-    switch (value2) {
-      case "ru":
-        renderMonthNameLocales(resources.ru.ui.calendar.months);
-        renderDaysNameLocales(resources.ru.ui.calendar.days);
-        break;
-      case "en":
-        renderMonthNameLocales(resources.en.ui.calendar.months);
-        renderDaysNameLocales(resources.en.ui.calendar.days);
-        break;
-      default:
-        renderMonthNameLocales(resources.ru.ui.calendar.months);
-        renderDaysNameLocales(resources.ru.ui.calendar.days);
-    }
-    $i18n.on("languageChanged", (changed) => {
-      $i18n.t("debugmsg:debug:onLanguageChangedMsg");
-      dynamicDateGenerator(changed);
-      $i18n.t("debugmsg:debug:calendar:monthAfterLangChanged");
-    });
-  }
-  dynamicDateGenerator();
-  function onPageInit() {
-    const $$ = f7.$;
-    SPEventsCalendar = f7.calendar.create({
-      containerEl: "#calendar-container",
-      locale: lng,
-      firstDay: 1,
-      value: [today],
-      events,
-      renderToolbar() {
-        return `
-          <div class="toolbar calendar-custom-toolbar">
-            <div class="toolbar-inner">
-              <div class="left">
-                <a  class="link icon-only"><i class="icon icon-back"></i></a>
-              </div>
-              <div class="center"></div>
-              <div class="right">
-                <a  class="link icon-only"><i class="icon icon-forward"></i></a>
-              </div>
-            </div>
-          </div>
-        `.trim();
-      },
-      on: {
-        init(SPEventsCalendar2) {
-          $$(".calendar-custom-toolbar .center").text(`${monthNames[SPEventsCalendar2.currentMonth]}, ${SPEventsCalendar2.currentYear}`);
-          $$(".calendar-custom-toolbar .left .link").on("click", () => {
-            SPEventsCalendar2.prevMonth(300);
-          });
-          $$(".calendar-custom-toolbar .right .link").on("click", () => {
-            SPEventsCalendar2.nextMonth(300);
-          });
-          $i18n.on("languageChanged", (changed) => {
-            if (changed) {
-              $$(".calendar-custom-toolbar .center").text(`${monthNames[SPEventsCalendar2.currentMonth]}, ${SPEventsCalendar2.currentYear}`);
-              $$(".calendar-week-day").forEach((el, index2) => {
-                el.innerText = daysNames[index2];
-              });
-            }
-          });
-          renderEvents(SPEventsCalendar2);
-        },
-        monthYearChangeStart(SPEventsCalendar2) {
-          $$(".calendar-custom-toolbar .center").text(`${monthNames[SPEventsCalendar2.currentMonth]}, ${SPEventsCalendar2.currentYear}`);
-        },
-        change(SPEventsCalendar2) {
-          renderEvents(SPEventsCalendar2);
-        }
-      }
-    });
-  }
-  function onPageBeforeRemove() {
-    SPEventsCalendar.destroy();
-  }
-  return [eventItems, $i18n, i18n2, events, onPageInit, onPageBeforeRemove];
-}
-class Home extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance$4, create_fragment$4, safe_not_equal, {});
-  }
-}
-function create_default_slot_4$2(ctx) {
-  let t_value = (
-    /*$i18n*/
-    ctx[0].t("ui:about:navTitle") + ""
-  );
-  let t2;
-  return {
-    c() {
-      t2 = text(t_value);
-    },
-    m(target, anchor) {
-      insert(target, t2, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*$i18n*/
-      1 && t_value !== (t_value = /*$i18n*/
-      ctx2[0].t("ui:about:navTitle") + "")) set_data(t2, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-    }
-  };
-}
-function create_default_slot_3$2(ctx) {
-  let navleft;
-  let t2;
-  let navtitle;
-  let current;
-  navleft = new Nav_left({ props: { backLink: "back" } });
-  navtitle = new Nav_title({
-    props: {
-      $$slots: { default: [create_default_slot_4$2] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(navleft.$$.fragment);
-      t2 = space();
-      create_component(navtitle.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(navleft, target, anchor);
-      insert(target, t2, anchor);
-      mount_component(navtitle, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const navtitle_changes = {};
-      if (dirty & /*$$scope, $i18n*/
-      5) {
-        navtitle_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      navtitle.$set(navtitle_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(navleft.$$.fragment, local);
-      transition_in(navtitle.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(navleft.$$.fragment, local);
-      transition_out(navtitle.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-      destroy_component(navleft, detaching);
-      destroy_component(navtitle, detaching);
-    }
-  };
-}
-function create_default_slot_2$2(ctx) {
-  let t_value = (
-    /*$i18n*/
-    ctx[0].t("ui:about:blockTitle") + ""
-  );
-  let t2;
-  return {
-    c() {
-      t2 = text(t_value);
-    },
-    m(target, anchor) {
-      insert(target, t2, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*$i18n*/
-      1 && t_value !== (t_value = /*$i18n*/
-      ctx2[0].t("ui:about:blockTitle") + "")) set_data(t2, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-    }
-  };
-}
-function create_default_slot_1$3(ctx) {
-  let p;
-  let t_value = (
-    /*$i18n*/
-    ctx[0].t("ui:about:description") + ""
-  );
-  let t2;
-  return {
-    c() {
-      p = element("p");
-      t2 = text(t_value);
-    },
-    m(target, anchor) {
-      insert(target, p, anchor);
-      append(p, t2);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*$i18n*/
-      1 && t_value !== (t_value = /*$i18n*/
-      ctx2[0].t("ui:about:description") + "")) set_data(t2, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(p);
-      }
-    }
-  };
-}
-function create_default_slot$3(ctx) {
-  let navbar;
-  let t0;
-  let blocktitle;
-  let t1;
-  let block;
-  let current;
-  navbar = new Navbar({
-    props: {
-      $$slots: { default: [create_default_slot_3$2] },
-      $$scope: { ctx }
-    }
-  });
-  blocktitle = new Block_title({
-    props: {
-      medium: true,
-      $$slots: { default: [create_default_slot_2$2] },
-      $$scope: { ctx }
-    }
-  });
-  block = new Block({
-    props: {
-      strongIos: true,
-      outlineIos: true,
-      $$slots: { default: [create_default_slot_1$3] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(navbar.$$.fragment);
-      t0 = space();
-      create_component(blocktitle.$$.fragment);
-      t1 = space();
-      create_component(block.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(navbar, target, anchor);
-      insert(target, t0, anchor);
-      mount_component(blocktitle, target, anchor);
-      insert(target, t1, anchor);
-      mount_component(block, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const navbar_changes = {};
-      if (dirty & /*$$scope, $i18n*/
-      5) {
-        navbar_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      navbar.$set(navbar_changes);
-      const blocktitle_changes = {};
-      if (dirty & /*$$scope, $i18n*/
-      5) {
-        blocktitle_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      blocktitle.$set(blocktitle_changes);
-      const block_changes = {};
-      if (dirty & /*$$scope, $i18n*/
-      5) {
-        block_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      block.$set(block_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(navbar.$$.fragment, local);
-      transition_in(blocktitle.$$.fragment, local);
-      transition_in(block.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(navbar.$$.fragment, local);
-      transition_out(blocktitle.$$.fragment, local);
-      transition_out(block.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t0);
-        detach(t1);
-      }
-      destroy_component(navbar, detaching);
-      destroy_component(blocktitle, detaching);
-      destroy_component(block, detaching);
-    }
-  };
-}
-function create_fragment$3(ctx) {
-  let page;
-  let current;
-  page = new Page({
-    props: {
-      name: "about",
-      $$slots: { default: [create_default_slot$3] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(page.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(page, target, anchor);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      const page_changes = {};
-      if (dirty & /*$$scope, $i18n*/
-      5) {
-        page_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      page.$set(page_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(page.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(page.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(page, detaching);
-    }
-  };
-}
-function instance$3($$self, $$props, $$invalidate) {
-  let $i18n;
-  const i18n2 = getContext("i18n");
-  component_subscribe($$self, i18n2, (value2) => $$invalidate(0, $i18n = value2));
-  return [$i18n, i18n2];
-}
-class About extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance$3, create_fragment$3, safe_not_equal, {});
-  }
-}
-function get_each_context$1(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[3] = list[i];
-  return child_ctx;
-}
-function create_default_slot_5(ctx) {
-  let multiply;
-  let current;
-  multiply = new Multiply({});
-  return {
-    c() {
-      create_component(multiply.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(multiply, target, anchor);
-      current = true;
-    },
-    i(local) {
-      if (current) return;
-      transition_in(multiply.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(multiply.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(multiply, detaching);
-    }
-  };
-}
-function create_default_slot_4$1(ctx) {
-  let button;
-  let current;
-  button = new Button({
-    props: {
-      type: "button",
-      small: true,
-      tonal: true,
-      round: true,
-      popupClose: true,
-      $$slots: { default: [create_default_slot_5] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(button.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(button, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const button_changes = {};
-      if (dirty & /*$$scope*/
-      64) {
-        button_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button.$set(button_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(button.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(button.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(button, detaching);
-    }
-  };
-}
-function create_default_slot_3$1(ctx) {
-  let navright;
-  let current;
-  navright = new Nav_right({
-    props: {
-      $$slots: { default: [create_default_slot_4$1] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(navright.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(navright, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const navright_changes = {};
-      if (dirty & /*$$scope*/
-      64) {
-        navright_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      navright.$set(navright_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(navright.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(navright.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(navright, detaching);
-    }
-  };
-}
-function create_else_block(ctx) {
-  let p;
-  let t_value = (
-    /*popupProps*/
-    ctx[0].collection + ""
-  );
-  let t2;
-  return {
-    c() {
-      p = element("p");
-      t2 = text(t_value);
-    },
-    m(target, anchor) {
-      insert(target, p, anchor);
-      append(p, t2);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*popupProps*/
-      1 && t_value !== (t_value = /*popupProps*/
-      ctx2[0].collection + "")) set_data(t2, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(p);
-      }
-    }
-  };
-}
-function create_if_block(ctx) {
-  let each_1_anchor;
-  let each_value = ensure_array_like(
-    /*popupProps*/
-    ctx[0].collection
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
-  }
-  return {
-    c() {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      each_1_anchor = empty();
-    },
-    m(target, anchor) {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(target, anchor);
-        }
-      }
-      insert(target, each_1_anchor, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*popupProps*/
-      1) {
-        each_value = ensure_array_like(
-          /*popupProps*/
-          ctx2[0].collection
-        );
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$1(ctx2, each_value, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block$1(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-          }
-        }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value.length;
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(each_1_anchor);
-      }
-      destroy_each(each_blocks, detaching);
-    }
-  };
-}
-function create_each_block$1(ctx) {
-  let p;
-  let t_value = (
-    /*item*/
-    ctx[3] + ""
-  );
-  let t2;
-  return {
-    c() {
-      p = element("p");
-      t2 = text(t_value);
-    },
-    m(target, anchor) {
-      insert(target, p, anchor);
-      append(p, t2);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*popupProps*/
-      1 && t_value !== (t_value = /*item*/
-      ctx2[3] + "")) set_data(t2, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(p);
-      }
-    }
-  };
-}
-function create_default_slot_2$1(ctx) {
-  let if_block_anchor;
-  function select_block_type(ctx2, dirty) {
-    if (
-      /*popupProps*/
-      ctx2[0].iterable === true
-    ) return create_if_block;
-    return create_else_block;
-  }
-  let current_block_type = select_block_type(ctx);
-  let if_block = current_block_type(ctx);
-  return {
-    c() {
-      if_block.c();
-      if_block_anchor = empty();
-    },
-    m(target, anchor) {
-      if_block.m(target, anchor);
-      insert(target, if_block_anchor, anchor);
-    },
-    p(ctx2, dirty) {
-      if (current_block_type === (current_block_type = select_block_type(ctx2)) && if_block) {
-        if_block.p(ctx2, dirty);
-      } else {
-        if_block.d(1);
-        if_block = current_block_type(ctx2);
-        if (if_block) {
-          if_block.c();
-          if_block.m(if_block_anchor.parentNode, if_block_anchor);
-        }
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(if_block_anchor);
-      }
-      if_block.d(detaching);
-    }
-  };
-}
-function create_default_slot_1$2(ctx) {
-  let navbar;
-  let t2;
-  let block;
-  let current;
-  navbar = new Navbar({
-    props: {
-      title: (
-        /*$i18n*/
-        ctx[1].t("ui:wikipopup:title")
-      ),
-      $$slots: { default: [create_default_slot_3$1] },
-      $$scope: { ctx }
-    }
-  });
-  block = new Block({
-    props: {
-      strong: true,
-      $$slots: { default: [create_default_slot_2$1] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(navbar.$$.fragment);
-      t2 = space();
-      create_component(block.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(navbar, target, anchor);
-      insert(target, t2, anchor);
-      mount_component(block, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const navbar_changes = {};
-      if (dirty & /*$i18n*/
-      2) navbar_changes.title = /*$i18n*/
-      ctx2[1].t("ui:wikipopup:title");
-      if (dirty & /*$$scope*/
-      64) {
-        navbar_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      navbar.$set(navbar_changes);
-      const block_changes = {};
-      if (dirty & /*$$scope, popupProps*/
-      65) {
-        block_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      block.$set(block_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(navbar.$$.fragment, local);
-      transition_in(block.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(navbar.$$.fragment, local);
-      transition_out(block.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-      destroy_component(navbar, detaching);
-      destroy_component(block, detaching);
-    }
-  };
-}
-function create_default_slot$2(ctx) {
-  let page;
-  let current;
-  page = new Page({
-    props: {
-      $$slots: { default: [create_default_slot_1$2] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(page.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(page, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const page_changes = {};
-      if (dirty & /*$$scope, popupProps, $i18n*/
-      67) {
-        page_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      page.$set(page_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(page.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(page.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(page, detaching);
-    }
-  };
-}
-function create_fragment$2(ctx) {
-  let popup;
-  let current;
-  popup = new Popup2({
-    props: {
-      swipeToClose: "to-bottom",
-      $$slots: { default: [create_default_slot$2] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(popup.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(popup, target, anchor);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      const popup_changes = {};
-      if (dirty & /*$$scope, popupProps, $i18n*/
-      67) {
-        popup_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      popup.$set(popup_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(popup.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(popup.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(popup, detaching);
-    }
-  };
-}
-function instance$2($$self, $$props, $$invalidate) {
-  let $i18n;
-  const i18n2 = getContext("i18n");
-  component_subscribe($$self, i18n2, (value2) => $$invalidate(1, $i18n = value2));
-  let { popupProps = { collection: [], iterable: false } } = $$props;
-  console.log(popupProps);
-  $$self.$$set = ($$props2) => {
-    if ("popupProps" in $$props2) $$invalidate(0, popupProps = $$props2.popupProps);
-  };
-  return [popupProps, $i18n, i18n2];
-}
-class EventWikiPopup extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance$2, create_fragment$2, safe_not_equal, { popupProps: 0 });
-  }
-}
-const routes = [
-  {
-    path: "/",
-    component: Home,
-    master: true
-  },
-  {
-    path: "/about/",
-    component: About
-  },
-  {
-    path: "/event-wiki-popup/",
-    popup: {
-      component: EventWikiPopup
-    }
-  }
-];
+const i18n = createI18nStore(instance$2);
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[7] = list[i];
@@ -56409,13 +57319,7 @@ function create_default_slot(ctx) {
   let t2;
   let panel;
   let current;
-  view = new View2({
-    props: {
-      main: true,
-      browserHistory: true,
-      url: "/"
-    }
-  });
+  view = new View2({ props: { main: true, url: "/" } });
   panel = new Panel2({
     props: {
       swipe: true,
@@ -56548,7 +57452,8 @@ Framework7.use([
   SmartSelectComponent,
   Panel$1,
   PickerComponent,
-  Calendar2
+  Calendar2,
+  AccordionComponent
 ]);
 new App_1({
   target: document.getElementById("app")
