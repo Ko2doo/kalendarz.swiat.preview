@@ -15504,23 +15504,23 @@ let Calendar$1 = class Calendar extends Framework7Class {
       params = {};
     }
     super(params, [app2]);
-    const calendar = this;
-    calendar.params = extend$1({}, app2.params.calendar, params);
+    const calendar2 = this;
+    calendar2.params = extend$1({}, app2.params.calendar, params);
     let $containerEl;
-    if (calendar.params.containerEl) {
-      $containerEl = $(calendar.params.containerEl);
-      if ($containerEl.length === 0) return calendar;
+    if (calendar2.params.containerEl) {
+      $containerEl = $(calendar2.params.containerEl);
+      if ($containerEl.length === 0) return calendar2;
     }
     let $inputEl;
-    if (calendar.params.inputEl) {
-      $inputEl = $(calendar.params.inputEl);
+    if (calendar2.params.inputEl) {
+      $inputEl = $(calendar2.params.inputEl);
     }
-    const isHorizontal = calendar.params.direction === "horizontal";
+    const isHorizontal = calendar2.params.direction === "horizontal";
     let inverter = 1;
     if (isHorizontal) {
       inverter = app2.rtl ? -1 : 1;
     }
-    extend$1(calendar, {
+    extend$1(calendar2, {
       app: app2,
       $containerEl,
       containerEl: $containerEl && $containerEl[0],
@@ -15529,104 +15529,104 @@ let Calendar$1 = class Calendar extends Framework7Class {
       inputEl: $inputEl && $inputEl[0],
       initialized: false,
       opened: false,
-      url: calendar.params.url,
+      url: calendar2.params.url,
       isHorizontal,
       inverter,
       animating: false,
       allowTouchMove: true,
-      hasTimePicker: calendar.params.timePicker && !calendar.params.rangePicker && !calendar.params.multiple
+      hasTimePicker: calendar2.params.timePicker && !calendar2.params.rangePicker && !calendar2.params.multiple
     });
-    calendar.dayFormatter = (date) => {
-      const formatter = new Intl.DateTimeFormat(calendar.params.locale, {
+    calendar2.dayFormatter = (date) => {
+      const formatter = new Intl.DateTimeFormat(calendar2.params.locale, {
         day: "numeric"
       });
       return formatter.format(date).replace(/日/, "");
     };
-    calendar.monthFormatter = (date) => {
-      const formatter = new Intl.DateTimeFormat(calendar.params.locale, {
+    calendar2.monthFormatter = (date) => {
+      const formatter = new Intl.DateTimeFormat(calendar2.params.locale, {
         month: "long"
       });
       return formatter.format(date);
     };
-    calendar.yearFormatter = (date) => {
-      const formatter = new Intl.DateTimeFormat(calendar.params.locale, {
+    calendar2.yearFormatter = (date) => {
+      const formatter = new Intl.DateTimeFormat(calendar2.params.locale, {
         year: "numeric"
       });
       return formatter.format(date);
     };
-    calendar.timeSelectorFormatter = (date) => {
-      const formatter = new Intl.DateTimeFormat(calendar.params.locale, calendar.params.timePickerFormat);
+    calendar2.timeSelectorFormatter = (date) => {
+      const formatter = new Intl.DateTimeFormat(calendar2.params.locale, calendar2.params.timePickerFormat);
       return formatter.format(date);
     };
-    const timeFormatCheckDate = calendar.timeSelectorFormatter(/* @__PURE__ */ new Date()).toLowerCase();
-    calendar.is12HoursFormat = timeFormatCheckDate.indexOf("pm") >= 0 || timeFormatCheckDate.indexOf("am") >= 0;
+    const timeFormatCheckDate = calendar2.timeSelectorFormatter(/* @__PURE__ */ new Date()).toLowerCase();
+    calendar2.is12HoursFormat = timeFormatCheckDate.indexOf("pm") >= 0 || timeFormatCheckDate.indexOf("am") >= 0;
     let {
       monthNames,
       monthNamesShort,
       dayNames,
       dayNamesShort
-    } = calendar.params;
+    } = calendar2.params;
     const {
       monthNamesIntl,
       monthNamesShortIntl,
       dayNamesIntl,
       dayNamesShortIntl
-    } = calendar.getIntlNames();
+    } = calendar2.getIntlNames();
     if (monthNames === "auto") monthNames = monthNamesIntl;
     if (monthNamesShort === "auto") monthNamesShort = monthNamesShortIntl;
     if (dayNames === "auto") dayNames = dayNamesIntl;
     if (dayNamesShort === "auto") dayNamesShort = dayNamesShortIntl;
-    extend$1(calendar, {
+    extend$1(calendar2, {
       monthNames,
       monthNamesShort,
       dayNames,
       dayNamesShort
     });
     function onInputClick() {
-      calendar.open();
+      calendar2.open();
     }
     function onInputFocus(e) {
       e.preventDefault();
     }
     function onInputClear() {
-      calendar.setValue([]);
-      if (calendar.opened) {
-        calendar.update();
+      calendar2.setValue([]);
+      if (calendar2.opened) {
+        calendar2.update();
       }
     }
     function onHtmlClick(e) {
       const $targetEl = $(e.target);
-      if (calendar.destroyed || !calendar.params) return;
-      if (calendar.isPopover()) return;
-      if (!calendar.opened || calendar.closing) return;
+      if (calendar2.destroyed || !calendar2.params) return;
+      if (calendar2.isPopover()) return;
+      if (!calendar2.opened || calendar2.closing) return;
       if ($targetEl.closest('[class*="backdrop"]').length) return;
-      if (calendar.monthPickerPopover || calendar.yearPickerPopover || calendar.timePickerPopover) return;
+      if (calendar2.monthPickerPopover || calendar2.yearPickerPopover || calendar2.timePickerPopover) return;
       if ($inputEl && $inputEl.length > 0) {
         if ($targetEl[0] !== $inputEl[0] && $targetEl.closest(".sheet-modal, .calendar-modal").length === 0) {
-          calendar.close();
+          calendar2.close();
         }
       } else if ($(e.target).closest(".sheet-modal, .calendar-modal").length === 0) {
-        calendar.close();
+        calendar2.close();
       }
     }
-    extend$1(calendar, {
+    extend$1(calendar2, {
       attachInputEvents() {
-        calendar.$inputEl.on("click", onInputClick);
-        calendar.$inputEl.on("input:clear", onInputClear);
-        if (calendar.params.inputReadOnly) {
-          calendar.$inputEl.on("focus mousedown", onInputFocus);
-          if (calendar.$inputEl[0]) {
-            calendar.$inputEl[0].f7ValidateReadonly = true;
+        calendar2.$inputEl.on("click", onInputClick);
+        calendar2.$inputEl.on("input:clear", onInputClear);
+        if (calendar2.params.inputReadOnly) {
+          calendar2.$inputEl.on("focus mousedown", onInputFocus);
+          if (calendar2.$inputEl[0]) {
+            calendar2.$inputEl[0].f7ValidateReadonly = true;
           }
         }
       },
       detachInputEvents() {
-        calendar.$inputEl.off("click", onInputClick);
-        calendar.$inputEl.off("input:clear", onInputClear);
-        if (calendar.params.inputReadOnly) {
-          calendar.$inputEl.off("focus mousedown", onInputFocus);
-          if (calendar.$inputEl[0]) {
-            delete calendar.$inputEl[0].f7ValidateReadonly;
+        calendar2.$inputEl.off("click", onInputClick);
+        calendar2.$inputEl.off("input:clear", onInputClear);
+        if (calendar2.params.inputReadOnly) {
+          calendar2.$inputEl.off("focus mousedown", onInputFocus);
+          if (calendar2.$inputEl[0]) {
+            delete calendar2.$inputEl[0].f7ValidateReadonly;
           }
         }
       },
@@ -15637,7 +15637,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
         app2.off("click", onHtmlClick);
       }
     });
-    calendar.attachCalendarEvents = function attachCalendarEvents() {
+    calendar2.attachCalendarEvents = function attachCalendarEvents() {
       let allowItemClick = true;
       let isTouched;
       let isMoved;
@@ -15656,7 +15656,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
       const {
         $el,
         $wrapperEl
-      } = calendar;
+      } = calendar2;
       function handleTouchStart(e) {
         if (isMoved || isTouched || !e.isTrusted) return;
         isTouched = true;
@@ -15668,24 +15668,24 @@ let Calendar$1 = class Calendar extends Framework7Class {
         percentage = 0;
         allowItemClick = true;
         isScrolling = void 0;
-        currentTranslate = calendar.monthsTranslate;
+        currentTranslate = calendar2.monthsTranslate;
       }
       function handleTouchMove(e) {
         if (!isTouched || !e.isTrusted) return;
         const {
           isHorizontal: isH
-        } = calendar;
+        } = calendar2;
         touchCurrentX = e.type === "touchmove" ? e.targetTouches[0].pageX : e.pageX;
         touchCurrentY = e.type === "touchmove" ? e.targetTouches[0].pageY : e.pageY;
         if (typeof isScrolling === "undefined") {
           isScrolling = !!(isScrolling || Math.abs(touchCurrentY - touchStartY) > Math.abs(touchCurrentX - touchStartX));
         }
-        if (isH && isScrolling || !calendar.allowTouchMove) {
+        if (isH && isScrolling || !calendar2.allowTouchMove) {
           isTouched = false;
           return;
         }
         e.preventDefault();
-        if (calendar.animating) {
+        if (calendar2.animating) {
           isTouched = false;
           return;
         }
@@ -15698,7 +15698,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
         }
         touchesDiff = isH ? touchCurrentX - touchStartX : touchCurrentY - touchStartY;
         percentage = touchesDiff / (isH ? wrapperWidth : wrapperHeight);
-        currentTranslate = (calendar.monthsTranslate * calendar.inverter + percentage) * 100;
+        currentTranslate = (calendar2.monthsTranslate * calendar2.inverter + percentage) * 100;
         $wrapperEl.transform(`translate3d(${isH ? currentTranslate : 0}%, ${isH ? 0 : currentTranslate}%, 0)`);
       }
       function handleTouchEnd(e) {
@@ -15712,20 +15712,20 @@ let Calendar$1 = class Calendar extends Framework7Class {
         touchEndTime = (/* @__PURE__ */ new Date()).getTime();
         if (touchEndTime - touchStartTime < 300) {
           if (Math.abs(touchesDiff) < 10) {
-            calendar.resetMonth();
+            calendar2.resetMonth();
           } else if (touchesDiff >= 10) {
-            if (app2.rtl) calendar.nextMonth();
-            else calendar.prevMonth();
-          } else if (app2.rtl) calendar.prevMonth();
-          else calendar.nextMonth();
+            if (app2.rtl) calendar2.nextMonth();
+            else calendar2.prevMonth();
+          } else if (app2.rtl) calendar2.prevMonth();
+          else calendar2.nextMonth();
         } else if (percentage <= -0.5) {
-          if (app2.rtl) calendar.prevMonth();
-          else calendar.nextMonth();
+          if (app2.rtl) calendar2.prevMonth();
+          else calendar2.nextMonth();
         } else if (percentage >= 0.5) {
-          if (app2.rtl) calendar.nextMonth();
-          else calendar.prevMonth();
+          if (app2.rtl) calendar2.nextMonth();
+          else calendar2.prevMonth();
         } else {
-          calendar.resetMonth();
+          calendar2.resetMonth();
         }
         setTimeout(() => {
           allowItemClick = true;
@@ -15739,51 +15739,51 @@ let Calendar$1 = class Calendar extends Framework7Class {
         }
         if ($dayEl.length === 0) return;
         if ($dayEl.hasClass("calendar-day-disabled")) return;
-        if (!calendar.params.rangePicker) {
-          if ($dayEl.hasClass("calendar-day-next")) calendar.nextMonth();
-          if ($dayEl.hasClass("calendar-day-prev")) calendar.prevMonth();
+        if (!calendar2.params.rangePicker) {
+          if ($dayEl.hasClass("calendar-day-next")) calendar2.nextMonth();
+          if ($dayEl.hasClass("calendar-day-prev")) calendar2.prevMonth();
         }
         const dateYear = parseInt($dayEl.attr("data-year"), 10);
         const dateMonth = parseInt($dayEl.attr("data-month"), 10);
         const dateDay = parseInt($dayEl.attr("data-day"), 10);
-        calendar.emit("local::dayClick calendarDayClick", calendar, $dayEl[0], dateYear, dateMonth, dateDay);
-        if (!$dayEl.hasClass("calendar-day-selected") || calendar.params.multiple || calendar.params.rangePicker) {
+        calendar2.emit("local::dayClick calendarDayClick", calendar2, $dayEl[0], dateYear, dateMonth, dateDay);
+        if (!$dayEl.hasClass("calendar-day-selected") || calendar2.params.multiple || calendar2.params.rangePicker) {
           const valueToAdd = new Date(dateYear, dateMonth, dateDay, 0, 0, 0);
-          if (calendar.hasTimePicker) {
-            if (calendar.value && calendar.value[0]) {
-              valueToAdd.setHours(calendar.value[0].getHours(), calendar.value[0].getMinutes());
+          if (calendar2.hasTimePicker) {
+            if (calendar2.value && calendar2.value[0]) {
+              valueToAdd.setHours(calendar2.value[0].getHours(), calendar2.value[0].getMinutes());
             } else {
               valueToAdd.setHours((/* @__PURE__ */ new Date()).getHours(), (/* @__PURE__ */ new Date()).getMinutes());
             }
           }
-          calendar.addValue(valueToAdd);
+          calendar2.addValue(valueToAdd);
         }
-        if (calendar.params.closeOnSelect) {
-          if (calendar.params.rangePicker && calendar.value.length === 2 || !calendar.params.rangePicker) {
-            calendar.close();
+        if (calendar2.params.closeOnSelect) {
+          if (calendar2.params.rangePicker && calendar2.value.length === 2 || !calendar2.params.rangePicker) {
+            calendar2.close();
           }
         }
       }
       function onNextMonthClick() {
-        calendar.nextMonth();
+        calendar2.nextMonth();
       }
       function onPrevMonthClick() {
-        calendar.prevMonth();
+        calendar2.prevMonth();
       }
       function onNextYearClick() {
-        calendar.nextYear();
+        calendar2.nextYear();
       }
       function onPrevYearClick() {
-        calendar.prevYear();
+        calendar2.prevYear();
       }
       function onMonthSelectorClick() {
-        calendar.openMonthPicker();
+        calendar2.openMonthPicker();
       }
       function onYearSelectorClick() {
-        calendar.openYearPicker();
+        calendar2.openYearPicker();
       }
       function onTimeSelectorClick() {
-        calendar.openTimePicker();
+        calendar2.openTimePicker();
       }
       const passiveListener = app2.touchEvents.start === "touchstart" && getSupport().passiveListener ? {
         passive: true,
@@ -15793,45 +15793,45 @@ let Calendar$1 = class Calendar extends Framework7Class {
       $el.find(".calendar-next-month-button").on("click", onNextMonthClick);
       $el.find(".calendar-prev-year-button").on("click", onPrevYearClick);
       $el.find(".calendar-next-year-button").on("click", onNextYearClick);
-      if (calendar.params.monthPicker) {
+      if (calendar2.params.monthPicker) {
         $el.find(".current-month-value").on("click", onMonthSelectorClick);
       }
-      if (calendar.params.yearPicker) {
+      if (calendar2.params.yearPicker) {
         $el.find(".current-year-value").on("click", onYearSelectorClick);
       }
-      if (calendar.hasTimePicker) {
+      if (calendar2.hasTimePicker) {
         $el.find(".calendar-time-selector a").on("click", onTimeSelectorClick);
       }
       $wrapperEl.on("click", handleDayClick);
-      if (calendar.params.touchMove) {
+      if (calendar2.params.touchMove) {
         $wrapperEl.on(app2.touchEvents.start, handleTouchStart, passiveListener);
         app2.on("touchmove:active", handleTouchMove);
         app2.on("touchend:passive", handleTouchEnd);
       }
-      calendar.detachCalendarEvents = function detachCalendarEvents() {
+      calendar2.detachCalendarEvents = function detachCalendarEvents() {
         $el.find(".calendar-prev-month-button").off("click", onPrevMonthClick);
         $el.find(".calendar-next-month-button").off("click", onNextMonthClick);
         $el.find(".calendar-prev-year-button").off("click", onPrevYearClick);
         $el.find(".calendar-next-year-button").off("click", onNextYearClick);
-        if (calendar.params.monthPicker) {
+        if (calendar2.params.monthPicker) {
           $el.find(".current-month-value").off("click", onMonthSelectorClick);
         }
-        if (calendar.params.yearPicker) {
+        if (calendar2.params.yearPicker) {
           $el.find(".current-year-value").off("click", onYearSelectorClick);
         }
-        if (calendar.hasTimePicker) {
+        if (calendar2.hasTimePicker) {
           $el.find(".calendar-time-selector a").off("click", onTimeSelectorClick);
         }
         $wrapperEl.off("click", handleDayClick);
-        if (calendar.params.touchMove) {
+        if (calendar2.params.touchMove) {
           $wrapperEl.off(app2.touchEvents.start, handleTouchStart, passiveListener);
           app2.off("touchmove:active", handleTouchMove);
           app2.off("touchend:passive", handleTouchEnd);
         }
       };
     };
-    calendar.init();
-    return calendar;
+    calendar2.init();
+    return calendar2;
   }
   get view() {
     const {
@@ -15849,8 +15849,8 @@ let Calendar$1 = class Calendar extends Framework7Class {
     return view;
   }
   getIntlNames() {
-    const calendar = this;
-    const locale = calendar.params.locale;
+    const calendar2 = this;
+    const locale = calendar2.params.locale;
     const monthNamesIntl = [];
     const monthNamesShortIntl = [];
     const dayNamesIntl = [];
@@ -15872,7 +15872,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
     let yearEnded;
     for (let i = 0; i < 24; i += 1) {
       const date = (/* @__PURE__ */ new Date()).setMonth(i, 1);
-      const currentYear = calendar.yearFormatter(date);
+      const currentYear = calendar2.yearFormatter(date);
       if (year && currentYear !== year) {
         if (yearStarted) yearEnded = true;
         yearStarted = true;
@@ -15900,37 +15900,37 @@ let Calendar$1 = class Calendar extends Framework7Class {
     };
   }
   normalizeDate(date) {
-    const calendar = this;
+    const calendar2 = this;
     const d = new Date(date);
-    if (calendar.hasTimePicker) {
+    if (calendar2.hasTimePicker) {
       return new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes());
     }
     return new Date(d.getFullYear(), d.getMonth(), d.getDate());
   }
   normalizeValues(values) {
-    const calendar = this;
+    const calendar2 = this;
     let newValues = [];
     if (values && Array.isArray(values)) {
-      newValues = values.map((val2) => calendar.normalizeDate(val2));
+      newValues = values.map((val2) => calendar2.normalizeDate(val2));
     }
     return newValues;
   }
   initInput() {
-    const calendar = this;
-    if (!calendar.$inputEl) return;
-    if (calendar.params.inputReadOnly) calendar.$inputEl.prop("readOnly", true);
+    const calendar2 = this;
+    if (!calendar2.$inputEl) return;
+    if (calendar2.params.inputReadOnly) calendar2.$inputEl.prop("readOnly", true);
   }
   isPopover() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       app: app2,
       modal,
       params
-    } = calendar;
+    } = calendar2;
     const device = getDevice();
     if (params.openIn === "sheet") return false;
     if (modal && modal.type !== "popover") return false;
-    if (!calendar.inline && calendar.inputEl) {
+    if (!calendar2.inline && calendar2.inputEl) {
       if (params.openIn === "popover") return true;
       if (device.ios) {
         return !!device.ipad;
@@ -15942,7 +15942,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
     return false;
   }
   formatDate(d) {
-    const calendar = this;
+    const calendar2 = this;
     const date = new Date(d);
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -15954,11 +15954,11 @@ let Calendar$1 = class Calendar extends Framework7Class {
       monthNamesShort,
       dayNames,
       dayNamesShort
-    } = calendar;
+    } = calendar2;
     const {
       dateFormat,
       locale
-    } = calendar.params;
+    } = calendar2.params;
     function twoDigits(number) {
       return number < 10 ? `0${number}` : number;
     }
@@ -15975,7 +15975,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
         DD: dayNames[weekDay],
         D: dayNamesShort[weekDay]
       };
-      if (calendar.params.timePicker) {
+      if (calendar2.params.timePicker) {
         const hours = date.getHours();
         const minutes = date.getMinutes();
         const seconds = date.getSeconds();
@@ -16009,54 +16009,54 @@ let Calendar$1 = class Calendar extends Framework7Class {
     return formatter.format(date);
   }
   formatValue() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       value: value2
-    } = calendar;
-    if (calendar.params.formatValue) {
-      return calendar.params.formatValue.call(calendar, value2);
+    } = calendar2;
+    if (calendar2.params.formatValue) {
+      return calendar2.params.formatValue.call(calendar2, value2);
     }
-    return value2.map((v) => calendar.formatDate(v)).join(calendar.params.rangePicker ? " - " : ", ");
+    return value2.map((v) => calendar2.formatDate(v)).join(calendar2.params.rangePicker ? " - " : ", ");
   }
   addValue(newValue) {
-    const calendar = this;
+    const calendar2 = this;
     const {
       multiple,
       rangePicker,
       rangePickerMinDays,
       rangePickerMaxDays
-    } = calendar.params;
+    } = calendar2.params;
     if (multiple) {
-      if (!calendar.value) calendar.value = [];
+      if (!calendar2.value) calendar2.value = [];
       let inValuesIndex;
-      for (let i = 0; i < calendar.value.length; i += 1) {
-        if (new Date(newValue).getTime() === new Date(calendar.value[i]).getTime()) {
+      for (let i = 0; i < calendar2.value.length; i += 1) {
+        if (new Date(newValue).getTime() === new Date(calendar2.value[i]).getTime()) {
           inValuesIndex = i;
         }
       }
       if (typeof inValuesIndex === "undefined") {
-        calendar.value.push(newValue);
+        calendar2.value.push(newValue);
       } else {
-        calendar.value.splice(inValuesIndex, 1);
+        calendar2.value.splice(inValuesIndex, 1);
       }
-      calendar.updateValue();
+      calendar2.updateValue();
     } else if (rangePicker) {
-      if (!calendar.value) calendar.value = [];
-      if (calendar.value.length === 2 || calendar.value.length === 0) {
-        calendar.value = [];
+      if (!calendar2.value) calendar2.value = [];
+      if (calendar2.value.length === 2 || calendar2.value.length === 0) {
+        calendar2.value = [];
       }
-      if (calendar.value.length === 0 || Math.abs(calendar.value[0].getTime() - newValue.getTime()) >= (rangePickerMinDays - 1) * 60 * 60 * 24 * 1e3 && (rangePickerMaxDays === 0 || Math.abs(calendar.value[0].getTime() - newValue.getTime()) <= (rangePickerMaxDays - 1) * 60 * 60 * 24 * 1e3)) calendar.value.push(newValue);
-      else calendar.value = [];
-      calendar.value.sort((a, b) => a - b);
-      calendar.updateValue();
+      if (calendar2.value.length === 0 || Math.abs(calendar2.value[0].getTime() - newValue.getTime()) >= (rangePickerMinDays - 1) * 60 * 60 * 24 * 1e3 && (rangePickerMaxDays === 0 || Math.abs(calendar2.value[0].getTime() - newValue.getTime()) <= (rangePickerMaxDays - 1) * 60 * 60 * 24 * 1e3)) calendar2.value.push(newValue);
+      else calendar2.value = [];
+      calendar2.value.sort((a, b) => a - b);
+      calendar2.updateValue();
     } else {
-      calendar.value = [newValue];
-      calendar.updateValue();
+      calendar2.value = [newValue];
+      calendar2.updateValue();
     }
   }
   setValue(values) {
-    const calendar = this;
-    const currentValue = calendar.value;
+    const calendar2 = this;
+    const currentValue = calendar2.value;
     if (Array.isArray(currentValue) && Array.isArray(values) && currentValue.length === values.length) {
       let equal = true;
       currentValue.forEach((v, index2) => {
@@ -16064,22 +16064,22 @@ let Calendar$1 = class Calendar extends Framework7Class {
       });
       if (equal) return;
     }
-    calendar.value = values;
-    calendar.updateValue();
+    calendar2.value = values;
+    calendar2.updateValue();
   }
   getValue() {
-    const calendar = this;
-    return calendar.value;
+    const calendar2 = this;
+    return calendar2.value;
   }
   updateValue(onlyHeader) {
-    const calendar = this;
+    const calendar2 = this;
     const {
       $el,
       $wrapperEl,
       $inputEl,
       value: value2,
       params
-    } = calendar;
+    } = calendar2;
     let i;
     if ($el && $el.length > 0) {
       $wrapperEl.find(".calendar-day-selected").removeClass("calendar-day-selected calendar-day-selected-range calendar-day-selected-left calendar-day-selected-right");
@@ -16108,20 +16108,20 @@ let Calendar$1 = class Calendar extends Framework7Class {
         valueDate = new Date(rightDate);
         $wrapperEl.find(`.calendar-day[data-date="${valueDate.getFullYear()}-${valueDate.getMonth()}-${valueDate.getDate()}"]`).removeClass("calendar-day-selected-range").addClass("calendar-day-selected calendar-day-selected-right");
       } else {
-        for (i = 0; i < calendar.value.length; i += 1) {
+        for (i = 0; i < calendar2.value.length; i += 1) {
           valueDate = new Date(value2[i]);
           $wrapperEl.find(`.calendar-day[data-date="${valueDate.getFullYear()}-${valueDate.getMonth()}-${valueDate.getDate()}"]`).addClass("calendar-day-selected");
         }
       }
     }
     if (!onlyHeader) {
-      calendar.emit("local::change calendarChange", calendar, value2);
+      calendar2.emit("local::change calendarChange", calendar2, value2);
     }
-    if ($el && $el.length > 0 && calendar.hasTimePicker) {
-      $el.find(".calendar-time-selector a").text(value2 && value2.length ? calendar.timeSelectorFormatter(value2[0]) : calendar.params.timePickerPlaceholder);
+    if ($el && $el.length > 0 && calendar2.hasTimePicker) {
+      $el.find(".calendar-time-selector a").text(value2 && value2.length ? calendar2.timeSelectorFormatter(value2[0]) : calendar2.params.timePickerPlaceholder);
     }
     if ($inputEl && $inputEl.length || params.header) {
-      const inputValue = calendar.formatValue(value2);
+      const inputValue = calendar2.formatValue(value2);
       if (params.header && $el && $el.length) {
         $el.find(".calendar-selected-date").text(inputValue);
       }
@@ -16132,22 +16132,22 @@ let Calendar$1 = class Calendar extends Framework7Class {
     }
   }
   updateCurrentMonthYear(dir) {
-    const calendar = this;
+    const calendar2 = this;
     const {
       $months,
       $el,
       monthNames
-    } = calendar;
+    } = calendar2;
     let currentLocaleMonth;
     let currentLocaleYear;
     if (typeof dir === "undefined") {
-      calendar.currentMonth = parseInt($months.eq(1).attr("data-month"), 10);
-      calendar.currentYear = parseInt($months.eq(1).attr("data-year"), 10);
+      calendar2.currentMonth = parseInt($months.eq(1).attr("data-month"), 10);
+      calendar2.currentYear = parseInt($months.eq(1).attr("data-year"), 10);
       currentLocaleMonth = $months.eq(1).attr("data-locale-month");
       currentLocaleYear = $months.eq(1).attr("data-locale-year");
     } else {
-      calendar.currentMonth = parseInt($months.eq(dir === "next" ? $months.length - 1 : 0).attr("data-month"), 10);
-      calendar.currentYear = parseInt($months.eq(dir === "next" ? $months.length - 1 : 0).attr("data-year"), 10);
+      calendar2.currentMonth = parseInt($months.eq(dir === "next" ? $months.length - 1 : 0).attr("data-month"), 10);
+      calendar2.currentYear = parseInt($months.eq(dir === "next" ? $months.length - 1 : 0).attr("data-year"), 10);
       currentLocaleMonth = $months.eq(dir === "next" ? $months.length - 1 : 0).attr("data-locale-month");
       currentLocaleYear = $months.eq(dir === "next" ? $months.length - 1 : 0).attr("data-locale-year");
     }
@@ -16155,47 +16155,47 @@ let Calendar$1 = class Calendar extends Framework7Class {
     $el.find(".current-year-value").text(currentLocaleYear);
   }
   update() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       currentYear,
       currentMonth,
       $wrapperEl
-    } = calendar;
+    } = calendar2;
     const currentDate = new Date(currentYear, currentMonth);
-    const prevMonthHtml = calendar.renderMonth(currentDate, "prev");
-    const currentMonthHtml = calendar.renderMonth(currentDate);
-    const nextMonthHtml = calendar.renderMonth(currentDate, "next");
+    const prevMonthHtml = calendar2.renderMonth(currentDate, "prev");
+    const currentMonthHtml = calendar2.renderMonth(currentDate);
+    const nextMonthHtml = calendar2.renderMonth(currentDate, "next");
     $wrapperEl.transition(0).html(`${prevMonthHtml}${currentMonthHtml}${nextMonthHtml}`).transform("translate3d(0,0,0)");
-    calendar.$months = $wrapperEl.find(".calendar-month");
-    calendar.monthsTranslate = 0;
-    calendar.setMonthsTranslate();
-    calendar.$months.each((monthEl) => {
-      calendar.emit("local::monthAdd calendarMonthAdd", monthEl);
+    calendar2.$months = $wrapperEl.find(".calendar-month");
+    calendar2.monthsTranslate = 0;
+    calendar2.setMonthsTranslate();
+    calendar2.$months.each((monthEl) => {
+      calendar2.emit("local::monthAdd calendarMonthAdd", monthEl);
     });
   }
   onMonthChangeStart(dir) {
-    const calendar = this;
+    const calendar2 = this;
     const {
       $months,
       currentYear,
       currentMonth
-    } = calendar;
-    calendar.updateCurrentMonthYear(dir);
+    } = calendar2;
+    calendar2.updateCurrentMonthYear(dir);
     $months.removeClass("calendar-month-current calendar-month-prev calendar-month-next");
     const currentIndex = dir === "next" ? $months.length - 1 : 0;
     $months.eq(currentIndex).addClass("calendar-month-current");
     $months.eq(dir === "next" ? currentIndex - 1 : currentIndex + 1).addClass(dir === "next" ? "calendar-month-prev" : "calendar-month-next");
-    calendar.emit("local::monthYearChangeStart calendarMonthYearChangeStart", calendar, currentYear, currentMonth);
+    calendar2.emit("local::monthYearChangeStart calendarMonthYearChangeStart", calendar2, currentYear, currentMonth);
   }
   onMonthChangeEnd(dir, rebuildBoth) {
-    const calendar = this;
+    const calendar2 = this;
     const {
       currentYear,
       currentMonth,
       $wrapperEl,
       monthsTranslate
-    } = calendar;
-    calendar.animating = false;
+    } = calendar2;
+    calendar2.animating = false;
     let nextMonthHtml;
     let prevMonthHtml;
     let currentMonthHtml;
@@ -16205,11 +16205,11 @@ let Calendar$1 = class Calendar extends Framework7Class {
       rebuildBoth = true;
     }
     if (!rebuildBoth) {
-      currentMonthHtml = calendar.renderMonth(new Date(currentYear, currentMonth), dir);
+      currentMonthHtml = calendar2.renderMonth(new Date(currentYear, currentMonth), dir);
     } else {
       $wrapperEl.find(".calendar-month-next, .calendar-month-prev").remove();
-      prevMonthHtml = calendar.renderMonth(new Date(currentYear, currentMonth), "prev");
-      nextMonthHtml = calendar.renderMonth(new Date(currentYear, currentMonth), "next");
+      prevMonthHtml = calendar2.renderMonth(new Date(currentYear, currentMonth), "prev");
+      nextMonthHtml = calendar2.renderMonth(new Date(currentYear, currentMonth), "next");
     }
     if (dir === "next" || rebuildBoth) {
       $wrapperEl.append(currentMonthHtml || nextMonthHtml);
@@ -16218,21 +16218,21 @@ let Calendar$1 = class Calendar extends Framework7Class {
       $wrapperEl.prepend(currentMonthHtml || prevMonthHtml);
     }
     const $months = $wrapperEl.find(".calendar-month");
-    calendar.$months = $months;
-    calendar.setMonthsTranslate(monthsTranslate);
-    calendar.emit("local::monthAdd calendarMonthAdd", calendar, dir === "next" ? $months.eq($months.length - 1)[0] : $months.eq(0)[0]);
-    calendar.emit("local::monthYearChangeEnd calendarMonthYearChangeEnd", calendar, currentYear, currentMonth);
+    calendar2.$months = $months;
+    calendar2.setMonthsTranslate(monthsTranslate);
+    calendar2.emit("local::monthAdd calendarMonthAdd", calendar2, dir === "next" ? $months.eq($months.length - 1)[0] : $months.eq(0)[0]);
+    calendar2.emit("local::monthYearChangeEnd calendarMonthYearChangeEnd", calendar2, currentYear, currentMonth);
   }
   setMonthsTranslate(translate) {
-    const calendar = this;
+    const calendar2 = this;
     const {
       $months,
       isHorizontal: isH,
       inverter
-    } = calendar;
-    translate = translate || calendar.monthsTranslate || 0;
-    if (typeof calendar.monthsTranslate === "undefined") {
-      calendar.monthsTranslate = translate;
+    } = calendar2;
+    translate = translate || calendar2.monthsTranslate || 0;
+    if (typeof calendar2.monthsTranslate === "undefined") {
+      calendar2.monthsTranslate = translate;
     }
     $months.removeClass("calendar-month-current calendar-month-prev calendar-month-next");
     const prevMonthTranslate = -(translate + 1) * 100 * inverter;
@@ -16243,126 +16243,126 @@ let Calendar$1 = class Calendar extends Framework7Class {
     $months.eq(2).transform(`translate3d(${isH ? nextMonthTranslate : 0}%, ${isH ? 0 : nextMonthTranslate}%, 0)`).addClass("calendar-month-next");
   }
   nextMonth(transition2) {
-    const calendar = this;
+    const calendar2 = this;
     const {
       params,
       $wrapperEl,
       inverter,
       isHorizontal: isH
-    } = calendar;
+    } = calendar2;
     if (typeof transition2 === "undefined" || typeof transition2 === "object") {
       transition2 = "";
       if (!params.animate) transition2 = 0;
     }
-    const nextMonth = parseInt(calendar.$months.eq(calendar.$months.length - 1).attr("data-month"), 10);
-    const nextYear = parseInt(calendar.$months.eq(calendar.$months.length - 1).attr("data-year"), 10);
+    const nextMonth = parseInt(calendar2.$months.eq(calendar2.$months.length - 1).attr("data-month"), 10);
+    const nextYear = parseInt(calendar2.$months.eq(calendar2.$months.length - 1).attr("data-year"), 10);
     const nextDate = new Date(nextYear, nextMonth);
     const nextDateTime = nextDate.getTime();
-    const transitionEndCallback = !calendar.animating;
+    const transitionEndCallback = !calendar2.animating;
     if (params.maxDate) {
       if (nextDateTime > new Date(params.maxDate).getTime()) {
-        calendar.resetMonth();
+        calendar2.resetMonth();
         return;
       }
     }
-    calendar.monthsTranslate -= 1;
-    if (nextMonth === calendar.currentMonth) {
-      const nextMonthTranslate = -calendar.monthsTranslate * 100 * inverter;
-      const nextMonthHtml = $(calendar.renderMonth(nextDateTime, "next")).transform(`translate3d(${isH ? nextMonthTranslate : 0}%, ${isH ? 0 : nextMonthTranslate}%, 0)`).addClass("calendar-month-next");
+    calendar2.monthsTranslate -= 1;
+    if (nextMonth === calendar2.currentMonth) {
+      const nextMonthTranslate = -calendar2.monthsTranslate * 100 * inverter;
+      const nextMonthHtml = $(calendar2.renderMonth(nextDateTime, "next")).transform(`translate3d(${isH ? nextMonthTranslate : 0}%, ${isH ? 0 : nextMonthTranslate}%, 0)`).addClass("calendar-month-next");
       $wrapperEl.append(nextMonthHtml[0]);
-      calendar.$months = $wrapperEl.find(".calendar-month");
-      calendar.emit("local::monthAdd calendarMonthAdd", calendar.$months.eq(calendar.$months.length - 1)[0]);
+      calendar2.$months = $wrapperEl.find(".calendar-month");
+      calendar2.emit("local::monthAdd calendarMonthAdd", calendar2.$months.eq(calendar2.$months.length - 1)[0]);
     }
-    calendar.animating = true;
-    calendar.onMonthChangeStart("next");
-    const translate = calendar.monthsTranslate * 100 * inverter;
+    calendar2.animating = true;
+    calendar2.onMonthChangeStart("next");
+    const translate = calendar2.monthsTranslate * 100 * inverter;
     $wrapperEl.transition(transition2).transform(`translate3d(${isH ? translate : 0}%, ${isH ? 0 : translate}%, 0)`);
     if (transitionEndCallback) {
       $wrapperEl.transitionEnd(() => {
-        calendar.onMonthChangeEnd("next");
+        calendar2.onMonthChangeEnd("next");
       });
     }
     if (!params.animate) {
-      calendar.onMonthChangeEnd("next");
+      calendar2.onMonthChangeEnd("next");
     }
   }
   prevMonth(transition2) {
-    const calendar = this;
+    const calendar2 = this;
     const {
       params,
       $wrapperEl,
       inverter,
       isHorizontal: isH
-    } = calendar;
+    } = calendar2;
     if (typeof transition2 === "undefined" || typeof transition2 === "object") {
       transition2 = "";
       if (!params.animate) transition2 = 0;
     }
-    const prevMonth = parseInt(calendar.$months.eq(0).attr("data-month"), 10);
-    const prevYear = parseInt(calendar.$months.eq(0).attr("data-year"), 10);
+    const prevMonth = parseInt(calendar2.$months.eq(0).attr("data-month"), 10);
+    const prevYear = parseInt(calendar2.$months.eq(0).attr("data-year"), 10);
     const prevDate = new Date(prevYear, prevMonth + 1, -1);
     const prevDateTime = prevDate.getTime();
-    const transitionEndCallback = !calendar.animating;
+    const transitionEndCallback = !calendar2.animating;
     if (params.minDate) {
       let minDate = new Date(params.minDate);
       minDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
       if (prevDateTime < minDate.getTime()) {
-        calendar.resetMonth();
+        calendar2.resetMonth();
         return;
       }
     }
-    calendar.monthsTranslate += 1;
-    if (prevMonth === calendar.currentMonth) {
-      const prevMonthTranslate = -calendar.monthsTranslate * 100 * inverter;
-      const prevMonthHtml = $(calendar.renderMonth(prevDateTime, "prev")).transform(`translate3d(${isH ? prevMonthTranslate : 0}%, ${isH ? 0 : prevMonthTranslate}%, 0)`).addClass("calendar-month-prev");
+    calendar2.monthsTranslate += 1;
+    if (prevMonth === calendar2.currentMonth) {
+      const prevMonthTranslate = -calendar2.monthsTranslate * 100 * inverter;
+      const prevMonthHtml = $(calendar2.renderMonth(prevDateTime, "prev")).transform(`translate3d(${isH ? prevMonthTranslate : 0}%, ${isH ? 0 : prevMonthTranslate}%, 0)`).addClass("calendar-month-prev");
       $wrapperEl.prepend(prevMonthHtml[0]);
-      calendar.$months = $wrapperEl.find(".calendar-month");
-      calendar.emit("local::monthAdd calendarMonthAdd", calendar.$months.eq(0)[0]);
+      calendar2.$months = $wrapperEl.find(".calendar-month");
+      calendar2.emit("local::monthAdd calendarMonthAdd", calendar2.$months.eq(0)[0]);
     }
-    calendar.animating = true;
-    calendar.onMonthChangeStart("prev");
-    const translate = calendar.monthsTranslate * 100 * inverter;
+    calendar2.animating = true;
+    calendar2.onMonthChangeStart("prev");
+    const translate = calendar2.monthsTranslate * 100 * inverter;
     $wrapperEl.transition(transition2).transform(`translate3d(${isH ? translate : 0}%, ${isH ? 0 : translate}%, 0)`);
     if (transitionEndCallback) {
       $wrapperEl.transitionEnd(() => {
-        calendar.onMonthChangeEnd("prev");
+        calendar2.onMonthChangeEnd("prev");
       });
     }
     if (!params.animate) {
-      calendar.onMonthChangeEnd("prev");
+      calendar2.onMonthChangeEnd("prev");
     }
   }
   resetMonth(transition2) {
     if (transition2 === void 0) {
       transition2 = "";
     }
-    const calendar = this;
+    const calendar2 = this;
     const {
       $wrapperEl,
       inverter,
       isHorizontal: isH,
       monthsTranslate
-    } = calendar;
+    } = calendar2;
     const translate = monthsTranslate * 100 * inverter;
     $wrapperEl.transition(transition2).transform(`translate3d(${isH ? translate : 0}%, ${isH ? 0 : translate}%, 0)`);
   }
   // eslint-disable-next-line
   setYearMonth(year, month, transition2) {
-    const calendar = this;
+    const calendar2 = this;
     const {
       params,
       isHorizontal: isH,
       $wrapperEl,
       inverter
-    } = calendar;
-    if (typeof year === "undefined") year = calendar.currentYear;
-    if (typeof month === "undefined") month = calendar.currentMonth;
+    } = calendar2;
+    if (typeof year === "undefined") year = calendar2.currentYear;
+    if (typeof month === "undefined") month = calendar2.currentMonth;
     if (typeof transition2 === "undefined" || typeof transition2 === "object") {
       transition2 = "";
       if (!params.animate) transition2 = 0;
     }
     let targetDate;
-    if (year < calendar.currentYear) {
+    if (year < calendar2.currentYear) {
       targetDate = new Date(year, month + 1, -1).getTime();
     } else {
       targetDate = new Date(year, month).getTime();
@@ -16377,49 +16377,49 @@ let Calendar$1 = class Calendar extends Framework7Class {
         return false;
       }
     }
-    const currentDate = new Date(calendar.currentYear, calendar.currentMonth).getTime();
+    const currentDate = new Date(calendar2.currentYear, calendar2.currentMonth).getTime();
     const dir = targetDate > currentDate ? "next" : "prev";
-    const newMonthHTML = calendar.renderMonth(new Date(year, month));
-    calendar.monthsTranslate = calendar.monthsTranslate || 0;
-    const prevTranslate = calendar.monthsTranslate;
+    const newMonthHTML = calendar2.renderMonth(new Date(year, month));
+    calendar2.monthsTranslate = calendar2.monthsTranslate || 0;
+    const prevTranslate = calendar2.monthsTranslate;
     let monthTranslate;
-    const transitionEndCallback = !calendar.animating && transition2 !== 0;
+    const transitionEndCallback = !calendar2.animating && transition2 !== 0;
     if (targetDate > currentDate) {
-      calendar.monthsTranslate -= 1;
-      if (!calendar.animating) calendar.$months.eq(calendar.$months.length - 1).remove();
+      calendar2.monthsTranslate -= 1;
+      if (!calendar2.animating) calendar2.$months.eq(calendar2.$months.length - 1).remove();
       $wrapperEl.append(newMonthHTML);
-      calendar.$months = $wrapperEl.find(".calendar-month");
+      calendar2.$months = $wrapperEl.find(".calendar-month");
       monthTranslate = -(prevTranslate - 1) * 100 * inverter;
-      calendar.$months.eq(calendar.$months.length - 1).transform(`translate3d(${isH ? monthTranslate : 0}%, ${isH ? 0 : monthTranslate}%, 0)`).addClass("calendar-month-next");
+      calendar2.$months.eq(calendar2.$months.length - 1).transform(`translate3d(${isH ? monthTranslate : 0}%, ${isH ? 0 : monthTranslate}%, 0)`).addClass("calendar-month-next");
     } else {
-      calendar.monthsTranslate += 1;
-      if (!calendar.animating) calendar.$months.eq(0).remove();
+      calendar2.monthsTranslate += 1;
+      if (!calendar2.animating) calendar2.$months.eq(0).remove();
       $wrapperEl.prepend(newMonthHTML);
-      calendar.$months = $wrapperEl.find(".calendar-month");
+      calendar2.$months = $wrapperEl.find(".calendar-month");
       monthTranslate = -(prevTranslate + 1) * 100 * inverter;
-      calendar.$months.eq(0).transform(`translate3d(${isH ? monthTranslate : 0}%, ${isH ? 0 : monthTranslate}%, 0)`).addClass("calendar-month-prev");
+      calendar2.$months.eq(0).transform(`translate3d(${isH ? monthTranslate : 0}%, ${isH ? 0 : monthTranslate}%, 0)`).addClass("calendar-month-prev");
     }
-    calendar.emit("local::monthAdd calendarMonthAdd", dir === "next" ? calendar.$months.eq(calendar.$months.length - 1)[0] : calendar.$months.eq(0)[0]);
-    calendar.animating = true;
-    calendar.onMonthChangeStart(dir);
-    const wrapperTranslate = calendar.monthsTranslate * 100 * inverter;
+    calendar2.emit("local::monthAdd calendarMonthAdd", dir === "next" ? calendar2.$months.eq(calendar2.$months.length - 1)[0] : calendar2.$months.eq(0)[0]);
+    calendar2.animating = true;
+    calendar2.onMonthChangeStart(dir);
+    const wrapperTranslate = calendar2.monthsTranslate * 100 * inverter;
     $wrapperEl.transition(transition2).transform(`translate3d(${isH ? wrapperTranslate : 0}%, ${isH ? 0 : wrapperTranslate}%, 0)`);
     if (transitionEndCallback) {
       $wrapperEl.transitionEnd(() => {
-        calendar.onMonthChangeEnd(dir, true);
+        calendar2.onMonthChangeEnd(dir, true);
       });
     }
     if (!params.animate || transition2 === 0) {
-      calendar.onMonthChangeEnd(dir, true);
+      calendar2.onMonthChangeEnd(dir, true);
     }
   }
   nextYear() {
-    const calendar = this;
-    calendar.setYearMonth(calendar.currentYear + 1);
+    const calendar2 = this;
+    calendar2.setYearMonth(calendar2.currentYear + 1);
   }
   prevYear() {
-    const calendar = this;
-    calendar.setYearMonth(calendar.currentYear - 1);
+    const calendar2 = this;
+    calendar2.setYearMonth(calendar2.currentYear - 1);
   }
   // eslint-disable-next-line
   dateInRange(dayDate, range) {
@@ -16477,29 +16477,29 @@ let Calendar$1 = class Calendar extends Framework7Class {
     return new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
   }
   renderMonths(date) {
-    const calendar = this;
-    if (calendar.params.renderMonths) {
-      return calendar.params.renderMonths.call(calendar, date);
+    const calendar2 = this;
+    if (calendar2.params.renderMonths) {
+      return calendar2.params.renderMonths.call(calendar2, date);
     }
     return $jsx$1("div", {
       class: "calendar-months-wrapper"
-    }, calendar.renderMonth(date, "prev"), calendar.renderMonth(date), calendar.renderMonth(date, "next"));
+    }, calendar2.renderMonth(date, "prev"), calendar2.renderMonth(date), calendar2.renderMonth(date, "next"));
   }
   renderMonth(d, offset2) {
-    const calendar = this;
+    const calendar2 = this;
     const {
       params,
       value: value2
-    } = calendar;
+    } = calendar2;
     if (params.renderMonth) {
-      return params.renderMonth.call(calendar, d, offset2);
+      return params.renderMonth.call(calendar2, d, offset2);
     }
     let date = new Date(d);
     let year = date.getFullYear();
     let month = date.getMonth();
-    let localeMonth = calendar.monthNames.indexOf(calendar.monthFormatter(date));
+    let localeMonth = calendar2.monthNames.indexOf(calendar2.monthFormatter(date));
     if (localeMonth < 0) localeMonth = month;
-    let localeYear = calendar.yearFormatter(date);
+    let localeYear = calendar2.yearFormatter(date);
     if (offset2 === "next") {
       if (month === 11) date = new Date(year + 1, 0);
       else date = new Date(year, month + 1, 1);
@@ -16511,9 +16511,9 @@ let Calendar$1 = class Calendar extends Framework7Class {
     if (offset2 === "next" || offset2 === "prev") {
       month = date.getMonth();
       year = date.getFullYear();
-      localeMonth = calendar.monthNames.indexOf(calendar.monthFormatter(date));
+      localeMonth = calendar2.monthNames.indexOf(calendar2.monthFormatter(date));
       if (localeMonth < 0) localeMonth = month;
-      localeYear = calendar.yearFormatter(date);
+      localeYear = calendar2.yearFormatter(date);
     }
     const currentValues = [];
     const today = (/* @__PURE__ */ new Date()).setHours(0, 0, 0, 0);
@@ -16521,8 +16521,8 @@ let Calendar$1 = class Calendar extends Framework7Class {
     const maxDate = params.maxDate ? new Date(params.maxDate).getTime() : null;
     const rows = 6;
     const cols = 7;
-    const daysInPrevMonth = calendar.daysInMonth(new Date(date.getFullYear(), date.getMonth()).getTime() - 10 * 24 * 60 * 60 * 1e3);
-    const daysInMonth = calendar.daysInMonth(date);
+    const daysInPrevMonth = calendar2.daysInMonth(new Date(date.getFullYear(), date.getMonth()).getTime() - 10 * 24 * 60 * 60 * 1e3);
+    const daysInMonth = calendar2.daysInMonth(date);
     const minDayNumber = params.firstDay === 6 ? 0 : 1;
     let monthHtml = "";
     let dayIndex = 0 + (params.firstDay - 1);
@@ -16584,7 +16584,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
         let eventsHtml = "";
         hasEvents = false;
         if (params.events) {
-          if (calendar.dateInRange(dayDate, params.events)) {
+          if (calendar2.dateInRange(dayDate, params.events)) {
             hasEvents = true;
           }
         }
@@ -16599,7 +16599,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
             const eventDots = [];
             params.events.forEach((ev) => {
               const color = ev.color || "";
-              if (eventDots.indexOf(color) < 0 && calendar.dateInRange(dayDate, ev)) {
+              if (eventDots.indexOf(color) < 0 && calendar2.dateInRange(dayDate, ev)) {
                 eventDots.push(color);
               }
             });
@@ -16614,7 +16614,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
         }
         if (params.rangesClasses) {
           for (let k = 0; k < params.rangesClasses.length; k += 1) {
-            if (calendar.dateInRange(dayDate, params.rangesClasses[k].range)) {
+            if (calendar2.dateInRange(dayDate, params.rangesClasses[k].range)) {
               addClass2 += ` ${params.rangesClasses[k].cssClass}`;
             }
           }
@@ -16624,7 +16624,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
           disabled = true;
         }
         if (params.disabled) {
-          if (calendar.dateInRange(dayDate, params.disabled)) {
+          if (calendar2.dateInRange(dayDate, params.disabled)) {
             disabled = true;
           }
         }
@@ -16634,7 +16634,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
         dayDate = new Date(dayDate);
         const dayYear = dayDate.getFullYear();
         const dayMonth = dayDate.getMonth();
-        const dayNumberDisplay = calendar.dayFormatter(dayDate);
+        const dayNumberDisplay = calendar2.dayFormatter(dayDate);
         rowHtml += `
           <div data-year="${dayYear}" data-month="${dayMonth}" data-day="${dayNumber}" class="calendar-day${addClass2}" data-date="${dayYear}-${dayMonth}-${dayNumber}">
             <span class="calendar-day-number">${dayNumberDisplay}${eventsHtml}</span>
@@ -16646,17 +16646,17 @@ let Calendar$1 = class Calendar extends Framework7Class {
     return monthHtml;
   }
   renderWeekHeader() {
-    const calendar = this;
-    if (calendar.params.renderWeekHeader) {
-      return calendar.params.renderWeekHeader.call(calendar);
+    const calendar2 = this;
+    if (calendar2.params.renderWeekHeader) {
+      return calendar2.params.renderWeekHeader.call(calendar2);
     }
     const {
       params
-    } = calendar;
+    } = calendar2;
     let weekDaysHtml = "";
     for (let i = 0; i < 7; i += 1) {
       const dayIndex = i + params.firstDay > 6 ? i - 7 + params.firstDay : i + params.firstDay;
-      const dayName = calendar.dayNamesShort[dayIndex];
+      const dayName = calendar2.dayNamesShort[dayIndex];
       weekDaysHtml += `<div class="calendar-week-day">${dayName}</div>`;
     }
     return $jsx$1("div", {
@@ -16664,9 +16664,9 @@ let Calendar$1 = class Calendar extends Framework7Class {
     }, weekDaysHtml);
   }
   renderMonthSelector() {
-    const calendar = this;
-    if (calendar.params.renderMonthSelector) {
-      return calendar.params.renderMonthSelector.call(calendar);
+    const calendar2 = this;
+    if (calendar2.params.renderMonthSelector) {
+      return calendar2.params.renderMonthSelector.call(calendar2);
     }
     return $jsx$1("div", {
       class: "calendar-month-selector"
@@ -16674,7 +16674,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
       class: "link icon-only calendar-prev-month-button"
     }, $jsx$1("i", {
       class: "icon icon-prev"
-    })), calendar.params.monthPicker ? $jsx$1("a", {
+    })), calendar2.params.monthPicker ? $jsx$1("a", {
       class: "current-month-value link"
     }) : $jsx$1("span", {
       class: "current-month-value"
@@ -16685,9 +16685,9 @@ let Calendar$1 = class Calendar extends Framework7Class {
     })));
   }
   renderYearSelector() {
-    const calendar = this;
-    if (calendar.params.renderYearSelector) {
-      return calendar.params.renderYearSelector.call(calendar);
+    const calendar2 = this;
+    if (calendar2.params.renderYearSelector) {
+      return calendar2.params.renderYearSelector.call(calendar2);
     }
     return $jsx$1("div", {
       class: "calendar-year-selector"
@@ -16695,7 +16695,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
       class: "link icon-only calendar-prev-year-button"
     }, $jsx$1("i", {
       class: "icon icon-prev"
-    })), calendar.params.yearPicker ? $jsx$1("a", {
+    })), calendar2.params.yearPicker ? $jsx$1("a", {
       class: "current-year-value link"
     }) : $jsx$1("span", {
       class: "current-year-value"
@@ -16707,53 +16707,53 @@ let Calendar$1 = class Calendar extends Framework7Class {
   }
   // eslint-disable-next-line
   renderTimeSelector() {
-    const calendar = this;
-    const value2 = calendar.value && calendar.value[0];
+    const calendar2 = this;
+    const value2 = calendar2.value && calendar2.value[0];
     let timeString;
-    if (value2) timeString = calendar.timeSelectorFormatter(value2);
+    if (value2) timeString = calendar2.timeSelectorFormatter(value2);
     return $jsx$1("div", {
       class: "calendar-time-selector"
-    }, $jsx$1("span", null, calendar.params.timePickerLabel), $jsx$1("a", {
+    }, $jsx$1("span", null, calendar2.params.timePickerLabel), $jsx$1("a", {
       class: "link"
-    }, timeString || calendar.params.timePickerPlaceholder));
+    }, timeString || calendar2.params.timePickerPlaceholder));
   }
   renderHeader() {
-    const calendar = this;
-    if (calendar.params.renderHeader) {
-      return calendar.params.renderHeader.call(calendar);
+    const calendar2 = this;
+    if (calendar2.params.renderHeader) {
+      return calendar2.params.renderHeader.call(calendar2);
     }
     return $jsx$1("div", {
       class: "calendar-header"
     }, $jsx$1("div", {
       class: "calendar-selected-date"
-    }, calendar.params.headerPlaceholder));
+    }, calendar2.params.headerPlaceholder));
   }
   renderFooter() {
-    const calendar = this;
-    const app2 = calendar.app;
-    if (calendar.params.renderFooter) {
-      return calendar.params.renderFooter.call(calendar);
+    const calendar2 = this;
+    const app2 = calendar2.app;
+    if (calendar2.params.renderFooter) {
+      return calendar2.params.renderFooter.call(calendar2);
     }
     return $jsx$1("div", {
       class: "calendar-footer"
     }, $jsx$1("a", {
       class: `${app2.theme === "md" ? "button button-round" : "link"} calendar-close sheet-close popover-close`
-    }, calendar.params.toolbarCloseText));
+    }, calendar2.params.toolbarCloseText));
   }
   renderToolbar() {
-    const calendar = this;
-    if (calendar.params.renderToolbar) {
-      return calendar.params.renderToolbar.call(calendar, calendar);
+    const calendar2 = this;
+    if (calendar2.params.renderToolbar) {
+      return calendar2.params.renderToolbar.call(calendar2, calendar2);
     }
     return $jsx$1("div", {
       class: "toolbar toolbar-top"
     }, $jsx$1("div", {
       class: "toolbar-inner"
-    }, calendar.params.monthSelector ? calendar.renderMonthSelector() : "", calendar.params.yearSelector ? calendar.renderYearSelector() : ""));
+    }, calendar2.params.monthSelector ? calendar2.renderMonthSelector() : "", calendar2.params.yearSelector ? calendar2.renderYearSelector() : ""));
   }
   // eslint-disable-next-line
   renderInline() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       cssClass,
       toolbar,
@@ -16761,20 +16761,20 @@ let Calendar$1 = class Calendar extends Framework7Class {
       footer,
       rangePicker,
       weekHeader
-    } = calendar.params;
+    } = calendar2.params;
     const {
       value: value2,
       hasTimePicker
-    } = calendar;
+    } = calendar2;
     const date = value2 && value2.length ? value2[0] : (/* @__PURE__ */ new Date()).setHours(0, 0, 0);
     return $jsx$1("div", {
       class: `calendar calendar-inline ${rangePicker ? "calendar-range" : ""} ${cssClass || ""}`
-    }, header && calendar.renderHeader(), toolbar && calendar.renderToolbar(), weekHeader && calendar.renderWeekHeader(), $jsx$1("div", {
+    }, header && calendar2.renderHeader(), toolbar && calendar2.renderToolbar(), weekHeader && calendar2.renderWeekHeader(), $jsx$1("div", {
       class: "calendar-months"
-    }, calendar.renderMonths(date)), hasTimePicker && calendar.renderTimeSelector(), footer && calendar.renderFooter());
+    }, calendar2.renderMonths(date)), hasTimePicker && calendar2.renderTimeSelector(), footer && calendar2.renderFooter());
   }
   renderCustomModal() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       cssClass,
       toolbar,
@@ -16782,20 +16782,20 @@ let Calendar$1 = class Calendar extends Framework7Class {
       footer,
       rangePicker,
       weekHeader
-    } = calendar.params;
+    } = calendar2.params;
     const {
       value: value2,
       hasTimePicker
-    } = calendar;
+    } = calendar2;
     const date = value2 && value2.length ? value2[0] : (/* @__PURE__ */ new Date()).setHours(0, 0, 0);
     return $jsx$1("div", {
       class: `calendar calendar-modal ${rangePicker ? "calendar-range" : ""} ${cssClass || ""}`
-    }, header && calendar.renderHeader(), toolbar && calendar.renderToolbar(), weekHeader && calendar.renderWeekHeader(), $jsx$1("div", {
+    }, header && calendar2.renderHeader(), toolbar && calendar2.renderToolbar(), weekHeader && calendar2.renderWeekHeader(), $jsx$1("div", {
       class: "calendar-months"
-    }, calendar.renderMonths(date)), hasTimePicker && calendar.renderTimeSelector(), footer && calendar.renderFooter());
+    }, calendar2.renderMonths(date)), hasTimePicker && calendar2.renderTimeSelector(), footer && calendar2.renderFooter());
   }
   renderSheet() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       cssClass,
       toolbar,
@@ -16803,20 +16803,20 @@ let Calendar$1 = class Calendar extends Framework7Class {
       footer,
       rangePicker,
       weekHeader
-    } = calendar.params;
+    } = calendar2.params;
     const {
       value: value2,
       hasTimePicker
-    } = calendar;
+    } = calendar2;
     const date = value2 && value2.length ? value2[0] : (/* @__PURE__ */ new Date()).setHours(0, 0, 0);
     return $jsx$1("div", {
       class: `sheet-modal calendar calendar-sheet ${rangePicker ? "calendar-range" : ""} ${cssClass || ""}`
-    }, header && calendar.renderHeader(), toolbar && calendar.renderToolbar(), weekHeader && calendar.renderWeekHeader(), $jsx$1("div", {
+    }, header && calendar2.renderHeader(), toolbar && calendar2.renderToolbar(), weekHeader && calendar2.renderWeekHeader(), $jsx$1("div", {
       class: "sheet-modal-inner calendar-months"
-    }, calendar.renderMonths(date)), hasTimePicker && calendar.renderTimeSelector(), footer && calendar.renderFooter());
+    }, calendar2.renderMonths(date)), hasTimePicker && calendar2.renderTimeSelector(), footer && calendar2.renderFooter());
   }
   renderPopover() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       cssClass,
       toolbar,
@@ -16824,11 +16824,11 @@ let Calendar$1 = class Calendar extends Framework7Class {
       footer,
       rangePicker,
       weekHeader
-    } = calendar.params;
+    } = calendar2.params;
     const {
       value: value2,
       hasTimePicker
-    } = calendar;
+    } = calendar2;
     const date = value2 && value2.length ? value2[0] : (/* @__PURE__ */ new Date()).setHours(0, 0, 0);
     return $jsx$1("div", {
       class: "popover calendar-popover"
@@ -16836,68 +16836,68 @@ let Calendar$1 = class Calendar extends Framework7Class {
       class: "popover-inner"
     }, $jsx$1("div", {
       class: `calendar ${rangePicker ? "calendar-range" : ""} ${cssClass || ""}`
-    }, header && calendar.renderHeader(), toolbar && calendar.renderToolbar(), weekHeader && calendar.renderWeekHeader(), $jsx$1("div", {
+    }, header && calendar2.renderHeader(), toolbar && calendar2.renderToolbar(), weekHeader && calendar2.renderWeekHeader(), $jsx$1("div", {
       class: "calendar-months"
-    }, calendar.renderMonths(date)), hasTimePicker && calendar.renderTimeSelector(), footer && calendar.renderFooter())));
+    }, calendar2.renderMonths(date)), hasTimePicker && calendar2.renderTimeSelector(), footer && calendar2.renderFooter())));
   }
   render() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       params
-    } = calendar;
-    if (params.render) return params.render.call(calendar);
-    if (!calendar.inline) {
+    } = calendar2;
+    if (params.render) return params.render.call(calendar2);
+    if (!calendar2.inline) {
       let modalType = params.openIn;
-      if (modalType === "auto") modalType = calendar.isPopover() ? "popover" : "sheet";
-      if (modalType === "popover") return calendar.renderPopover();
-      if (modalType === "sheet") return calendar.renderSheet();
-      return calendar.renderCustomModal();
+      if (modalType === "auto") modalType = calendar2.isPopover() ? "popover" : "sheet";
+      if (modalType === "popover") return calendar2.renderPopover();
+      if (modalType === "sheet") return calendar2.renderSheet();
+      return calendar2.renderCustomModal();
     }
-    return calendar.renderInline();
+    return calendar2.renderInline();
   }
   openMonthPicker() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       $el,
       app: app2
-    } = calendar;
+    } = calendar2;
     if (!$el || !$el.length) return;
     $el.append('<div class="popover calendar-popover calendar-month-picker-popover"><div class="popover-inner"><div class="calendar-month-picker"></div></div></div>');
-    calendar.monthPickerPopover = app2.popover.create({
+    calendar2.monthPickerPopover = app2.popover.create({
       el: $el.find(".calendar-month-picker-popover"),
       targetEl: $el.find(".calendar-month-selector"),
       backdrop: true,
       backdropUnique: true,
       on: {
         close() {
-          calendar.closeMonthPicker();
+          calendar2.closeMonthPicker();
         },
         closed() {
-          if (calendar.monthPickerPopover.$el) calendar.monthPickerPopover.$el.remove();
-          calendar.monthPickerPopover.destroy();
-          if (calendar.monthPickerInstance) {
-            calendar.monthPickerInstance.close();
-            calendar.monthPickerInstance.destroy();
+          if (calendar2.monthPickerPopover.$el) calendar2.monthPickerPopover.$el.remove();
+          calendar2.monthPickerPopover.destroy();
+          if (calendar2.monthPickerInstance) {
+            calendar2.monthPickerInstance.close();
+            calendar2.monthPickerInstance.destroy();
           }
-          delete calendar.monthPickerInstance;
-          delete calendar.monthPickerPopover;
+          delete calendar2.monthPickerInstance;
+          delete calendar2.monthPickerPopover;
         }
       }
     });
-    calendar.monthPickerPopover.open();
-    const localeMonth = parseInt(calendar.$el.find(".calendar-month-current").attr("data-locale-month"), 10);
+    calendar2.monthPickerPopover.open();
+    const localeMonth = parseInt(calendar2.$el.find(".calendar-month-current").attr("data-locale-month"), 10);
     const values = [];
     const displayValues = [];
-    calendar.monthNames.forEach((m, index2) => {
+    calendar2.monthNames.forEach((m, index2) => {
       values.push(index2);
       displayValues.push(m);
     });
-    calendar.monthPickerInstance = app2.picker.create({
-      containerEl: calendar.monthPickerPopover.$el.find(".calendar-month-picker"),
+    calendar2.monthPickerInstance = app2.picker.create({
+      containerEl: calendar2.monthPickerPopover.$el.find(".calendar-month-picker"),
       value: [localeMonth],
-      toolbar: calendar.params.monthPickerToolbar,
+      toolbar: calendar2.params.monthPickerToolbar,
       rotateEffect: false,
-      toolbarCloseText: calendar.params.monthPickerCloseText,
+      toolbarCloseText: calendar2.params.monthPickerCloseText,
       cols: [{
         values,
         displayValues
@@ -16905,81 +16905,81 @@ let Calendar$1 = class Calendar extends Framework7Class {
     });
   }
   closeMonthPicker() {
-    const calendar = this;
-    if (calendar.monthPickerPopover && calendar.monthPickerPopover.opened) calendar.monthPickerPopover.close();
-    const index2 = calendar.monthPickerInstance.value[0];
-    const localeMonthIndex = parseInt(calendar.$el.find(".calendar-month-current").attr("data-locale-month"), 10);
-    const monthIndex = calendar.currentMonth;
+    const calendar2 = this;
+    if (calendar2.monthPickerPopover && calendar2.monthPickerPopover.opened) calendar2.monthPickerPopover.close();
+    const index2 = calendar2.monthPickerInstance.value[0];
+    const localeMonthIndex = parseInt(calendar2.$el.find(".calendar-month-current").attr("data-locale-month"), 10);
+    const monthIndex = calendar2.currentMonth;
     const diff = localeMonthIndex - monthIndex;
     const diffIndex = index2 - diff;
-    calendar.setYearMonth(calendar.currentYear, diffIndex, 0);
+    calendar2.setYearMonth(calendar2.currentYear, diffIndex, 0);
   }
   openYearPicker() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       $el,
       app: app2
-    } = calendar;
+    } = calendar2;
     if (!$el || !$el.length) return;
     $el.append('<div class="popover calendar-popover calendar-year-picker-popover"><div class="popover-inner"><div class="calendar-year-picker"></div></div></div>');
-    calendar.yearPickerPopover = app2.popover.create({
+    calendar2.yearPickerPopover = app2.popover.create({
       el: $el.find(".calendar-year-picker-popover"),
       targetEl: $el.find(".calendar-year-selector"),
       backdrop: true,
       backdropUnique: true,
       on: {
         close() {
-          calendar.closeYearPicker();
+          calendar2.closeYearPicker();
         },
         closed() {
-          if (calendar.yearPickerPopover.$el) calendar.yearPickerPopover.$el.remove();
-          calendar.yearPickerPopover.destroy();
-          if (calendar.yearPickerInstance) {
-            calendar.yearPickerInstance.close();
-            calendar.yearPickerInstance.destroy();
+          if (calendar2.yearPickerPopover.$el) calendar2.yearPickerPopover.$el.remove();
+          calendar2.yearPickerPopover.destroy();
+          if (calendar2.yearPickerInstance) {
+            calendar2.yearPickerInstance.close();
+            calendar2.yearPickerInstance.destroy();
           }
-          delete calendar.yearPickerInstance;
-          delete calendar.yearPickerPopover;
+          delete calendar2.yearPickerInstance;
+          delete calendar2.yearPickerPopover;
         }
       }
     });
-    calendar.yearPickerPopover.open();
-    const currentYear = calendar.currentYear;
-    let yearMin = calendar.params.yearPickerMin || (/* @__PURE__ */ new Date()).getFullYear() - 100;
-    if (calendar.params.minDate) {
-      yearMin = Math.max(yearMin, new Date(calendar.params.minDate).getFullYear());
+    calendar2.yearPickerPopover.open();
+    const currentYear = calendar2.currentYear;
+    let yearMin = calendar2.params.yearPickerMin || (/* @__PURE__ */ new Date()).getFullYear() - 100;
+    if (calendar2.params.minDate) {
+      yearMin = Math.max(yearMin, new Date(calendar2.params.minDate).getFullYear());
     }
-    let yearMax = calendar.params.yearPickerMax || (/* @__PURE__ */ new Date()).getFullYear() + 100;
-    if (calendar.params.maxDate) {
-      yearMax = Math.min(yearMax, new Date(calendar.params.maxDate).getFullYear());
+    let yearMax = calendar2.params.yearPickerMax || (/* @__PURE__ */ new Date()).getFullYear() + 100;
+    if (calendar2.params.maxDate) {
+      yearMax = Math.min(yearMax, new Date(calendar2.params.maxDate).getFullYear());
     }
     const years = [];
     for (let i = yearMin; i <= yearMax; i += 1) {
       years.push(i);
     }
-    calendar.yearPickerInstance = app2.picker.create({
-      containerEl: calendar.yearPickerPopover.$el.find(".calendar-year-picker"),
+    calendar2.yearPickerInstance = app2.picker.create({
+      containerEl: calendar2.yearPickerPopover.$el.find(".calendar-year-picker"),
       value: [currentYear],
-      toolbar: calendar.params.yearPickerToolbar,
+      toolbar: calendar2.params.yearPickerToolbar,
       rotateEffect: false,
-      toolbarCloseText: calendar.params.yearPickerCloseText,
+      toolbarCloseText: calendar2.params.yearPickerCloseText,
       cols: [{
         values: years
       }]
     });
   }
   closeYearPicker() {
-    const calendar = this;
-    if (calendar.yearPickerPopover && calendar.yearPickerPopover.opened) calendar.yearPickerPopover.close();
-    calendar.setYearMonth(calendar.yearPickerInstance.value[0], void 0, 0);
+    const calendar2 = this;
+    if (calendar2.yearPickerPopover && calendar2.yearPickerPopover.opened) calendar2.yearPickerPopover.close();
+    calendar2.setYearMonth(calendar2.yearPickerInstance.value[0], void 0, 0);
   }
   openTimePicker() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       $el,
       app: app2,
       is12HoursFormat
-    } = calendar;
+    } = calendar2;
     if (!$el || !$el.length) return;
     $el.append('<div class="popover calendar-popover calendar-time-picker-popover"><div class="popover-inner"><div class="calendar-time-picker"></div></div></div>');
     const hoursArr = [];
@@ -16993,8 +16993,8 @@ let Calendar$1 = class Calendar extends Framework7Class {
       minutesArr.push(i);
     }
     let value2;
-    if (calendar.value && calendar.value.length) {
-      value2 = [calendar.value[0].getHours(), calendar.value[0].getMinutes()];
+    if (calendar2.value && calendar2.value.length) {
+      value2 = [calendar2.value[0].getHours(), calendar2.value[0].getMinutes()];
     } else {
       value2 = [(/* @__PURE__ */ new Date()).getHours(), (/* @__PURE__ */ new Date()).getMinutes()];
     }
@@ -17003,34 +17003,34 @@ let Calendar$1 = class Calendar extends Framework7Class {
       if (value2[0] > 12) value2[0] -= 12;
       if (value2[0] === 0) value2[0] = 12;
     }
-    calendar.timePickerPopover = app2.popover.create({
+    calendar2.timePickerPopover = app2.popover.create({
       el: $el.find(".calendar-time-picker-popover"),
       targetEl: $el.find(".calendar-time-selector .link"),
       backdrop: true,
       backdropUnique: true,
       on: {
         close() {
-          calendar.closeTimePicker();
+          calendar2.closeTimePicker();
         },
         closed() {
-          if (calendar.timePickerPopover.$el) calendar.timePickerPopover.$el.remove();
-          calendar.timePickerPopover.destroy();
-          if (calendar.timePickerInstance) {
-            calendar.timePickerInstance.close();
-            calendar.timePickerInstance.destroy();
+          if (calendar2.timePickerPopover.$el) calendar2.timePickerPopover.$el.remove();
+          calendar2.timePickerPopover.destroy();
+          if (calendar2.timePickerInstance) {
+            calendar2.timePickerInstance.close();
+            calendar2.timePickerInstance.destroy();
           }
-          delete calendar.timePickerInstance;
-          delete calendar.timePickerPopover;
+          delete calendar2.timePickerInstance;
+          delete calendar2.timePickerPopover;
         }
       }
     });
-    calendar.timePickerPopover.open();
-    calendar.timePickerInstance = app2.picker.create({
-      containerEl: calendar.timePickerPopover.$el.find(".calendar-time-picker"),
+    calendar2.timePickerPopover.open();
+    calendar2.timePickerInstance = app2.picker.create({
+      containerEl: calendar2.timePickerPopover.$el.find(".calendar-time-picker"),
       value: value2,
-      toolbar: calendar.params.timePickerToolbar,
+      toolbar: calendar2.params.timePickerToolbar,
       rotateEffect: false,
-      toolbarCloseText: calendar.params.timePickerCloseText,
+      toolbarCloseText: calendar2.params.timePickerCloseText,
       cols: [{
         values: hoursArr
       }, {
@@ -17045,15 +17045,15 @@ let Calendar$1 = class Calendar extends Framework7Class {
     });
   }
   closeTimePicker() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       is12HoursFormat
-    } = calendar;
-    if (calendar.timePickerInstance) {
-      const timePickerValue = calendar.timePickerInstance.value;
+    } = calendar2;
+    if (calendar2.timePickerInstance) {
+      const timePickerValue = calendar2.timePickerInstance.value;
       let hours = parseInt(timePickerValue[0], 10);
       const minutes = parseInt(timePickerValue[1], 10);
-      const period = calendar.timePickerInstance.value[2];
+      const period = calendar2.timePickerInstance.value[2];
       if (is12HoursFormat) {
         if (period === "AM" && hours === 12) {
           hours = 0;
@@ -17061,7 +17061,7 @@ let Calendar$1 = class Calendar extends Framework7Class {
           hours += 12;
         }
       }
-      let value2 = calendar.value && calendar.value.length && calendar.value[0];
+      let value2 = calendar2.value && calendar2.value.length && calendar2.value[0];
       if (!value2) {
         value2 = /* @__PURE__ */ new Date();
         value2.setHours(hours, minutes, 0, 0);
@@ -17069,12 +17069,12 @@ let Calendar$1 = class Calendar extends Framework7Class {
         value2 = new Date(value2);
         value2.setHours(hours, minutes);
       }
-      calendar.setValue([value2]);
-      if (calendar.timePickerPopover && calendar.timePickerPopover.opened) calendar.timePickerPopover.close();
+      calendar2.setValue([value2]);
+      if (calendar2.timePickerPopover && calendar2.timePickerPopover.opened) calendar2.timePickerPopover.close();
     }
   }
   onOpen() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       initialized,
       $el,
@@ -17083,33 +17083,33 @@ let Calendar$1 = class Calendar extends Framework7Class {
       inline,
       value: value2,
       params
-    } = calendar;
-    calendar.closing = false;
-    calendar.opened = true;
-    calendar.opening = true;
-    calendar.attachCalendarEvents();
+    } = calendar2;
+    calendar2.closing = false;
+    calendar2.opened = true;
+    calendar2.opening = true;
+    calendar2.attachCalendarEvents();
     const updateValue = !value2 && params.value;
     if (!initialized) {
-      if (value2) calendar.setValue(value2, 0);
+      if (value2) calendar2.setValue(value2, 0);
       else if (params.value) {
-        calendar.setValue(calendar.normalizeValues(params.value), 0);
+        calendar2.setValue(calendar2.normalizeValues(params.value), 0);
       }
     } else if (value2) {
-      calendar.setValue(value2, 0);
+      calendar2.setValue(value2, 0);
     }
-    calendar.updateCurrentMonthYear();
-    calendar.monthsTranslate = 0;
-    calendar.setMonthsTranslate();
-    if (updateValue) calendar.updateValue();
+    calendar2.updateCurrentMonthYear();
+    calendar2.monthsTranslate = 0;
+    calendar2.setMonthsTranslate();
+    if (updateValue) calendar2.updateValue();
     else if (params.header && value2) {
-      calendar.updateValue(true);
+      calendar2.updateValue(true);
     }
     if (!inline && $inputEl && $inputEl.length && app2.theme === "md") {
       $inputEl.trigger("focus");
     }
-    calendar.initialized = true;
-    calendar.$months.each((monthEl) => {
-      calendar.emit("local::monthAdd calendarMonthAdd", monthEl);
+    calendar2.initialized = true;
+    calendar2.$months.each((monthEl) => {
+      calendar2.emit("local::monthAdd calendarMonthAdd", monthEl);
     });
     if ($el) {
       $el.trigger("calendar:open");
@@ -17117,97 +17117,97 @@ let Calendar$1 = class Calendar extends Framework7Class {
     if ($inputEl) {
       $inputEl.trigger("calendar:open");
     }
-    calendar.emit("local::open calendarOpen", calendar);
+    calendar2.emit("local::open calendarOpen", calendar2);
   }
   onOpened() {
-    const calendar = this;
-    calendar.opening = false;
-    if (calendar.$el) {
-      calendar.$el.trigger("calendar:opened");
+    const calendar2 = this;
+    calendar2.opening = false;
+    if (calendar2.$el) {
+      calendar2.$el.trigger("calendar:opened");
     }
-    if (calendar.$inputEl) {
-      calendar.$inputEl.trigger("calendar:opened");
+    if (calendar2.$inputEl) {
+      calendar2.$inputEl.trigger("calendar:opened");
     }
-    calendar.emit("local::opened calendarOpened", calendar);
+    calendar2.emit("local::opened calendarOpened", calendar2);
   }
   onClose() {
-    const calendar = this;
-    const app2 = calendar.app;
-    calendar.opening = false;
-    calendar.closing = true;
-    if (calendar.$inputEl) {
+    const calendar2 = this;
+    const app2 = calendar2.app;
+    calendar2.opening = false;
+    calendar2.closing = true;
+    if (calendar2.$inputEl) {
       if (app2.theme === "md") {
-        calendar.$inputEl.trigger("blur");
+        calendar2.$inputEl.trigger("blur");
       } else {
-        const validate = calendar.$inputEl.attr("validate");
-        const required = calendar.$inputEl.attr("required");
+        const validate = calendar2.$inputEl.attr("validate");
+        const required = calendar2.$inputEl.attr("required");
         if (validate && required) {
-          app2.input.validate(calendar.$inputEl);
+          app2.input.validate(calendar2.$inputEl);
         }
       }
     }
-    if (calendar.detachCalendarEvents) {
-      calendar.detachCalendarEvents();
+    if (calendar2.detachCalendarEvents) {
+      calendar2.detachCalendarEvents();
     }
-    if (calendar.$el) {
-      calendar.$el.trigger("calendar:close");
+    if (calendar2.$el) {
+      calendar2.$el.trigger("calendar:close");
     }
-    if (calendar.$inputEl) {
-      calendar.$inputEl.trigger("calendar:close");
+    if (calendar2.$inputEl) {
+      calendar2.$inputEl.trigger("calendar:close");
     }
-    calendar.emit("local::close calendarClose", calendar);
+    calendar2.emit("local::close calendarClose", calendar2);
   }
   onClosed() {
-    const calendar = this;
-    calendar.opened = false;
-    calendar.closing = false;
-    if (!calendar.inline) {
+    const calendar2 = this;
+    calendar2.opened = false;
+    calendar2.closing = false;
+    if (!calendar2.inline) {
       nextTick(() => {
-        if (calendar.modal && calendar.modal.el && calendar.modal.destroy) {
-          if (!calendar.params.routableModals) {
-            calendar.modal.destroy();
+        if (calendar2.modal && calendar2.modal.el && calendar2.modal.destroy) {
+          if (!calendar2.params.routableModals) {
+            calendar2.modal.destroy();
           }
         }
-        delete calendar.modal;
+        delete calendar2.modal;
       });
     }
-    if (calendar.timePickerInstance) {
-      if (calendar.timePickerInstance.destroy) calendar.timePickerInstance.destroy();
-      delete calendar.timePickerInstance;
+    if (calendar2.timePickerInstance) {
+      if (calendar2.timePickerInstance.destroy) calendar2.timePickerInstance.destroy();
+      delete calendar2.timePickerInstance;
     }
-    if (calendar.$el) {
-      calendar.$el.trigger("calendar:closed");
+    if (calendar2.$el) {
+      calendar2.$el.trigger("calendar:closed");
     }
-    if (calendar.$inputEl) {
-      calendar.$inputEl.trigger("calendar:closed");
+    if (calendar2.$inputEl) {
+      calendar2.$inputEl.trigger("calendar:closed");
     }
-    calendar.emit("local::closed calendarClosed", calendar);
+    calendar2.emit("local::closed calendarClosed", calendar2);
   }
   open() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       app: app2,
       opened,
       inline,
       $inputEl,
       params
-    } = calendar;
+    } = calendar2;
     if (opened) return;
     if (inline) {
-      calendar.$el = $(calendar.render());
-      calendar.$el[0].f7Calendar = calendar;
-      calendar.$wrapperEl = calendar.$el.find(".calendar-months-wrapper");
-      calendar.$months = calendar.$wrapperEl.find(".calendar-month");
-      calendar.$containerEl.append(calendar.$el);
-      calendar.onOpen();
-      calendar.onOpened();
+      calendar2.$el = $(calendar2.render());
+      calendar2.$el[0].f7Calendar = calendar2;
+      calendar2.$wrapperEl = calendar2.$el.find(".calendar-months-wrapper");
+      calendar2.$months = calendar2.$wrapperEl.find(".calendar-month");
+      calendar2.$containerEl.append(calendar2.$el);
+      calendar2.onOpen();
+      calendar2.onOpened();
       return;
     }
     let modalType = params.openIn;
     if (modalType === "auto") {
-      modalType = calendar.isPopover() ? "popover" : "sheet";
+      modalType = calendar2.isPopover() ? "popover" : "sheet";
     }
-    const modalContent = calendar.render();
+    const modalContent = calendar2.render();
     const modalParams = {
       targetEl: $inputEl,
       scrollToEl: params.scrollToInput ? $inputEl : void 0,
@@ -17217,26 +17217,26 @@ let Calendar$1 = class Calendar extends Framework7Class {
       on: {
         open() {
           const modal = this;
-          calendar.modal = modal;
-          calendar.$el = modalType === "popover" ? modal.$el.find(".calendar") : modal.$el;
-          calendar.$wrapperEl = calendar.$el.find(".calendar-months-wrapper");
-          calendar.$months = calendar.$wrapperEl.find(".calendar-month");
-          calendar.$el[0].f7Calendar = calendar;
+          calendar2.modal = modal;
+          calendar2.$el = modalType === "popover" ? modal.$el.find(".calendar") : modal.$el;
+          calendar2.$wrapperEl = calendar2.$el.find(".calendar-months-wrapper");
+          calendar2.$months = calendar2.$wrapperEl.find(".calendar-month");
+          calendar2.$el[0].f7Calendar = calendar2;
           if (modalType === "customModal") {
-            $(calendar.$el).find(".calendar-close").once("click", () => {
-              calendar.close();
+            $(calendar2.$el).find(".calendar-close").once("click", () => {
+              calendar2.close();
             });
           }
-          calendar.onOpen();
+          calendar2.onOpen();
         },
         opened() {
-          calendar.onOpened();
+          calendar2.onOpened();
         },
         close() {
-          calendar.onClose();
+          calendar2.onClose();
         },
         closed() {
-          calendar.onClosed();
+          calendar2.onClosed();
         }
       }
     };
@@ -17244,78 +17244,78 @@ let Calendar$1 = class Calendar extends Framework7Class {
       modalParams.push = params.sheetPush;
       modalParams.swipeToClose = params.sheetSwipeToClose;
     }
-    if (params.routableModals && calendar.view) {
-      calendar.view.router.navigate({
-        url: calendar.url,
+    if (params.routableModals && calendar2.view) {
+      calendar2.view.router.navigate({
+        url: calendar2.url,
         route: {
-          path: calendar.url,
+          path: calendar2.url,
           [modalType]: modalParams
         }
       });
     } else {
-      calendar.modal = app2[modalType].create(modalParams);
-      calendar.modal.open();
+      calendar2.modal = app2[modalType].create(modalParams);
+      calendar2.modal.open();
     }
   }
   close() {
-    const calendar = this;
+    const calendar2 = this;
     const {
       opened,
       inline
-    } = calendar;
+    } = calendar2;
     if (!opened) return;
     if (inline) {
-      calendar.onClose();
-      calendar.onClosed();
+      calendar2.onClose();
+      calendar2.onClosed();
       return;
     }
-    if (calendar.params.routableModals && calendar.view) {
-      calendar.view.router.back();
+    if (calendar2.params.routableModals && calendar2.view) {
+      calendar2.view.router.back();
     } else {
-      calendar.modal.close();
+      calendar2.modal.close();
     }
   }
   init() {
-    const calendar = this;
-    calendar.initInput();
-    if (calendar.inline) {
-      calendar.open();
-      calendar.emit("local::init calendarInit", calendar);
+    const calendar2 = this;
+    calendar2.initInput();
+    if (calendar2.inline) {
+      calendar2.open();
+      calendar2.emit("local::init calendarInit", calendar2);
       return;
     }
-    if (!calendar.initialized && calendar.params.value) {
-      calendar.setValue(calendar.normalizeValues(calendar.params.value));
+    if (!calendar2.initialized && calendar2.params.value) {
+      calendar2.setValue(calendar2.normalizeValues(calendar2.params.value));
     }
-    if (calendar.$inputEl) {
-      calendar.attachInputEvents();
+    if (calendar2.$inputEl) {
+      calendar2.attachInputEvents();
     }
-    if (calendar.params.closeByOutsideClick) {
-      calendar.attachHtmlEvents();
+    if (calendar2.params.closeByOutsideClick) {
+      calendar2.attachHtmlEvents();
     }
-    calendar.emit("local::init calendarInit", calendar);
+    calendar2.emit("local::init calendarInit", calendar2);
   }
   destroy() {
-    const calendar = this;
-    if (calendar.destroyed) return;
+    const calendar2 = this;
+    if (calendar2.destroyed) return;
     const {
       $el
-    } = calendar;
-    calendar.emit("local::beforeDestroy calendarBeforeDestroy", calendar);
+    } = calendar2;
+    calendar2.emit("local::beforeDestroy calendarBeforeDestroy", calendar2);
     if ($el) $el.trigger("calendar:beforedestroy");
-    calendar.close();
-    if (calendar.$inputEl) {
-      calendar.detachInputEvents();
+    calendar2.close();
+    if (calendar2.$inputEl) {
+      calendar2.detachInputEvents();
     }
-    if (calendar.params.closeByOutsideClick) {
-      calendar.detachHtmlEvents();
+    if (calendar2.params.closeByOutsideClick) {
+      calendar2.detachHtmlEvents();
     }
-    if (calendar.timePickerInstance) {
-      if (calendar.timePickerInstance.destroy) calendar.timePickerInstance.destroy();
-      delete calendar.timePickerInstance;
+    if (calendar2.timePickerInstance) {
+      if (calendar2.timePickerInstance.destroy) calendar2.timePickerInstance.destroy();
+      delete calendar2.timePickerInstance;
     }
-    if ($el && $el.length) delete calendar.$el[0].f7Calendar;
-    deleteProps(calendar);
-    calendar.destroyed = true;
+    if ($el && $el.length) delete calendar2.$el[0].f7Calendar;
+    deleteProps(calendar2);
+    calendar2.destroyed = true;
   }
 };
 const Calendar2 = {
@@ -17337,9 +17337,9 @@ const Calendar2 = {
       }
       const $el = $(el);
       if ($el.length === 0) return;
-      const calendar = $el[0].f7Calendar;
-      if (!calendar || calendar && !calendar.opened) return;
-      calendar.close();
+      const calendar2 = $el[0].f7Calendar;
+      if (!calendar2 || calendar2 && !calendar2.opened) return;
+      calendar2.close();
     };
   },
   params: {
@@ -18792,6 +18792,225 @@ const AccordionComponent = {
     }
   }
 };
+const Tab$1 = {
+  show() {
+    const app2 = this;
+    let tabEl;
+    let tabLinkEl;
+    let animate2;
+    let tabRoute;
+    let animatedInit;
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    if (args.length === 1 && args[0] && args[0].constructor === Object) {
+      tabEl = args[0].tabEl;
+      tabLinkEl = args[0].tabLinkEl;
+      animate2 = args[0].animate;
+      tabRoute = args[0].tabRoute;
+      animatedInit = args[0].animatedInit;
+    } else {
+      [tabEl, tabLinkEl, animate2, tabRoute] = args;
+      if (typeof args[1] === "boolean") {
+        [tabEl, animate2, tabLinkEl, tabRoute] = args;
+        if (args.length > 2 && tabLinkEl.constructor === Object) {
+          [tabEl, animate2, tabRoute, tabLinkEl] = args;
+        }
+      }
+    }
+    if (typeof animate2 === "undefined") animate2 = true;
+    const $newTabEl = $(tabEl);
+    if (tabRoute && $newTabEl[0]) {
+      $newTabEl[0].f7TabRoute = tabRoute;
+    }
+    if (!animatedInit && ($newTabEl.length === 0 || $newTabEl.hasClass("tab-active"))) {
+      return {
+        $newTabEl,
+        newTabEl: $newTabEl[0]
+      };
+    }
+    let $tabLinkEl;
+    if (tabLinkEl) $tabLinkEl = $(tabLinkEl);
+    const $tabsEl = $newTabEl.parent(".tabs");
+    if ($tabsEl.length === 0) {
+      return {
+        $newTabEl,
+        newTabEl: $newTabEl[0]
+      };
+    }
+    if (app2.swipeout) app2.swipeout.allowOpen = true;
+    const tabsChangedCallbacks = [];
+    function onTabsChanged(callback) {
+      tabsChangedCallbacks.push(callback);
+    }
+    function tabsChanged() {
+      tabsChangedCallbacks.forEach((callback) => {
+        callback();
+      });
+    }
+    let animated = false;
+    if ($tabsEl.parent().hasClass("tabs-animated-wrap")) {
+      $tabsEl.parent()[animate2 ? "removeClass" : "addClass"]("not-animated");
+      const transitionDuration = parseFloat($tabsEl.css("transition-duration").replace(",", "."));
+      if (animate2 && transitionDuration) {
+        $tabsEl.transitionEnd(tabsChanged);
+        animated = true;
+      }
+      const tabsTranslate = (app2.rtl ? $newTabEl.index() : -$newTabEl.index()) * 100;
+      $tabsEl.transform(`translate3d(${tabsTranslate}%,0,0)`);
+    }
+    let swiper;
+    if ($tabsEl[0].nodeName.toLowerCase() === "swiper-container" && app2.swiper) {
+      swiper = $tabsEl[0].swiper;
+      const newTabIndex = swiper.slides.indexOf($newTabEl[0]);
+      if (swiper && swiper.activeIndex !== newTabIndex) {
+        animated = true;
+        swiper.once("slideChangeTransitionEnd", () => {
+          tabsChanged();
+        }).slideTo(newTabIndex, animate2 ? void 0 : 0);
+      } else if (swiper && swiper.animating) {
+        animated = true;
+        swiper.once("slideChangeTransitionEnd", () => {
+          tabsChanged();
+        });
+      }
+    }
+    const $oldTabEl = $tabsEl.children(".tab-active");
+    $oldTabEl.removeClass("tab-active");
+    if (!animatedInit && (!swiper || swiper && !swiper.animating || swiper && tabRoute)) {
+      if ($oldTabEl.hasClass("view") && $oldTabEl.children(".page").length) {
+        $oldTabEl.children(".page").each((pageEl) => {
+          $(pageEl).trigger("page:tabhide");
+          app2.emit("pageTabHide", pageEl);
+        });
+      }
+      $oldTabEl.trigger("tab:hide");
+      app2.emit("tabHide", $oldTabEl[0]);
+    }
+    $newTabEl.addClass("tab-active");
+    if (!animatedInit && (!swiper || swiper && !swiper.animating || swiper && tabRoute)) {
+      if ($newTabEl.hasClass("view") && $newTabEl.children(".page").length) {
+        $newTabEl.children(".page").each((pageEl) => {
+          $(pageEl).trigger("page:tabshow");
+          app2.emit("pageTabShow", pageEl);
+        });
+      }
+      $newTabEl.trigger("tab:show");
+      app2.emit("tabShow", $newTabEl[0]);
+    }
+    if (!$tabLinkEl) {
+      if (typeof tabEl === "string") $tabLinkEl = $(`.tab-link[href="${tabEl}"]`);
+      else $tabLinkEl = $(`.tab-link[href="#${$newTabEl.attr("id")}"]`);
+      if (!$tabLinkEl || $tabLinkEl && $tabLinkEl.length === 0) {
+        $("[data-tab]").each((el) => {
+          if ($newTabEl.is($(el).attr("data-tab"))) $tabLinkEl = $(el);
+        });
+      }
+      if (tabRoute && (!$tabLinkEl || $tabLinkEl && $tabLinkEl.length === 0)) {
+        $tabLinkEl = $(`[data-route-tab-id="${tabRoute.route.tab.id}"]`);
+        if ($tabLinkEl.length === 0) {
+          $tabLinkEl = $(`.tab-link[href="${tabRoute.url}"]`);
+        }
+      }
+      if ($tabLinkEl.length > 1 && $newTabEl.parents(".page").length) {
+        $tabLinkEl = $tabLinkEl.filter((tabLinkElement) => {
+          return $(tabLinkElement).parents(".page")[0] === $newTabEl.parents(".page")[0];
+        });
+        if (app2.theme === "ios" && $tabLinkEl.length === 0 && tabRoute) {
+          const $pageEl = $newTabEl.parents(".page");
+          const $navbarEl = $(app2.navbar.getElByPage($pageEl));
+          $tabLinkEl = $navbarEl.find(`[data-route-tab-id="${tabRoute.route.tab.id}"]`);
+          if ($tabLinkEl.length === 0) {
+            $tabLinkEl = $navbarEl.find(`.tab-link[href="${tabRoute.url}"]`);
+          }
+        }
+      }
+    }
+    if ($tabLinkEl.length > 0) {
+      let $oldTabLinkEl;
+      if ($oldTabEl && $oldTabEl.length > 0) {
+        const oldTabId = $oldTabEl.attr("id");
+        if (oldTabId) {
+          $oldTabLinkEl = $(`.tab-link[href="#${oldTabId}"]`);
+          if (!$oldTabLinkEl || $oldTabLinkEl && $oldTabLinkEl.length === 0) {
+            $oldTabLinkEl = $(`.tab-link[data-route-tab-id="${oldTabId}"]`);
+          }
+        }
+        if (!$oldTabLinkEl || $oldTabLinkEl && $oldTabLinkEl.length === 0) {
+          $("[data-tab]").each((tabLinkElement) => {
+            if ($oldTabEl.is($(tabLinkElement).attr("data-tab"))) $oldTabLinkEl = $(tabLinkElement);
+          });
+        }
+        if (!$oldTabLinkEl || $oldTabLinkEl && $oldTabLinkEl.length === 0) {
+          $oldTabLinkEl = $tabLinkEl.siblings(".tab-link-active");
+        }
+      } else if (tabRoute) {
+        $oldTabLinkEl = $tabLinkEl.siblings(".tab-link-active");
+      }
+      if ($oldTabLinkEl && $oldTabLinkEl.length > 1 && $oldTabEl && $oldTabEl.parents(".page").length) {
+        $oldTabLinkEl = $oldTabLinkEl.filter((tabLinkElement) => {
+          return $(tabLinkElement).parents(".page")[0] === $oldTabEl.parents(".page")[0];
+        });
+      }
+      if ($oldTabLinkEl && $oldTabLinkEl.length > 0) $oldTabLinkEl.removeClass("tab-link-active");
+      if ($tabLinkEl && $tabLinkEl.length > 0) {
+        $tabLinkEl.addClass("tab-link-active");
+        const $tabbarEl = $tabLinkEl.parents(".tabbar, .tabbar-icons");
+        const hasHighlight = app2.toolbar && $tabbarEl.length > 0 && ($tabbarEl.hasClass("tabbar-highlight") || app2.theme !== "ios");
+        if (hasHighlight) {
+          app2.toolbar.setHighlight($tabbarEl);
+        }
+      }
+    }
+    return {
+      $newTabEl,
+      newTabEl: $newTabEl[0],
+      $oldTabEl,
+      oldTabEl: $oldTabEl[0],
+      onTabsChanged,
+      animated
+    };
+  }
+};
+const TabsComponent = {
+  name: "tabs",
+  create() {
+    const app2 = this;
+    extend$1(app2, {
+      tab: {
+        show: Tab$1.show.bind(app2)
+      }
+    });
+  },
+  on: {
+    "pageInit tabMounted": function onInit(pageOrTabEl) {
+      const $el = $(pageOrTabEl.el || pageOrTabEl);
+      const animatedTabEl = $el.find(".tabs-animated-wrap > .tabs > .tab-active")[0];
+      if (!animatedTabEl) return;
+      const app2 = this;
+      app2.tab.show({
+        tabEl: animatedTabEl,
+        animatedInit: true,
+        animate: false
+      });
+    }
+  },
+  clicks: {
+    ".tab-link": function tabLinkClick($clickedEl, data2) {
+      if (data2 === void 0) {
+        data2 = {};
+      }
+      if ($clickedEl.attr("href") && $clickedEl.attr("href").indexOf("#") === 0 || $clickedEl.attr("data-tab")) {
+        const app2 = this;
+        app2.tab.show({
+          tabEl: data2.tab || $clickedEl.attr("href"),
+          tabLinkEl: $clickedEl,
+          animate: data2.animate
+        });
+      }
+    }
+  }
+};
 function noUndefinedProps(obj) {
   const o = {};
   Object.keys(obj).forEach((key) => {
@@ -19805,7 +20024,7 @@ const get_default_slot_context$5 = (ctx) => ({ popup: (
   /*f7Popup*/
   ctx[2]
 ) });
-function create_fragment$C(ctx) {
+function create_fragment$G(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -20095,7 +20314,7 @@ class Popup2 extends SvelteComponent {
       this,
       options,
       instance_1$5,
-      create_fragment$C,
+      create_fragment$G,
       safe_not_equal,
       {
         class: 6,
@@ -20183,7 +20402,7 @@ const useTab = (getEl, emit) => {
     detachEvents();
   });
 };
-function create_fragment$B(ctx) {
+function create_fragment$F(ctx) {
   let current;
   const default_slot_template = (
     /*#slots*/
@@ -20245,7 +20464,7 @@ function create_fragment$B(ctx) {
     }
   };
 }
-function instance$x($$self, $$props, $$invalidate) {
+function instance$B($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { route = void 0 } = $$props;
   let { router = void 0 } = $$props;
@@ -20260,10 +20479,10 @@ function instance$x($$self, $$props, $$invalidate) {
 class Router_context_provider extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$x, create_fragment$B, safe_not_equal, { route: 0, router: 1 });
+    init(this, options, instance$B, create_fragment$F, safe_not_equal, { route: 0, router: 1 });
   }
 }
-function get_each_context$5(ctx, list, i) {
+function get_each_context$4(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[31] = list[i];
   return child_ctx;
@@ -20274,7 +20493,7 @@ const get_default_slot_context$4 = (ctx) => ({ view: (
   /*f7View*/
   ctx[3]
 ) });
-function create_default_slot$e(ctx) {
+function create_default_slot$f(ctx) {
   let switch_instance;
   let t2;
   let current;
@@ -20359,7 +20578,7 @@ function create_default_slot$e(ctx) {
     }
   };
 }
-function create_each_block$5(key_1, ctx) {
+function create_each_block$4(key_1, ctx) {
   let first;
   let routercontextprovider;
   let current;
@@ -20373,7 +20592,7 @@ function create_each_block$5(key_1, ctx) {
         /*page*/
         ctx[31].props.f7router
       ),
-      $$slots: { default: [create_default_slot$e] },
+      $$slots: { default: [create_default_slot$f] },
       $$scope: { ctx }
     }
   });
@@ -20422,7 +20641,7 @@ function create_each_block$5(key_1, ctx) {
     }
   };
 }
-function create_fragment$A(ctx) {
+function create_fragment$E(ctx) {
   let div;
   let t2;
   let each_blocks = [];
@@ -20448,9 +20667,9 @@ function create_fragment$A(ctx) {
     ctx2[31].id
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context$5(ctx, each_value, i);
+    let child_ctx = get_each_context$4(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block$5(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$4(key, child_ctx));
   }
   return {
     c() {
@@ -20524,7 +20743,7 @@ function create_fragment$A(ctx) {
           ctx2[4]
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, outro_and_destroy_block, create_each_block$5, null, get_each_context$5);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, outro_and_destroy_block, create_each_block$4, null, get_each_context$4);
         check_outros();
       }
       if (!current || dirty[0] & /*classes*/
@@ -20783,7 +21002,7 @@ class View2 extends SvelteComponent {
       this,
       options,
       instance_1$4,
-      create_fragment$A,
+      create_fragment$E,
       safe_not_equal,
       {
         id: 0,
@@ -20807,7 +21026,7 @@ const get_default_slot_context$3 = (ctx) => ({ loginScreen: (
   /*f7LoginScreen*/
   ctx[2]
 ) });
-function create_fragment$z(ctx) {
+function create_fragment$D(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -21023,7 +21242,7 @@ function instance_1$3($$self, $$props, $$invalidate) {
 class Login_screen extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance_1$3, create_fragment$z, safe_not_equal, {
+    init(this, options, instance_1$3, create_fragment$D, safe_not_equal, {
       class: 6,
       style: 0,
       opened: 5,
@@ -21054,7 +21273,7 @@ const get_fixed_slot_context$1 = (ctx) => ({ sheet: (
   /*f7Sheet*/
   ctx[3]
 ) });
-function create_fragment$y(ctx) {
+function create_fragment$C(ctx) {
   let div1;
   let t0;
   let div0;
@@ -21517,7 +21736,7 @@ class Sheet extends SvelteComponent {
       this,
       options,
       instance_1$2,
-      create_fragment$y,
+      create_fragment$C,
       safe_not_equal,
       {
         class: 7,
@@ -21556,7 +21775,7 @@ const get_default_slot_context$1 = (ctx) => ({ popover: (
   /*f7Popover*/
   ctx[3]
 ) });
-function create_if_block$g(ctx) {
+function create_if_block$j(ctx) {
   let div;
   return {
     c() {
@@ -21573,14 +21792,14 @@ function create_if_block$g(ctx) {
     }
   };
 }
-function create_fragment$x(ctx) {
+function create_fragment$B(ctx) {
   let div1;
   let t2;
   let div0;
   let current;
   let if_block = (
     /*arrow*/
-    ctx[1] !== false && create_if_block$g()
+    ctx[1] !== false && create_if_block$j()
   );
   const default_slot_template = (
     /*#slots*/
@@ -21639,7 +21858,7 @@ function create_fragment$x(ctx) {
       ) {
         if (if_block) ;
         else {
-          if_block = create_if_block$g();
+          if_block = create_if_block$j();
           if_block.c();
           if_block.m(div1, t2);
         }
@@ -21864,7 +22083,7 @@ function instance_1$1($$self, $$props, $$invalidate) {
 class Popover2 extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance_1$1, create_fragment$x, safe_not_equal, {
+    init(this, options, instance_1$1, create_fragment$B, safe_not_equal, {
       class: 7,
       style: 0,
       opened: 6,
@@ -21891,7 +22110,7 @@ const get_default_slot_context = (ctx) => ({ panel: (
   /*f7Panel*/
   ctx[3]
 ) });
-function create_if_block$f(ctx) {
+function create_if_block$i(ctx) {
   let div;
   return {
     c() {
@@ -21908,7 +22127,7 @@ function create_if_block$f(ctx) {
     }
   };
 }
-function create_fragment$w(ctx) {
+function create_fragment$A(ctx) {
   let div;
   let t2;
   let current;
@@ -21925,7 +22144,7 @@ function create_fragment$w(ctx) {
   );
   let if_block = (
     /*resizable*/
-    ctx[0] && create_if_block$f()
+    ctx[0] && create_if_block$i()
   );
   let div_levels = [
     { class: (
@@ -21993,7 +22212,7 @@ function create_fragment$w(ctx) {
       ) {
         if (if_block) ;
         else {
-          if_block = create_if_block$f();
+          if_block = create_if_block$i();
           if_block.c();
           if_block.m(div, null);
         }
@@ -22324,7 +22543,7 @@ class Panel2 extends SvelteComponent {
       this,
       options,
       instance_1,
-      create_fragment$w,
+      create_fragment$A,
       safe_not_equal,
       {
         class: 7,
@@ -22455,7 +22674,7 @@ function create_default_slot_4$6(ctx) {
     }
   };
 }
-function create_if_block_3$4(ctx) {
+function create_if_block_3$5(ctx) {
   let loginscreen;
   let current;
   loginscreen = new Login_screen({
@@ -22550,7 +22769,7 @@ function create_default_slot_3$7(ctx) {
     }
   };
 }
-function create_if_block_2$7(ctx) {
+function create_if_block_2$9(ctx) {
   let sheet;
   let current;
   sheet = new Sheet({
@@ -22645,7 +22864,7 @@ function create_default_slot_2$8(ctx) {
     }
   };
 }
-function create_if_block_1$9(ctx) {
+function create_if_block_1$c(ctx) {
   let popover;
   let current;
   popover = new Popover2({
@@ -22659,7 +22878,7 @@ function create_if_block_1$9(ctx) {
         /*url*/
         ctx[1]
       ),
-      $$slots: { default: [create_default_slot_1$a] },
+      $$slots: { default: [create_default_slot_1$b] },
       $$scope: { ctx }
     }
   });
@@ -22699,7 +22918,7 @@ function create_if_block_1$9(ctx) {
     }
   };
 }
-function create_default_slot_1$a(ctx) {
+function create_default_slot_1$b(ctx) {
   let view;
   let current;
   view = new View2({
@@ -22747,7 +22966,7 @@ function create_default_slot_1$a(ctx) {
     }
   };
 }
-function create_if_block$e(ctx) {
+function create_if_block$h(ctx) {
   let panel;
   let current;
   panel = new Panel2({
@@ -22765,7 +22984,7 @@ function create_if_block$e(ctx) {
         /*url*/
         ctx[1]
       ),
-      $$slots: { default: [create_default_slot$d] },
+      $$slots: { default: [create_default_slot$e] },
       $$scope: { ctx }
     }
   });
@@ -22808,7 +23027,7 @@ function create_if_block$e(ctx) {
     }
   };
 }
-function create_default_slot$d(ctx) {
+function create_default_slot$e(ctx) {
   let view;
   let current;
   view = new View2({
@@ -22856,7 +23075,7 @@ function create_default_slot$d(ctx) {
     }
   };
 }
-function create_fragment$v(ctx) {
+function create_fragment$z(ctx) {
   let t0;
   let t1;
   let t2;
@@ -22873,17 +23092,17 @@ function create_fragment$v(ctx) {
   );
   let if_block1 = (
     /*openIn*/
-    ctx[0] === "loginScreen" && create_if_block_3$4(ctx)
+    ctx[0] === "loginScreen" && create_if_block_3$5(ctx)
   );
   let if_block2 = (
     /*openIn*/
-    ctx[0] === "sheet" && create_if_block_2$7(ctx)
+    ctx[0] === "sheet" && create_if_block_2$9(ctx)
   );
   let if_block3 = (
     /*openIn*/
-    ctx[0] === "popover" && create_if_block_1$9(ctx)
+    ctx[0] === "popover" && create_if_block_1$c(ctx)
   );
-  let if_block4 = show_if && create_if_block$e(ctx);
+  let if_block4 = show_if && create_if_block$h(ctx);
   return {
     c() {
       if (if_block0) if_block0.c();
@@ -22945,7 +23164,7 @@ function create_fragment$v(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block_3$4(ctx2);
+          if_block1 = create_if_block_3$5(ctx2);
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(t1.parentNode, t1);
@@ -22968,7 +23187,7 @@ function create_fragment$v(ctx) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block_2$7(ctx2);
+          if_block2 = create_if_block_2$9(ctx2);
           if_block2.c();
           transition_in(if_block2, 1);
           if_block2.m(t2.parentNode, t2);
@@ -22991,7 +23210,7 @@ function create_fragment$v(ctx) {
             transition_in(if_block3, 1);
           }
         } else {
-          if_block3 = create_if_block_1$9(ctx2);
+          if_block3 = create_if_block_1$c(ctx2);
           if_block3.c();
           transition_in(if_block3, 1);
           if_block3.m(t3.parentNode, t3);
@@ -23014,7 +23233,7 @@ function create_fragment$v(ctx) {
             transition_in(if_block4, 1);
           }
         } else {
-          if_block4 = create_if_block$e(ctx2);
+          if_block4 = create_if_block$h(ctx2);
           if_block4.c();
           transition_in(if_block4, 1);
           if_block4.m(if_block4_anchor.parentNode, if_block4_anchor);
@@ -23060,7 +23279,7 @@ function create_fragment$v(ctx) {
     }
   };
 }
-function instance$w($$self, $$props, $$invalidate) {
+function instance$A($$self, $$props, $$invalidate) {
   let { openIn } = $$props;
   let { url } = $$props;
   let { viewSelector } = $$props;
@@ -23080,7 +23299,7 @@ function instance$w($$self, $$props, $$invalidate) {
 class Router_open_in_component extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$w, create_fragment$v, safe_not_equal, {
+    init(this, options, instance$A, create_fragment$z, safe_not_equal, {
       openIn: 0,
       url: 1,
       viewSelector: 2,
@@ -23370,7 +23589,7 @@ const Framework7Svelte = {
     Framework72.Router.use(componentsRouter);
   }
 };
-function create_fragment$u(ctx) {
+function create_fragment$y(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -23462,7 +23681,7 @@ function create_fragment$u(ctx) {
     }
   };
 }
-function instance$v($$self, $$props, $$invalidate) {
+function instance$z($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = ["class"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -23483,15 +23702,15 @@ function instance$v($$self, $$props, $$invalidate) {
 class Accordion_content extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$v, create_fragment$u, safe_not_equal, { class: 2 });
+    init(this, options, instance$z, create_fragment$y, safe_not_equal, { class: 2 });
   }
 }
-function get_each_context$4(ctx, list, i) {
+function get_each_context$3(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[5] = list[i];
   return child_ctx;
 }
-function create_each_block$4(key_1, ctx) {
+function create_each_block$3(key_1, ctx) {
   let first;
   let switch_instance;
   let switch_instance_anchor;
@@ -23584,7 +23803,7 @@ function create_each_block$4(key_1, ctx) {
     }
   };
 }
-function create_fragment$t(ctx) {
+function create_fragment$x(ctx) {
   let div;
   let each_blocks = [];
   let each_1_lookup = /* @__PURE__ */ new Map();
@@ -23598,9 +23817,9 @@ function create_fragment$t(ctx) {
     ctx2[5].id
   );
   for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context$4(ctx, each_value, i);
+    let child_ctx = get_each_context$3(ctx, each_value, i);
     let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block$4(key, child_ctx));
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$3(key, child_ctx));
   }
   return {
     c() {
@@ -23628,7 +23847,7 @@ function create_fragment$t(ctx) {
           ctx2[0]
         );
         group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, outro_and_destroy_block, create_each_block$4, null, get_each_context$4);
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, outro_and_destroy_block, create_each_block$3, null, get_each_context$3);
         check_outros();
       }
     },
@@ -23656,7 +23875,7 @@ function create_fragment$t(ctx) {
     }
   };
 }
-function instance$u($$self, $$props, $$invalidate) {
+function instance$y($$self, $$props, $$invalidate) {
   let modals = [];
   let el;
   let routerData;
@@ -23692,10 +23911,10 @@ function instance$u($$self, $$props, $$invalidate) {
 class Routable_modals extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$u, create_fragment$t, safe_not_equal, {});
+    init(this, options, instance$y, create_fragment$x, safe_not_equal, {});
   }
 }
-function create_fragment$s(ctx) {
+function create_fragment$w(ctx) {
   let div;
   let t2;
   let routablemodals;
@@ -23790,7 +24009,7 @@ function create_fragment$s(ctx) {
     }
   };
 }
-function instance$t($$self, $$props, $$invalidate) {
+function instance$x($$self, $$props, $$invalidate) {
   let classes;
   let { $$slots: slots = {}, $$scope } = $$props;
   let { class: className = void 0 } = $$props;
@@ -23829,7 +24048,7 @@ function instance$t($$self, $$props, $$invalidate) {
 class App extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$t, create_fragment$s, safe_not_equal, { class: 2 });
+    init(this, options, instance$x, create_fragment$w, safe_not_equal, { class: 2 });
   }
 }
 const useTooltip = (el, props) => {
@@ -23876,7 +24095,7 @@ const useTooltip = (el, props) => {
     }
   };
 };
-function create_fragment$r(ctx) {
+function create_fragment$v(ctx) {
   let span;
   let useTooltip_action;
   let current;
@@ -23997,7 +24216,7 @@ function create_fragment$r(ctx) {
     }
   };
 }
-function instance$s($$self, $$props, $$invalidate) {
+function instance$w($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = ["class", "tooltip", "tooltipTrigger"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -24022,10 +24241,10 @@ function instance$s($$self, $$props, $$invalidate) {
 class Badge extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$s, create_fragment$r, safe_not_equal, { class: 4, tooltip: 0, tooltipTrigger: 1 });
+    init(this, options, instance$w, create_fragment$v, safe_not_equal, { class: 4, tooltip: 0, tooltipTrigger: 1 });
   }
 }
-function create_fragment$q(ctx) {
+function create_fragment$u(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -24117,7 +24336,7 @@ function create_fragment$q(ctx) {
     }
   };
 }
-function instance$r($$self, $$props, $$invalidate) {
+function instance$v($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = ["large", "medium", "class"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -24150,10 +24369,10 @@ function instance$r($$self, $$props, $$invalidate) {
 class Block_title extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$r, create_fragment$q, safe_not_equal, { large: 2, medium: 3, class: 4 });
+    init(this, options, instance$v, create_fragment$u, safe_not_equal, { large: 2, medium: 3, class: 4 });
   }
 }
-function create_fragment$p(ctx) {
+function create_fragment$t(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -24247,7 +24466,7 @@ function create_fragment$p(ctx) {
     }
   };
 }
-function instance$q($$self, $$props, $$invalidate) {
+function instance$u($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = [
     "inset",
@@ -24441,8 +24660,8 @@ class Block extends SvelteComponent {
     init(
       this,
       options,
-      instance$q,
-      create_fragment$p,
+      instance$u,
+      create_fragment$t,
       safe_not_equal,
       {
         inset: 3,
@@ -24543,7 +24762,7 @@ const useTheme = (set) => {
   }
   return t2;
 };
-function create_fragment$o(ctx) {
+function create_fragment$s(ctx) {
   let i;
   let t0_value = (
     /*iconText*/
@@ -24691,7 +24910,7 @@ function create_fragment$o(ctx) {
     }
   };
 }
-function instance$p($$self, $$props, $$invalidate) {
+function instance$t($$self, $$props, $$invalidate) {
   let iconClasses;
   let iconText;
   let iconSize;
@@ -24836,7 +25055,7 @@ function instance$p($$self, $$props, $$invalidate) {
 class Icon extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$p, create_fragment$o, safe_not_equal, {
+    init(this, options, instance$t, create_fragment$s, safe_not_equal, {
       style: 7,
       class: 8,
       material: 9,
@@ -24850,7 +25069,7 @@ class Icon extends SvelteComponent {
     });
   }
 }
-function create_if_block$d(ctx) {
+function create_if_block$g(ctx) {
   let badge;
   let current;
   const badge_spread_levels = [
@@ -24858,7 +25077,7 @@ function create_if_block$d(ctx) {
     ctx[0].badge.props
   ];
   let badge_props = {
-    $$slots: { default: [create_default_slot_1$9] },
+    $$slots: { default: [create_default_slot_1$a] },
     $$scope: { ctx }
   };
   for (let i = 0; i < badge_spread_levels.length; i += 1) {
@@ -24899,7 +25118,7 @@ function create_if_block$d(ctx) {
     }
   };
 }
-function create_default_slot_1$9(ctx) {
+function create_default_slot_1$a(ctx) {
   let t_value = (
     /*icon*/
     ctx[0].badge.content + ""
@@ -24924,12 +25143,12 @@ function create_default_slot_1$9(ctx) {
     }
   };
 }
-function create_default_slot$c(ctx) {
+function create_default_slot$d(ctx) {
   let if_block_anchor;
   let current;
   let if_block = (
     /*icon*/
-    ctx[0].badge && create_if_block$d(ctx)
+    ctx[0].badge && create_if_block$g(ctx)
   );
   return {
     c() {
@@ -24953,7 +25172,7 @@ function create_default_slot$c(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$d(ctx2);
+          if_block = create_if_block$g(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -24983,7 +25202,7 @@ function create_default_slot$c(ctx) {
     }
   };
 }
-function create_fragment$n(ctx) {
+function create_fragment$r(ctx) {
   let icon_1;
   let current;
   const icon_1_spread_levels = [
@@ -24991,7 +25210,7 @@ function create_fragment$n(ctx) {
     ctx[0].props
   ];
   let icon_1_props = {
-    $$slots: { default: [create_default_slot$c] },
+    $$slots: { default: [create_default_slot$d] },
     $$scope: { ctx }
   };
   for (let i = 0; i < icon_1_spread_levels.length; i += 1) {
@@ -25032,7 +25251,7 @@ function create_fragment$n(ctx) {
     }
   };
 }
-function instance$o($$self, $$props, $$invalidate) {
+function instance$s($$self, $$props, $$invalidate) {
   let { icon = void 0 } = $$props;
   $$self.$$set = ($$props2) => {
     if ("icon" in $$props2) $$invalidate(0, icon = $$props2.icon);
@@ -25042,10 +25261,10 @@ function instance$o($$self, $$props, $$invalidate) {
 class Use_icon extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$o, create_fragment$n, safe_not_equal, { icon: 0 });
+    init(this, options, instance$s, create_fragment$r, safe_not_equal, { icon: 0 });
   }
 }
-function create_else_block$5(ctx) {
+function create_else_block$7(ctx) {
   let span;
   return {
     c() {
@@ -25062,7 +25281,7 @@ function create_else_block$5(ctx) {
     }
   };
 }
-function create_if_block_1$8(ctx) {
+function create_if_block_1$b(ctx) {
   let span8;
   return {
     c() {
@@ -25080,7 +25299,7 @@ function create_if_block_1$8(ctx) {
     }
   };
 }
-function create_if_block$c(ctx) {
+function create_if_block$f(ctx) {
   let span;
   return {
     c() {
@@ -25098,20 +25317,20 @@ function create_if_block$c(ctx) {
     }
   };
 }
-function create_fragment$m(ctx) {
+function create_fragment$q(ctx) {
   let span;
   function select_block_type(ctx2, dirty) {
     if (
       /*theme*/
       ctx2[0] && /*theme*/
       ctx2[0].md
-    ) return create_if_block$c;
+    ) return create_if_block$f;
     if (
       /*theme*/
       ctx2[0] && /*theme*/
       ctx2[0].ios
-    ) return create_if_block_1$8;
-    return create_else_block$5;
+    ) return create_if_block_1$b;
+    return create_else_block$7;
   }
   let current_block_type = select_block_type(ctx);
   let if_block = current_block_type(ctx);
@@ -25180,7 +25399,7 @@ function create_fragment$m(ctx) {
     }
   };
 }
-function instance$n($$self, $$props, $$invalidate) {
+function instance$r($$self, $$props, $$invalidate) {
   let sizeComputed;
   let preloaderStyle;
   let classes;
@@ -25225,7 +25444,7 @@ function instance$n($$self, $$props, $$invalidate) {
 class Preloader extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$n, create_fragment$m, safe_not_equal, { style: 4, class: 5, size: 6 });
+    init(this, options, instance$r, create_fragment$q, safe_not_equal, { style: 4, class: 5, size: 6 });
   }
 }
 function create_else_block_1$2(ctx) {
@@ -25368,7 +25587,7 @@ function create_else_block_1$2(ctx) {
     }
   };
 }
-function create_if_block$b(ctx) {
+function create_if_block$e(ctx) {
   let button;
   let current_block_type_index;
   let if_block;
@@ -25377,7 +25596,7 @@ function create_if_block$b(ctx) {
   let current;
   let mounted;
   let dispose;
-  const if_block_creators = [create_if_block_1$7, create_else_block$4];
+  const if_block_creators = [create_if_block_1$a, create_else_block$6];
   const if_blocks = [];
   function select_block_type_1(ctx2, dirty) {
     if (
@@ -25917,7 +26136,7 @@ function create_if_block_7$1(ctx) {
     }
   };
 }
-function create_else_block$4(ctx) {
+function create_else_block$6(ctx) {
   let t0;
   let t1;
   let current;
@@ -26039,7 +26258,7 @@ function create_else_block$4(ctx) {
     }
   };
 }
-function create_if_block_1$7(ctx) {
+function create_if_block_1$a(ctx) {
   let preloader_1;
   let t0;
   let span;
@@ -26060,10 +26279,10 @@ function create_if_block_1$7(ctx) {
   });
   let if_block0 = (
     /*icon*/
-    ctx[8] && create_if_block_3$3(ctx)
+    ctx[8] && create_if_block_3$4(ctx)
   );
   let if_block1 = typeof /*text*/
-  ctx[0] !== "undefined" && create_if_block_2$6(ctx);
+  ctx[0] !== "undefined" && create_if_block_2$8(ctx);
   const default_slot_template = (
     /*#slots*/
     ctx[45].default
@@ -26119,7 +26338,7 @@ function create_if_block_1$7(ctx) {
             transition_in(if_block0, 1);
           }
         } else {
-          if_block0 = create_if_block_3$3(ctx2);
+          if_block0 = create_if_block_3$4(ctx2);
           if_block0.c();
           transition_in(if_block0, 1);
           if_block0.m(span, t1);
@@ -26136,7 +26355,7 @@ function create_if_block_1$7(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block_2$6(ctx2);
+          if_block1 = create_if_block_2$8(ctx2);
           if_block1.c();
           if_block1.m(span, t2);
         }
@@ -26259,7 +26478,7 @@ function create_if_block_4$1(ctx) {
     }
   };
 }
-function create_if_block_3$3(ctx) {
+function create_if_block_3$4(ctx) {
   let useicon;
   let current;
   useicon = new Use_icon({ props: { icon: (
@@ -26295,7 +26514,7 @@ function create_if_block_3$3(ctx) {
     }
   };
 }
-function create_if_block_2$6(ctx) {
+function create_if_block_2$8(ctx) {
   let span;
   let t_value = plainText(
     /*text*/
@@ -26325,12 +26544,12 @@ function create_if_block_2$6(ctx) {
     }
   };
 }
-function create_fragment$l(ctx) {
+function create_fragment$p(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$b, create_else_block_1$2];
+  const if_block_creators = [create_if_block$e, create_else_block_1$2];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -26390,7 +26609,7 @@ function create_fragment$l(ctx) {
     }
   };
 }
-function instance$m($$self, $$props, $$invalidate) {
+function instance$q($$self, $$props, $$invalidate) {
   let hrefComputed;
   let attrs;
   let classes;
@@ -26649,8 +26868,8 @@ class Button extends SvelteComponent {
     init(
       this,
       options,
-      instance$m,
-      create_fragment$l,
+      instance$q,
+      create_fragment$p,
       safe_not_equal,
       {
         class: 13,
@@ -26731,7 +26950,7 @@ const getReactiveContext = (name, setValue) => {
   });
   return value2;
 };
-function create_if_block_2$5(ctx) {
+function create_if_block_2$7(ctx) {
   let useicon;
   let current;
   useicon = new Use_icon({ props: { icon: (
@@ -26767,7 +26986,7 @@ function create_if_block_2$5(ctx) {
     }
   };
 }
-function create_if_block$a(ctx) {
+function create_if_block$d(ctx) {
   let span;
   let t0_value = plainText(
     /*text*/
@@ -26777,7 +26996,7 @@ function create_if_block$a(ctx) {
   let t1;
   let current;
   let if_block = typeof /*badge*/
-  ctx[1] !== "undefined" && create_if_block_1$6(ctx);
+  ctx[1] !== "undefined" && create_if_block_1$9(ctx);
   return {
     c() {
       span = element("span");
@@ -26813,7 +27032,7 @@ function create_if_block$a(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block_1$6(ctx2);
+          if_block = create_if_block_1$9(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(span, null);
@@ -26852,7 +27071,7 @@ function create_if_block$a(ctx) {
     }
   };
 }
-function create_if_block_1$6(ctx) {
+function create_if_block_1$9(ctx) {
   let badge_1;
   let current;
   badge_1 = new Badge({
@@ -26861,7 +27080,7 @@ function create_if_block_1$6(ctx) {
         /*badgeColor*/
         ctx[2]
       ),
-      $$slots: { default: [create_default_slot$b] },
+      $$slots: { default: [create_default_slot$c] },
       $$scope: { ctx }
     }
   });
@@ -26898,7 +27117,7 @@ function create_if_block_1$6(ctx) {
     }
   };
 }
-function create_default_slot$b(ctx) {
+function create_default_slot$c(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[1]
@@ -26925,7 +27144,7 @@ function create_default_slot$b(ctx) {
     }
   };
 }
-function create_fragment$k(ctx) {
+function create_fragment$o(ctx) {
   let a;
   let t0;
   let t1;
@@ -26936,7 +27155,7 @@ function create_fragment$k(ctx) {
   let dispose;
   let if_block0 = (
     /*icon*/
-    ctx[8] && create_if_block_2$5(ctx)
+    ctx[8] && create_if_block_2$7(ctx)
   );
   const default_slot_template = (
     /*#slots*/
@@ -26951,7 +27170,7 @@ function create_fragment$k(ctx) {
   );
   let if_block1 = (typeof /*text*/
   ctx[0] !== "undefined" || typeof /*badge*/
-  ctx[1] !== "undefined") && create_if_block$a(ctx);
+  ctx[1] !== "undefined") && create_if_block$d(ctx);
   let a_levels = [
     { class: (
       /*classes*/
@@ -27025,7 +27244,7 @@ function create_fragment$k(ctx) {
             transition_in(if_block0, 1);
           }
         } else {
-          if_block0 = create_if_block_2$5(ctx2);
+          if_block0 = create_if_block_2$7(ctx2);
           if_block0.c();
           transition_in(if_block0, 1);
           if_block0.m(a, t0);
@@ -27070,7 +27289,7 @@ function create_fragment$k(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block$a(ctx2);
+          if_block1 = create_if_block$d(ctx2);
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(a, null);
@@ -27136,7 +27355,7 @@ function create_fragment$k(ctx) {
     }
   };
 }
-function instance$l($$self, $$props, $$invalidate) {
+function instance$p($$self, $$props, $$invalidate) {
   let isTabbarIcons;
   let hrefComputed;
   let attrs;
@@ -27307,8 +27526,8 @@ class Link extends SvelteComponent {
     init(
       this,
       options,
-      instance$l,
-      create_fragment$k,
+      instance$p,
+      create_fragment$o,
       safe_not_equal,
       {
         class: 12,
@@ -27679,7 +27898,7 @@ const get_content_start_slot_changes = (dirty) => ({});
 const get_content_start_slot_context = (ctx) => ({});
 const get_root_start_slot_changes = (dirty) => ({});
 const get_root_start_slot_context = (ctx) => ({});
-function create_else_block$3(ctx) {
+function create_else_block$5(ctx) {
   let li;
   let t0;
   let current_block_type_index;
@@ -27722,12 +27941,12 @@ function create_else_block$3(ctx) {
     /*isSortable*/
     ctx[44] && /*sortable*/
     ctx[14] !== false && !/*isSortableOpposite*/
-    ctx[43] && create_if_block_3$2()
+    ctx[43] && create_if_block_3$3()
   );
   let if_block2 = (
     /*swipeout*/
     (ctx[13] || /*accordionItem*/
-    ctx[15]) && create_if_block_2$4(ctx)
+    ctx[15]) && create_if_block_2$6(ctx)
   );
   const root_slot_template = (
     /*#slots*/
@@ -27874,7 +28093,7 @@ function create_else_block$3(ctx) {
       ) {
         if (if_block1) ;
         else {
-          if_block1 = create_if_block_3$2();
+          if_block1 = create_if_block_3$3();
           if_block1.c();
           if_block1.m(li, t2);
         }
@@ -27894,7 +28113,7 @@ function create_else_block$3(ctx) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block_2$4(ctx2);
+          if_block2 = create_if_block_2$6(ctx2);
           if_block2.c();
           transition_in(if_block2, 1);
           if_block2.m(li, t3);
@@ -28016,7 +28235,7 @@ function create_else_block$3(ctx) {
     }
   };
 }
-function create_if_block_1$5(ctx) {
+function create_if_block_1$8(ctx) {
   let li;
   let t0_value = plainText(
     /*title*/
@@ -28178,7 +28397,7 @@ function create_if_block_1$5(ctx) {
     }
   };
 }
-function create_if_block$9(ctx) {
+function create_if_block$c(ctx) {
   let li;
   let span;
   let useTooltip_action;
@@ -31674,7 +31893,7 @@ function create_if_block_115(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_10$1] },
+      $$slots: { default: [create_default_slot_10$2] },
       $$scope: { ctx }
     }
   });
@@ -31712,7 +31931,7 @@ function create_if_block_115(ctx) {
     }
   };
 }
-function create_default_slot_10$1(ctx) {
+function create_default_slot_10$2(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -35737,7 +35956,7 @@ function create_if_block_80(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_7$2] },
+      $$slots: { default: [create_default_slot_7$3] },
       $$scope: { ctx }
     }
   });
@@ -35775,7 +35994,7 @@ function create_if_block_80(ctx) {
     }
   };
 }
-function create_default_slot_7$2(ctx) {
+function create_default_slot_7$3(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -36280,7 +36499,7 @@ function create_if_block_74(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_6$2] },
+      $$slots: { default: [create_default_slot_6$3] },
       $$scope: { ctx }
     }
   });
@@ -36318,7 +36537,7 @@ function create_if_block_74(ctx) {
     }
   };
 }
-function create_default_slot_6$2(ctx) {
+function create_default_slot_6$3(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -43996,7 +44215,7 @@ function create_if_block_18(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot_1$8] },
+      $$slots: { default: [create_default_slot_1$9] },
       $$scope: { ctx }
     }
   });
@@ -44034,7 +44253,7 @@ function create_if_block_18(ctx) {
     }
   };
 }
-function create_default_slot_1$8(ctx) {
+function create_default_slot_1$9(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -44539,7 +44758,7 @@ function create_if_block_12(ctx) {
         /*badgeColor*/
         ctx[11]
       ),
-      $$slots: { default: [create_default_slot$a] },
+      $$slots: { default: [create_default_slot$b] },
       $$scope: { ctx }
     }
   });
@@ -44577,7 +44796,7 @@ function create_if_block_12(ctx) {
     }
   };
 }
-function create_default_slot$a(ctx) {
+function create_default_slot$b(ctx) {
   let t_value = plainText(
     /*badge*/
     ctx[10]
@@ -44918,7 +45137,7 @@ function create_if_block_7(ctx) {
     }
   };
 }
-function create_if_block_3$2(ctx) {
+function create_if_block_3$3(ctx) {
   let div;
   return {
     c() {
@@ -44935,7 +45154,7 @@ function create_if_block_3$2(ctx) {
     }
   };
 }
-function create_if_block_2$4(ctx) {
+function create_if_block_2$6(ctx) {
   let current;
   const default_slot_template = (
     /*#slots*/
@@ -45024,12 +45243,12 @@ function fallback_block(ctx) {
     }
   };
 }
-function create_fragment$j(ctx) {
+function create_fragment$n(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$9, create_if_block_1$5, create_else_block$3];
+  const if_block_creators = [create_if_block$c, create_if_block_1$8, create_else_block$5];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -45093,7 +45312,7 @@ function create_fragment$j(ctx) {
     }
   };
 }
-function instance$k($$self, $$props, $$invalidate) {
+function instance$o($$self, $$props, $$invalidate) {
   let isMedia;
   let isSortable;
   let isSortableOpposite;
@@ -45686,8 +45905,8 @@ class List_item extends SvelteComponent {
     init(
       this,
       options,
-      instance$k,
-      create_fragment$j,
+      instance$o,
+      create_fragment$n,
       safe_not_equal,
       {
         class: 48,
@@ -45775,7 +45994,7 @@ function create_else_block_1(ctx) {
     ctx[55],
     get_before_list_slot_context_1
   );
-  const if_block_creators = [create_if_block_2$3, create_else_block_2];
+  const if_block_creators = [create_if_block_2$5, create_else_block_2];
   const if_blocks = [];
   function select_block_type_2(ctx2, dirty) {
     if (
@@ -45955,7 +46174,7 @@ function create_else_block_1(ctx) {
     }
   };
 }
-function create_if_block$8(ctx) {
+function create_if_block$b(ctx) {
   let form_1;
   let t0;
   let current_block_type_index;
@@ -45976,7 +46195,7 @@ function create_if_block$8(ctx) {
     ctx[55],
     get_before_list_slot_context
   );
-  const if_block_creators = [create_if_block_1$4, create_else_block$2];
+  const if_block_creators = [create_if_block_1$7, create_else_block$4];
   const if_blocks = [];
   function select_block_type_1(ctx2, dirty) {
     if (
@@ -46229,7 +46448,7 @@ function create_else_block_2(ctx) {
     }
   };
 }
-function create_if_block_2$3(ctx) {
+function create_if_block_2$5(ctx) {
   let ul_1;
   let t2;
   let current;
@@ -46341,7 +46560,7 @@ function create_if_block_2$3(ctx) {
     }
   };
 }
-function create_else_block$2(ctx) {
+function create_else_block$4(ctx) {
   let current;
   const default_slot_template = (
     /*#slots*/
@@ -46403,7 +46622,7 @@ function create_else_block$2(ctx) {
     }
   };
 }
-function create_if_block_1$4(ctx) {
+function create_if_block_1$7(ctx) {
   let ul_1;
   let t2;
   let current;
@@ -46515,12 +46734,12 @@ function create_if_block_1$4(ctx) {
     }
   };
 }
-function create_fragment$i(ctx) {
+function create_fragment$m(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$8, create_else_block_1];
+  const if_block_creators = [create_if_block$b, create_else_block_1];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -46580,7 +46799,7 @@ function create_fragment$i(ctx) {
     }
   };
 }
-function instance$j($$self, $$props, $$invalidate) {
+function instance$n($$self, $$props, $$invalidate) {
   let hasUlSlots;
   let classes;
   const omit_props_names = [
@@ -46954,8 +47173,8 @@ class List extends SvelteComponent {
     init(
       this,
       options,
-      instance$j,
-      create_fragment$i,
+      instance$n,
+      create_fragment$m,
       safe_not_equal,
       {
         class: 8,
@@ -47017,7 +47236,7 @@ class List extends SvelteComponent {
     return this.$$.ctx[54];
   }
 }
-function create_if_block$7(ctx) {
+function create_if_block$a(ctx) {
   let link;
   let current;
   link = new Link({
@@ -47082,13 +47301,13 @@ function create_if_block$7(ctx) {
     }
   };
 }
-function create_fragment$h(ctx) {
+function create_fragment$l(ctx) {
   let div;
   let t2;
   let current;
   let if_block = (
     /*backLink*/
-    ctx[0] && create_if_block$7(ctx)
+    ctx[0] && create_if_block$a(ctx)
   );
   const default_slot_template = (
     /*#slots*/
@@ -47141,7 +47360,7 @@ function create_fragment$h(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$7(ctx2);
+          if_block = create_if_block$a(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(div, t2);
@@ -47209,7 +47428,7 @@ function create_fragment$h(ctx) {
     }
   };
 }
-function instance$i($$self, $$props, $$invalidate) {
+function instance$m($$self, $$props, $$invalidate) {
   let classes;
   let needBackLinkText;
   let backLinkText;
@@ -47277,7 +47496,7 @@ function instance$i($$self, $$props, $$invalidate) {
 class Nav_left extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$i, create_fragment$h, safe_not_equal, {
+    init(this, options, instance$m, create_fragment$l, safe_not_equal, {
       class: 7,
       backLink: 0,
       backLinkUrl: 1,
@@ -47287,7 +47506,7 @@ class Nav_left extends SvelteComponent {
     });
   }
 }
-function create_fragment$g(ctx) {
+function create_fragment$k(ctx) {
   let div;
   let current;
   const default_slot_template = (
@@ -47379,7 +47598,7 @@ function create_fragment$g(ctx) {
     }
   };
 }
-function instance$h($$self, $$props, $$invalidate) {
+function instance$l($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = ["class", "sliding"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -47402,10 +47621,10 @@ function instance$h($$self, $$props, $$invalidate) {
 class Nav_right extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$h, create_fragment$g, safe_not_equal, { class: 2, sliding: 3 });
+    init(this, options, instance$l, create_fragment$k, safe_not_equal, { class: 2, sliding: 3 });
   }
 }
-function create_if_block_1$3(ctx) {
+function create_if_block_1$6(ctx) {
   let t_value = plainText(
     /*title*/
     ctx[0]
@@ -47432,7 +47651,7 @@ function create_if_block_1$3(ctx) {
     }
   };
 }
-function create_if_block$6(ctx) {
+function create_if_block$9(ctx) {
   let span;
   let t_value = plainText(
     /*subtitle*/
@@ -47463,15 +47682,15 @@ function create_if_block$6(ctx) {
     }
   };
 }
-function create_fragment$f(ctx) {
+function create_fragment$j(ctx) {
   let div;
   let t0;
   let t1;
   let current;
   let if_block0 = typeof /*title*/
-  ctx[0] !== "undefined" && create_if_block_1$3(ctx);
+  ctx[0] !== "undefined" && create_if_block_1$6(ctx);
   let if_block1 = typeof /*subtitle*/
-  ctx[1] !== "undefined" && create_if_block$6(ctx);
+  ctx[1] !== "undefined" && create_if_block$9(ctx);
   const default_slot_template = (
     /*#slots*/
     ctx[7].default
@@ -47521,7 +47740,7 @@ function create_fragment$f(ctx) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_1$3(ctx2);
+          if_block0 = create_if_block_1$6(ctx2);
           if_block0.c();
           if_block0.m(div, t0);
         }
@@ -47534,7 +47753,7 @@ function create_fragment$f(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block$6(ctx2);
+          if_block1 = create_if_block$9(ctx2);
           if_block1.c();
           if_block1.m(div, t1);
         }
@@ -47597,7 +47816,7 @@ function create_fragment$f(ctx) {
     }
   };
 }
-function instance$g($$self, $$props, $$invalidate) {
+function instance$k($$self, $$props, $$invalidate) {
   let classes;
   const omit_props_names = ["class", "title", "subtitle", "sliding"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -47624,7 +47843,7 @@ function instance$g($$self, $$props, $$invalidate) {
 class Nav_title extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$g, create_fragment$f, safe_not_equal, {
+    init(this, options, instance$k, create_fragment$j, safe_not_equal, {
       class: 4,
       title: 0,
       subtitle: 1,
@@ -47648,7 +47867,7 @@ const get_nav_left_slot_changes = (dirty) => ({});
 const get_nav_left_slot_context = (ctx) => ({});
 const get_before_inner_slot_changes = (dirty) => ({});
 const get_before_inner_slot_context = (ctx) => ({});
-function create_if_block_3$1(ctx) {
+function create_if_block_3$2(ctx) {
   let navleft;
   let current;
   navleft = new Nav_left({
@@ -47828,7 +48047,7 @@ function create_default_slot_2$6(ctx) {
     }
   };
 }
-function create_if_block_2$2(ctx) {
+function create_if_block_2$4(ctx) {
   let navtitle;
   let current;
   navtitle = new Nav_title({
@@ -47841,7 +48060,7 @@ function create_if_block_2$2(ctx) {
         /*subtitle*/
         ctx[5]
       ),
-      $$slots: { default: [create_default_slot_1$7] },
+      $$slots: { default: [create_default_slot_1$8] },
       $$scope: { ctx }
     }
   });
@@ -47881,7 +48100,7 @@ function create_if_block_2$2(ctx) {
     }
   };
 }
-function create_default_slot_1$7(ctx) {
+function create_default_slot_1$8(ctx) {
   let current;
   const title_slot_template = (
     /*#slots*/
@@ -47943,12 +48162,12 @@ function create_default_slot_1$7(ctx) {
     }
   };
 }
-function create_if_block_1$2(ctx) {
+function create_if_block_1$5(ctx) {
   let navright;
   let current;
   navright = new Nav_right({
     props: {
-      $$slots: { default: [create_default_slot$9] },
+      $$slots: { default: [create_default_slot$a] },
       $$scope: { ctx }
     }
   });
@@ -47982,7 +48201,7 @@ function create_if_block_1$2(ctx) {
     }
   };
 }
-function create_default_slot$9(ctx) {
+function create_default_slot$a(ctx) {
   let t2;
   let current;
   const nav_right_slot_template = (
@@ -48091,7 +48310,7 @@ function create_default_slot$9(ctx) {
     }
   };
 }
-function create_if_block$5(ctx) {
+function create_if_block$8(ctx) {
   let div1;
   let div0;
   let t0_value = plainText(
@@ -48179,7 +48398,7 @@ function create_if_block$5(ctx) {
     }
   };
 }
-function create_fragment$e(ctx) {
+function create_fragment$i(ctx) {
   let div2;
   let div0;
   let t0;
@@ -48205,22 +48424,22 @@ function create_fragment$e(ctx) {
   let if_block0 = (
     /*backLink*/
     (ctx[0] || /*hasLeftSlots*/
-    ctx[14]) && create_if_block_3$1(ctx)
+    ctx[14]) && create_if_block_3$2(ctx)
   );
   let if_block1 = (
     /*title*/
     (ctx[4] || /*subtitle*/
     ctx[5] || /*hasTitleSlots*/
-    ctx[12]) && create_if_block_2$2(ctx)
+    ctx[12]) && create_if_block_2$4(ctx)
   );
   let if_block2 = (
     /*hasRightSlots*/
-    ctx[13] && create_if_block_1$2(ctx)
+    ctx[13] && create_if_block_1$5(ctx)
   );
   let if_block3 = (
     /*largeTitle*/
     (ctx[11] || /*hasTitleLargeSlots*/
-    ctx[10]) && create_if_block$5(ctx)
+    ctx[10]) && create_if_block$8(ctx)
   );
   const default_slot_template = (
     /*#slots*/
@@ -48353,7 +48572,7 @@ function create_fragment$e(ctx) {
             transition_in(if_block0, 1);
           }
         } else {
-          if_block0 = create_if_block_3$1(ctx2);
+          if_block0 = create_if_block_3$2(ctx2);
           if_block0.c();
           transition_in(if_block0, 1);
           if_block0.m(div1, t2);
@@ -48378,7 +48597,7 @@ function create_fragment$e(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block_2$2(ctx2);
+          if_block1 = create_if_block_2$4(ctx2);
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(div1, t3);
@@ -48401,7 +48620,7 @@ function create_fragment$e(ctx) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block_1$2(ctx2);
+          if_block2 = create_if_block_1$5(ctx2);
           if_block2.c();
           transition_in(if_block2, 1);
           if_block2.m(div1, t4);
@@ -48425,7 +48644,7 @@ function create_fragment$e(ctx) {
             transition_in(if_block3, 1);
           }
         } else {
-          if_block3 = create_if_block$5(ctx2);
+          if_block3 = create_if_block$8(ctx2);
           if_block3.c();
           transition_in(if_block3, 1);
           if_block3.m(div1, t5);
@@ -48546,7 +48765,7 @@ function create_fragment$e(ctx) {
     }
   };
 }
-function instance$f($$self, $$props, $$invalidate) {
+function instance$j($$self, $$props, $$invalidate) {
   let hasLeftSlots;
   let hasRightSlots;
   let hasTitleSlots;
@@ -48847,8 +49066,8 @@ class Navbar extends SvelteComponent {
     init(
       this,
       options,
-      instance$f,
-      create_fragment$e,
+      instance$j,
+      create_fragment$i,
       safe_not_equal,
       {
         class: 17,
@@ -48886,7 +49105,7 @@ class Navbar extends SvelteComponent {
     return this.$$.ctx[29];
   }
 }
-function create_if_block_3(ctx) {
+function create_if_block_3$1(ctx) {
   let div1;
   let preloader;
   let t2;
@@ -48926,7 +49145,7 @@ function create_if_block_3(ctx) {
     }
   };
 }
-function create_if_block_2$1(ctx) {
+function create_if_block_2$3(ctx) {
   let preloader;
   let current;
   preloader = new Preloader({
@@ -48954,7 +49173,7 @@ function create_if_block_2$1(ctx) {
     }
   };
 }
-function create_if_block_1$1(ctx) {
+function create_if_block_1$4(ctx) {
   let preloader;
   let current;
   preloader = new Preloader({
@@ -48982,7 +49201,7 @@ function create_if_block_1$1(ctx) {
     }
   };
 }
-function create_if_block$4(ctx) {
+function create_if_block$7(ctx) {
   let div1;
   let preloader;
   let t2;
@@ -49022,7 +49241,7 @@ function create_if_block$4(ctx) {
     }
   };
 }
-function create_fragment$d(ctx) {
+function create_fragment$h(ctx) {
   let div;
   let t0;
   let t1;
@@ -49035,13 +49254,13 @@ function create_fragment$d(ctx) {
     /*ptr*/
     ctx[0] && /*ptrPreloader*/
     ctx[2] && !/*ptrBottom*/
-    ctx[3] && create_if_block_3()
+    ctx[3] && create_if_block_3$1()
   );
   let if_block1 = (
     /*infinite*/
     ctx[5] && /*infiniteTop*/
     ctx[6] && /*infinitePreloader*/
-    ctx[8] && create_if_block_2$1()
+    ctx[8] && create_if_block_2$3()
   );
   const default_slot_template = (
     /*#slots*/
@@ -49058,13 +49277,13 @@ function create_fragment$d(ctx) {
     /*infinite*/
     ctx[5] && !/*infiniteTop*/
     ctx[6] && /*infinitePreloader*/
-    ctx[8] && create_if_block_1$1()
+    ctx[8] && create_if_block_1$4()
   );
   let if_block3 = (
     /*ptr*/
     ctx[0] && /*ptrPreloader*/
     ctx[2] && /*ptrBottom*/
-    ctx[3] && create_if_block$4()
+    ctx[3] && create_if_block$7()
   );
   let div_levels = [
     { class: (
@@ -49137,7 +49356,7 @@ function create_fragment$d(ctx) {
             transition_in(if_block0, 1);
           }
         } else {
-          if_block0 = create_if_block_3();
+          if_block0 = create_if_block_3$1();
           if_block0.c();
           transition_in(if_block0, 1);
           if_block0.m(div, t0);
@@ -49161,7 +49380,7 @@ function create_fragment$d(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block_2$1();
+          if_block1 = create_if_block_2$3();
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(div, t1);
@@ -49208,7 +49427,7 @@ function create_fragment$d(ctx) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block_1$1();
+          if_block2 = create_if_block_1$4();
           if_block2.c();
           transition_in(if_block2, 1);
           if_block2.m(div, t3);
@@ -49232,7 +49451,7 @@ function create_fragment$d(ctx) {
             transition_in(if_block3, 1);
           }
         } else {
-          if_block3 = create_if_block$4();
+          if_block3 = create_if_block$7();
           if_block3.c();
           transition_in(if_block3, 1);
           if_block3.m(div, null);
@@ -49304,7 +49523,7 @@ function create_fragment$d(ctx) {
     }
   };
 }
-function instance$e($$self, $$props, $$invalidate) {
+function instance$i($$self, $$props, $$invalidate) {
   let pageContentClasses;
   const omit_props_names = [
     "tab",
@@ -49485,8 +49704,8 @@ class Page_content extends SvelteComponent {
     init(
       this,
       options,
-      instance$e,
-      create_fragment$d,
+      instance$i,
+      create_fragment$h,
       safe_not_equal,
       {
         tab: 12,
@@ -49518,7 +49737,7 @@ const get_static_slot_changes = (dirty) => ({});
 const get_static_slot_context = (ctx) => ({});
 const get_fixed_slot_changes = (dirty) => ({});
 const get_fixed_slot_context = (ctx) => ({});
-function create_else_block$1(ctx) {
+function create_else_block$3(ctx) {
   let t2;
   let current;
   const static_slot_template = (
@@ -49627,7 +49846,7 @@ function create_else_block$1(ctx) {
     }
   };
 }
-function create_if_block$3(ctx) {
+function create_if_block$6(ctx) {
   let pagecontent;
   let current;
   pagecontent = new Page_content({
@@ -49712,7 +49931,7 @@ function create_if_block$3(ctx) {
         /*onInfinite*/
         ctx[23]
       ),
-      $$slots: { default: [create_default_slot$8] },
+      $$slots: { default: [create_default_slot$9] },
       $$scope: { ctx }
     }
   });
@@ -49788,7 +50007,7 @@ function create_if_block$3(ctx) {
     }
   };
 }
-function create_default_slot$8(ctx) {
+function create_default_slot$9(ctx) {
   let t2;
   let current;
   const static_slot_template = (
@@ -49897,7 +50116,7 @@ function create_default_slot$8(ctx) {
     }
   };
 }
-function create_fragment$c(ctx) {
+function create_fragment$g(ctx) {
   let div;
   let t2;
   let current_block_type_index;
@@ -49914,7 +50133,7 @@ function create_fragment$c(ctx) {
     ctx[46],
     get_fixed_slot_context
   );
-  const if_block_creators = [create_if_block$3, create_else_block$1];
+  const if_block_creators = [create_if_block$6, create_else_block$3];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -50044,7 +50263,7 @@ function create_fragment$c(ctx) {
     }
   };
 }
-function instance$d($$self, $$props, $$invalidate) {
+function instance$h($$self, $$props, $$invalidate) {
   let forceSubnavbar;
   let forceNavbarLarge;
   let classes;
@@ -50432,8 +50651,8 @@ class Page extends SvelteComponent {
     init(
       this,
       options,
-      instance$d,
-      create_fragment$c,
+      instance$h,
+      create_fragment$g,
       safe_not_equal,
       {
         name: 0,
@@ -50467,7 +50686,1581 @@ class Page extends SvelteComponent {
     );
   }
 }
-function create_fragment$b(ctx) {
+function create_if_block_2$2(ctx) {
+  let p;
+  let t2;
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[14].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[13],
+    null
+  );
+  let if_block = (
+    /*strong*/
+    (ctx[0] || /*strongIos*/
+    ctx[1] || /*strongMd*/
+    ctx[2]) && create_if_block_3()
+  );
+  let p_levels = [{ class: (
+    /*classes*/
+    ctx[4]
+  ) }, restProps(
+    /*$$restProps*/
+    ctx[5]
+  )];
+  let p_data = {};
+  for (let i = 0; i < p_levels.length; i += 1) {
+    p_data = assign(p_data, p_levels[i]);
+  }
+  return {
+    c() {
+      p = element("p");
+      if (default_slot) default_slot.c();
+      t2 = space();
+      if (if_block) if_block.c();
+      set_attributes(p, p_data);
+    },
+    m(target, anchor) {
+      insert(target, p, anchor);
+      if (default_slot) {
+        default_slot.m(p, null);
+      }
+      append(p, t2);
+      if (if_block) if_block.m(p, null);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        8192)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[13],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[13]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[13],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      if (
+        /*strong*/
+        ctx2[0] || /*strongIos*/
+        ctx2[1] || /*strongMd*/
+        ctx2[2]
+      ) {
+        if (if_block) ;
+        else {
+          if_block = create_if_block_3();
+          if_block.c();
+          if_block.m(p, null);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+      set_attributes(p, p_data = get_spread_update(p_levels, [
+        (!current || dirty & /*classes*/
+        16) && { class: (
+          /*classes*/
+          ctx2[4]
+        ) },
+        dirty & /*$$restProps*/
+        32 && restProps(
+          /*$$restProps*/
+          ctx2[5]
+        )
+      ]));
+    },
+    i(local) {
+      if (current) return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(p);
+      }
+      if (default_slot) default_slot.d(detaching);
+      if (if_block) if_block.d();
+    }
+  };
+}
+function create_if_block$5(ctx) {
+  let div;
+  let t2;
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[14].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[13],
+    null
+  );
+  let if_block = (
+    /*strong*/
+    (ctx[0] || /*strongIos*/
+    ctx[1] || /*strongMd*/
+    ctx[2]) && create_if_block_1$3()
+  );
+  let div_levels = [{ class: (
+    /*classes*/
+    ctx[4]
+  ) }, restProps(
+    /*$$restProps*/
+    ctx[5]
+  )];
+  let div_data = {};
+  for (let i = 0; i < div_levels.length; i += 1) {
+    div_data = assign(div_data, div_levels[i]);
+  }
+  return {
+    c() {
+      div = element("div");
+      if (default_slot) default_slot.c();
+      t2 = space();
+      if (if_block) if_block.c();
+      set_attributes(div, div_data);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      if (default_slot) {
+        default_slot.m(div, null);
+      }
+      append(div, t2);
+      if (if_block) if_block.m(div, null);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        8192)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[13],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[13]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[13],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      if (
+        /*strong*/
+        ctx2[0] || /*strongIos*/
+        ctx2[1] || /*strongMd*/
+        ctx2[2]
+      ) {
+        if (if_block) ;
+        else {
+          if_block = create_if_block_1$3();
+          if_block.c();
+          if_block.m(div, null);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+      set_attributes(div, div_data = get_spread_update(div_levels, [
+        (!current || dirty & /*classes*/
+        16) && { class: (
+          /*classes*/
+          ctx2[4]
+        ) },
+        dirty & /*$$restProps*/
+        32 && restProps(
+          /*$$restProps*/
+          ctx2[5]
+        )
+      ]));
+    },
+    i(local) {
+      if (current) return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      if (default_slot) default_slot.d(detaching);
+      if (if_block) if_block.d();
+    }
+  };
+}
+function create_if_block_3(ctx) {
+  let span;
+  return {
+    c() {
+      span = element("span");
+      attr(span, "class", "segmented-highlight");
+    },
+    m(target, anchor) {
+      insert(target, span, anchor);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(span);
+      }
+    }
+  };
+}
+function create_if_block_1$3(ctx) {
+  let span;
+  return {
+    c() {
+      span = element("span");
+      attr(span, "class", "segmented-highlight");
+    },
+    m(target, anchor) {
+      insert(target, span, anchor);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(span);
+      }
+    }
+  };
+}
+function create_fragment$f(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block$5, create_if_block_2$2];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*tag*/
+      ctx2[3] === "div"
+    ) return 0;
+    if (
+      /*tag*/
+      ctx2[3] === "p"
+    ) return 1;
+    return -1;
+  }
+  if (~(current_block_type_index = select_block_type(ctx))) {
+    if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  }
+  return {
+    c() {
+      if (if_block) if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if (~current_block_type_index) {
+        if_blocks[current_block_type_index].m(target, anchor);
+      }
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2);
+      if (current_block_type_index === previous_block_index) {
+        if (~current_block_type_index) {
+          if_blocks[current_block_type_index].p(ctx2, dirty);
+        }
+      } else {
+        if (if_block) {
+          group_outros();
+          transition_out(if_blocks[previous_block_index], 1, 1, () => {
+            if_blocks[previous_block_index] = null;
+          });
+          check_outros();
+        }
+        if (~current_block_type_index) {
+          if_block = if_blocks[current_block_type_index];
+          if (!if_block) {
+            if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+            if_block.c();
+          } else {
+            if_block.p(ctx2, dirty);
+          }
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        } else {
+          if_block = null;
+        }
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (~current_block_type_index) {
+        if_blocks[current_block_type_index].d(detaching);
+      }
+    }
+  };
+}
+function instance$g($$self, $$props, $$invalidate) {
+  let classes;
+  const omit_props_names = [
+    "class",
+    "raised",
+    "raisedIos",
+    "raisedMd",
+    "round",
+    "roundIos",
+    "roundMd",
+    "strong",
+    "strongIos",
+    "strongMd",
+    "tag"
+  ];
+  let $$restProps = compute_rest_props($$props, omit_props_names);
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { class: className = void 0 } = $$props;
+  let { raised = false } = $$props;
+  let { raisedIos = false } = $$props;
+  let { raisedMd = false } = $$props;
+  let { round = false } = $$props;
+  let { roundIos = false } = $$props;
+  let { roundMd = false } = $$props;
+  let { strong = false } = $$props;
+  let { strongIos = false } = $$props;
+  let { strongMd = false } = $$props;
+  let { tag = "div" } = $$props;
+  $$self.$$set = ($$new_props) => {
+    $$invalidate(15, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
+    $$invalidate(5, $$restProps = compute_rest_props($$props, omit_props_names));
+    if ("class" in $$new_props) $$invalidate(6, className = $$new_props.class);
+    if ("raised" in $$new_props) $$invalidate(7, raised = $$new_props.raised);
+    if ("raisedIos" in $$new_props) $$invalidate(8, raisedIos = $$new_props.raisedIos);
+    if ("raisedMd" in $$new_props) $$invalidate(9, raisedMd = $$new_props.raisedMd);
+    if ("round" in $$new_props) $$invalidate(10, round = $$new_props.round);
+    if ("roundIos" in $$new_props) $$invalidate(11, roundIos = $$new_props.roundIos);
+    if ("roundMd" in $$new_props) $$invalidate(12, roundMd = $$new_props.roundMd);
+    if ("strong" in $$new_props) $$invalidate(0, strong = $$new_props.strong);
+    if ("strongIos" in $$new_props) $$invalidate(1, strongIos = $$new_props.strongIos);
+    if ("strongMd" in $$new_props) $$invalidate(2, strongMd = $$new_props.strongMd);
+    if ("tag" in $$new_props) $$invalidate(3, tag = $$new_props.tag);
+    if ("$$scope" in $$new_props) $$invalidate(13, $$scope = $$new_props.$$scope);
+  };
+  $$self.$$.update = () => {
+    $$invalidate(4, classes = classNames(
+      className,
+      {
+        segmented: true,
+        "segmented-raised": raised,
+        "segmented-raised-ios": raisedIos,
+        "segmented-raised-md": raisedMd,
+        "segmented-round": round,
+        "segmented-round-ios": roundIos,
+        "segmented-round-md": roundMd,
+        "segmented-strong": strong,
+        "segmented-strong-ios": strongIos,
+        "segmented-strong-md": strongMd
+      },
+      colorClasses($$props)
+    ));
+  };
+  $$props = exclude_internal_props($$props);
+  return [
+    strong,
+    strongIos,
+    strongMd,
+    tag,
+    classes,
+    $$restProps,
+    className,
+    raised,
+    raisedIos,
+    raisedMd,
+    round,
+    roundIos,
+    roundMd,
+    $$scope,
+    slots
+  ];
+}
+class Segmented extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$g, create_fragment$f, safe_not_equal, {
+      class: 6,
+      raised: 7,
+      raisedIos: 8,
+      raisedMd: 9,
+      round: 10,
+      roundIos: 11,
+      roundMd: 12,
+      strong: 0,
+      strongIos: 1,
+      strongMd: 2,
+      tag: 3
+    });
+  }
+}
+function create_else_block$2(ctx) {
+  let div;
+  let t2;
+  let current;
+  let if_block = (
+    /*tabContent*/
+    ctx[3] && create_if_block_2$1(ctx)
+  );
+  const default_slot_template = (
+    /*#slots*/
+    ctx[10].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[9],
+    null
+  );
+  let div_levels = [
+    { id: (
+      /*id*/
+      ctx[0]
+    ) },
+    { class: (
+      /*classes*/
+      ctx[4]
+    ) },
+    restProps(
+      /*$$restProps*/
+      ctx[6]
+    )
+  ];
+  let div_data = {};
+  for (let i = 0; i < div_levels.length; i += 1) {
+    div_data = assign(div_data, div_levels[i]);
+  }
+  return {
+    c() {
+      div = element("div");
+      if (if_block) if_block.c();
+      t2 = space();
+      if (default_slot) default_slot.c();
+      set_attributes(div, div_data);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      if (if_block) if_block.m(div, null);
+      append(div, t2);
+      if (default_slot) {
+        default_slot.m(div, null);
+      }
+      ctx[12](div);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (
+        /*tabContent*/
+        ctx2[3]
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & /*tabContent*/
+          8) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block_2$1(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(div, t2);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        512)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[9],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[9]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[9],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      set_attributes(div, div_data = get_spread_update(div_levels, [
+        (!current || dirty & /*id*/
+        1) && { id: (
+          /*id*/
+          ctx2[0]
+        ) },
+        (!current || dirty & /*classes*/
+        16) && { class: (
+          /*classes*/
+          ctx2[4]
+        ) },
+        dirty & /*$$restProps*/
+        64 && restProps(
+          /*$$restProps*/
+          ctx2[6]
+        )
+      ]));
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block);
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      if (if_block) if_block.d();
+      if (default_slot) default_slot.d(detaching);
+      ctx[12](null);
+    }
+  };
+}
+function create_if_block$4(ctx) {
+  let swiper_slide;
+  let t2;
+  let current;
+  let if_block = (
+    /*tabContent*/
+    ctx[3] && create_if_block_1$2(ctx)
+  );
+  const default_slot_template = (
+    /*#slots*/
+    ctx[10].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[9],
+    null
+  );
+  let swiper_slide_levels = [
+    { id: (
+      /*id*/
+      ctx[0]
+    ) },
+    { class: (
+      /*classes*/
+      ctx[4]
+    ) },
+    restProps(
+      /*$$restProps*/
+      ctx[6]
+    )
+  ];
+  let swiper_slide_data = {};
+  for (let i = 0; i < swiper_slide_levels.length; i += 1) {
+    swiper_slide_data = assign(swiper_slide_data, swiper_slide_levels[i]);
+  }
+  return {
+    c() {
+      swiper_slide = element("swiper-slide");
+      if (if_block) if_block.c();
+      t2 = space();
+      if (default_slot) default_slot.c();
+      set_attributes(swiper_slide, swiper_slide_data);
+    },
+    m(target, anchor) {
+      insert(target, swiper_slide, anchor);
+      if (if_block) if_block.m(swiper_slide, null);
+      append(swiper_slide, t2);
+      if (default_slot) {
+        default_slot.m(swiper_slide, null);
+      }
+      ctx[11](swiper_slide);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (
+        /*tabContent*/
+        ctx2[3]
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & /*tabContent*/
+          8) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block_1$2(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(swiper_slide, t2);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        512)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[9],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[9]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[9],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      set_attributes(swiper_slide, swiper_slide_data = get_spread_update(swiper_slide_levels, [
+        (!current || dirty & /*id*/
+        1) && { id: (
+          /*id*/
+          ctx2[0]
+        ) },
+        (!current || dirty & /*classes*/
+        16) && { class: (
+          /*classes*/
+          ctx2[4]
+        ) },
+        dirty & /*$$restProps*/
+        64 && restProps(
+          /*$$restProps*/
+          ctx2[6]
+        )
+      ]));
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block);
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(swiper_slide);
+      }
+      if (if_block) if_block.d();
+      if (default_slot) default_slot.d(detaching);
+      ctx[11](null);
+    }
+  };
+}
+function create_if_block_2$1(ctx) {
+  let switch_instance;
+  let switch_instance_anchor;
+  let current;
+  const switch_instance_spread_levels = [
+    /*tabContent*/
+    ctx[3].props
+  ];
+  var switch_value = (
+    /*tabContent*/
+    ctx[3].component
+  );
+  function switch_props(ctx2, dirty) {
+    let switch_instance_props = {};
+    for (let i = 0; i < switch_instance_spread_levels.length; i += 1) {
+      switch_instance_props = assign(switch_instance_props, switch_instance_spread_levels[i]);
+    }
+    if (dirty !== void 0 && dirty & /*tabContent*/
+    8) {
+      switch_instance_props = assign(switch_instance_props, get_spread_update(switch_instance_spread_levels, [get_spread_object(
+        /*tabContent*/
+        ctx2[3].props
+      )]));
+    }
+    return { props: switch_instance_props };
+  }
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+  }
+  return {
+    c() {
+      if (switch_instance) create_component(switch_instance.$$.fragment);
+      switch_instance_anchor = empty();
+    },
+    m(target, anchor) {
+      if (switch_instance) mount_component(switch_instance, target, anchor);
+      insert(target, switch_instance_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*tabContent*/
+      8 && switch_value !== (switch_value = /*tabContent*/
+      ctx2[3].component)) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props(ctx2, dirty));
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
+        } else {
+          switch_instance = null;
+        }
+      } else if (switch_value) {
+        const switch_instance_changes = dirty & /*tabContent*/
+        8 ? get_spread_update(switch_instance_spread_levels, [get_spread_object(
+          /*tabContent*/
+          ctx2[3].props
+        )]) : {};
+        switch_instance.$set(switch_instance_changes);
+      }
+    },
+    i(local) {
+      if (current) return;
+      if (switch_instance) transition_in(switch_instance.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      if (switch_instance) transition_out(switch_instance.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(switch_instance_anchor);
+      }
+      if (switch_instance) destroy_component(switch_instance, detaching);
+    }
+  };
+}
+function create_if_block_1$2(ctx) {
+  let switch_instance;
+  let switch_instance_anchor;
+  let current;
+  const switch_instance_spread_levels = [
+    /*tabContent*/
+    ctx[3].props
+  ];
+  var switch_value = (
+    /*tabContent*/
+    ctx[3].component
+  );
+  function switch_props(ctx2, dirty) {
+    let switch_instance_props = {};
+    for (let i = 0; i < switch_instance_spread_levels.length; i += 1) {
+      switch_instance_props = assign(switch_instance_props, switch_instance_spread_levels[i]);
+    }
+    if (dirty !== void 0 && dirty & /*tabContent*/
+    8) {
+      switch_instance_props = assign(switch_instance_props, get_spread_update(switch_instance_spread_levels, [get_spread_object(
+        /*tabContent*/
+        ctx2[3].props
+      )]));
+    }
+    return { props: switch_instance_props };
+  }
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+  }
+  return {
+    c() {
+      if (switch_instance) create_component(switch_instance.$$.fragment);
+      switch_instance_anchor = empty();
+    },
+    m(target, anchor) {
+      if (switch_instance) mount_component(switch_instance, target, anchor);
+      insert(target, switch_instance_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*tabContent*/
+      8 && switch_value !== (switch_value = /*tabContent*/
+      ctx2[3].component)) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props(ctx2, dirty));
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
+        } else {
+          switch_instance = null;
+        }
+      } else if (switch_value) {
+        const switch_instance_changes = dirty & /*tabContent*/
+        8 ? get_spread_update(switch_instance_spread_levels, [get_spread_object(
+          /*tabContent*/
+          ctx2[3].props
+        )]) : {};
+        switch_instance.$set(switch_instance_changes);
+      }
+    },
+    i(local) {
+      if (current) return;
+      if (switch_instance) transition_in(switch_instance.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      if (switch_instance) transition_out(switch_instance.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(switch_instance_anchor);
+      }
+      if (switch_instance) destroy_component(switch_instance, detaching);
+    }
+  };
+}
+function create_fragment$e(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block$4, create_else_block$2];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*isSwiper*/
+      ctx2[5] || /*TabsSwipeableContext*/
+      ctx2[1]
+    ) return 0;
+    return 1;
+  }
+  current_block_type_index = select_block_type(ctx);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(if_block_anchor.parentNode, if_block_anchor);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_blocks[current_block_type_index].d(detaching);
+    }
+  };
+}
+function instance$f($$self, $$props, $$invalidate) {
+  let isSwiper;
+  let classes;
+  const omit_props_names = ["class", "tabActive", "id"];
+  let $$restProps = compute_rest_props($$props, omit_props_names);
+  let { $$slots: slots = {}, $$scope } = $$props;
+  const emit = createEmitter(createEventDispatcher, $$props);
+  let { class: className = void 0 } = $$props;
+  let { tabActive = false } = $$props;
+  let { id: id2 = void 0 } = $$props;
+  const RouterContext = getContext("RouterContext") || {};
+  let TabsSwipeableContext = getReactiveContext("TabsSwipeableContext", (newValue) => {
+    $$invalidate(1, TabsSwipeableContext = newValue || false);
+  }) || {};
+  let el;
+  let routerData = null;
+  let initialTabContent = null;
+  if (!routerData && RouterContext && RouterContext.route && RouterContext.route.route && RouterContext.route.route.tab && RouterContext.route.route.tab.id === id2) {
+    const { component, asyncComponent: asyncComponent2, options: tabRouteOptions } = RouterContext.route.route.tab;
+    if (component || asyncComponent2) {
+      const parentProps = RouterContext.route.route.options && RouterContext.route.route.options.props;
+      initialTabContent = {
+        id: getComponentId(),
+        component: component || asyncComponent2,
+        isAsync: !!asyncComponent2,
+        props: {
+          ...parentProps || {},
+          ...tabRouteOptions && tabRouteOptions.props || {},
+          f7router: RouterContext.router,
+          f7route: RouterContext.route,
+          ...RouterContext.route.params
+        }
+      };
+    }
+  }
+  let tabContent = initialTabContent || null;
+  useTab(() => el, emit);
+  onMount(() => {
+    if (el && initialTabContent) {
+      $$invalidate(2, el.f7RouterTabLoaded = true, el);
+    }
+    f7ready(() => {
+      if (!routerData) {
+        routerData = {
+          el,
+          setTabContent(tc) {
+            tick().then(() => {
+              $$invalidate(3, tabContent = tc);
+            });
+          }
+        };
+        app.f7routers.tabs.push(routerData);
+      } else {
+        routerData.el = el;
+      }
+    });
+  });
+  afterUpdate(() => {
+    if (!routerData) return;
+    app.f7events.emit("tabRouterDidUpdate", routerData);
+  });
+  onDestroy(() => {
+    if (!routerData) return;
+    app.f7routers.tabs.splice(app.f7routers.tabs.indexOf(routerData), 1);
+    routerData = null;
+  });
+  function swiper_slide_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      el = $$value;
+      $$invalidate(2, el);
+    });
+  }
+  function div_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      el = $$value;
+      $$invalidate(2, el);
+    });
+  }
+  $$self.$$set = ($$new_props) => {
+    $$invalidate(17, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
+    $$invalidate(6, $$restProps = compute_rest_props($$props, omit_props_names));
+    if ("class" in $$new_props) $$invalidate(7, className = $$new_props.class);
+    if ("tabActive" in $$new_props) $$invalidate(8, tabActive = $$new_props.tabActive);
+    if ("id" in $$new_props) $$invalidate(0, id2 = $$new_props.id);
+    if ("$$scope" in $$new_props) $$invalidate(9, $$scope = $$new_props.$$scope);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*TabsSwipeableContext*/
+    2) {
+      $$invalidate(5, isSwiper = TabsSwipeableContext);
+    }
+    $$invalidate(4, classes = classNames(className, "tab", tabActive && "tab-active", colorClasses($$props)));
+  };
+  $$props = exclude_internal_props($$props);
+  return [
+    id2,
+    TabsSwipeableContext,
+    el,
+    tabContent,
+    classes,
+    isSwiper,
+    $$restProps,
+    className,
+    tabActive,
+    $$scope,
+    slots,
+    swiper_slide_binding,
+    div_binding
+  ];
+}
+class Tab extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$f, create_fragment$e, safe_not_equal, { class: 7, tabActive: 8, id: 0 });
+  }
+}
+function create_else_block$1(ctx) {
+  let div;
+  let div_class_value;
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[10].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[9],
+    null
+  );
+  let div_levels = [
+    {
+      class: div_class_value = classNames(
+        /*tabsClasses*/
+        ctx[4],
+        /*classes*/
+        ctx[5]
+      )
+    },
+    restProps(
+      /*$$restProps*/
+      ctx[6]
+    )
+  ];
+  let div_data = {};
+  for (let i = 0; i < div_levels.length; i += 1) {
+    div_data = assign(div_data, div_levels[i]);
+  }
+  return {
+    c() {
+      div = element("div");
+      if (default_slot) default_slot.c();
+      set_attributes(div, div_data);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      if (default_slot) {
+        default_slot.m(div, null);
+      }
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        512)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[9],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[9]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[9],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      set_attributes(div, div_data = get_spread_update(div_levels, [
+        (!current || dirty & /*tabsClasses, classes*/
+        48 && div_class_value !== (div_class_value = classNames(
+          /*tabsClasses*/
+          ctx2[4],
+          /*classes*/
+          ctx2[5]
+        ))) && { class: div_class_value },
+        dirty & /*$$restProps*/
+        64 && restProps(
+          /*$$restProps*/
+          ctx2[6]
+        )
+      ]));
+    },
+    i(local) {
+      if (current) return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      if (default_slot) default_slot.d(detaching);
+    }
+  };
+}
+function create_if_block_1$1(ctx) {
+  let swiper_container;
+  let swiper_container_class_value;
+  let swiper_container_init_value;
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[10].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[9],
+    null
+  );
+  let swiper_container_levels = [
+    {
+      class: swiper_container_class_value = classNames(
+        /*tabsClasses*/
+        ctx[4],
+        /*classes*/
+        ctx[5]
+      )
+    },
+    restProps(
+      /*$$restProps*/
+      ctx[6]
+    ),
+    {
+      init: swiper_container_init_value = /*swiperParams*/
+      ctx[2] ? "false" : "true"
+    }
+  ];
+  let swiper_container_data = {};
+  for (let i = 0; i < swiper_container_levels.length; i += 1) {
+    swiper_container_data = assign(swiper_container_data, swiper_container_levels[i]);
+  }
+  return {
+    c() {
+      swiper_container = element("swiper-container");
+      if (default_slot) default_slot.c();
+      set_attributes(swiper_container, swiper_container_data);
+    },
+    m(target, anchor) {
+      insert(target, swiper_container, anchor);
+      if (default_slot) {
+        default_slot.m(swiper_container, null);
+      }
+      ctx[12](swiper_container);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        512)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[9],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[9]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[9],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      set_attributes(swiper_container, swiper_container_data = get_spread_update(swiper_container_levels, [
+        (!current || dirty & /*tabsClasses, classes*/
+        48 && swiper_container_class_value !== (swiper_container_class_value = classNames(
+          /*tabsClasses*/
+          ctx2[4],
+          /*classes*/
+          ctx2[5]
+        ))) && { class: swiper_container_class_value },
+        dirty & /*$$restProps*/
+        64 && restProps(
+          /*$$restProps*/
+          ctx2[6]
+        ),
+        (!current || dirty & /*swiperParams*/
+        4 && swiper_container_init_value !== (swiper_container_init_value = /*swiperParams*/
+        ctx2[2] ? "false" : "true")) && { init: swiper_container_init_value }
+      ]));
+    },
+    i(local) {
+      if (current) return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(swiper_container);
+      }
+      if (default_slot) default_slot.d(detaching);
+      ctx[12](null);
+    }
+  };
+}
+function create_if_block$3(ctx) {
+  let div1;
+  let div0;
+  let div1_class_value;
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[10].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[9],
+    null
+  );
+  let div1_levels = [
+    {
+      class: div1_class_value = classNames(
+        "tabs-animated-wrap",
+        /*classes*/
+        ctx[5]
+      )
+    },
+    restProps(
+      /*$$restProps*/
+      ctx[6]
+    )
+  ];
+  let div_data_1 = {};
+  for (let i = 0; i < div1_levels.length; i += 1) {
+    div_data_1 = assign(div_data_1, div1_levels[i]);
+  }
+  return {
+    c() {
+      div1 = element("div");
+      div0 = element("div");
+      if (default_slot) default_slot.c();
+      attr(
+        div0,
+        "class",
+        /*tabsClasses*/
+        ctx[4]
+      );
+      set_attributes(div1, div_data_1);
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      append(div1, div0);
+      if (default_slot) {
+        default_slot.m(div0, null);
+      }
+      ctx[11](div1);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        512)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[9],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[9]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[9],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      if (!current || dirty & /*tabsClasses*/
+      16) {
+        attr(
+          div0,
+          "class",
+          /*tabsClasses*/
+          ctx2[4]
+        );
+      }
+      set_attributes(div1, div_data_1 = get_spread_update(div1_levels, [
+        (!current || dirty & /*classes*/
+        32 && div1_class_value !== (div1_class_value = classNames(
+          "tabs-animated-wrap",
+          /*classes*/
+          ctx2[5]
+        ))) && { class: div1_class_value },
+        dirty & /*$$restProps*/
+        64 && restProps(
+          /*$$restProps*/
+          ctx2[6]
+        )
+      ]));
+    },
+    i(local) {
+      if (current) return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+      }
+      if (default_slot) default_slot.d(detaching);
+      ctx[11](null);
+    }
+  };
+}
+function create_fragment$d(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block$3, create_if_block_1$1, create_else_block$1];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*animated*/
+      ctx2[0]
+    ) return 0;
+    if (
+      /*swipeable*/
+      ctx2[1]
+    ) return 1;
+    return 2;
+  }
+  current_block_type_index = select_block_type(ctx);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(if_block_anchor.parentNode, if_block_anchor);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_blocks[current_block_type_index].d(detaching);
+    }
+  };
+}
+function instance$e($$self, $$props, $$invalidate) {
+  let classes;
+  let tabsClasses;
+  const omit_props_names = ["class", "animated", "swipeable", "routable", "swiperParams"];
+  let $$restProps = compute_rest_props($$props, omit_props_names);
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { class: className = void 0 } = $$props;
+  let { animated = false } = $$props;
+  let { swipeable = false } = $$props;
+  let { routable = false } = $$props;
+  let { swiperParams = void 0 } = $$props;
+  let wrapEl;
+  setReactiveContext("TabsSwipeableContext", () => true);
+  onMount(() => {
+    if (swipeable && swiperParams && wrapEl) {
+      Object.assign(wrapEl, swiperParams);
+      wrapEl.initialize();
+    }
+    tick().then(() => {
+      if (swipeable && wrapEl.swiper) {
+        wrapEl.swiper.update();
+      }
+    });
+  });
+  function div1_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      wrapEl = $$value;
+      $$invalidate(3, wrapEl);
+    });
+  }
+  function swiper_container_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      wrapEl = $$value;
+      $$invalidate(3, wrapEl);
+    });
+  }
+  $$self.$$set = ($$new_props) => {
+    $$invalidate(13, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
+    $$invalidate(6, $$restProps = compute_rest_props($$props, omit_props_names));
+    if ("class" in $$new_props) $$invalidate(7, className = $$new_props.class);
+    if ("animated" in $$new_props) $$invalidate(0, animated = $$new_props.animated);
+    if ("swipeable" in $$new_props) $$invalidate(1, swipeable = $$new_props.swipeable);
+    if ("routable" in $$new_props) $$invalidate(8, routable = $$new_props.routable);
+    if ("swiperParams" in $$new_props) $$invalidate(2, swiperParams = $$new_props.swiperParams);
+    if ("$$scope" in $$new_props) $$invalidate(9, $$scope = $$new_props.$$scope);
+  };
+  $$self.$$.update = () => {
+    $$invalidate(5, classes = classNames(className, colorClasses($$props)));
+    if ($$self.$$.dirty & /*routable*/
+    256) {
+      $$invalidate(4, tabsClasses = classNames({ tabs: true, "tabs-routable": routable }));
+    }
+  };
+  $$props = exclude_internal_props($$props);
+  return [
+    animated,
+    swipeable,
+    swiperParams,
+    wrapEl,
+    tabsClasses,
+    classes,
+    $$restProps,
+    className,
+    routable,
+    $$scope,
+    slots,
+    div1_binding,
+    swiper_container_binding
+  ];
+}
+class Tabs extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$e, create_fragment$d, safe_not_equal, {
+      class: 7,
+      animated: 0,
+      swipeable: 1,
+      routable: 8,
+      swiperParams: 2
+    });
+  }
+}
+function create_fragment$c(ctx) {
   let svg;
   let path2;
   let svg_levels = [
@@ -50515,7 +52308,7 @@ function create_fragment$b(ctx) {
     }
   };
 }
-function instance$c($$self, $$props, $$invalidate) {
+function instance$d($$self, $$props, $$invalidate) {
   const omit_props_names = [];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   $$self.$$set = ($$new_props) => {
@@ -50527,10 +52320,10 @@ function instance$c($$self, $$props, $$invalidate) {
 class Bell extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$c, create_fragment$b, safe_not_equal, {});
+    init(this, options, instance$d, create_fragment$c, safe_not_equal, {});
   }
 }
-function create_fragment$a(ctx) {
+function create_fragment$b(ctx) {
   let svg;
   let path2;
   let svg_levels = [
@@ -50578,7 +52371,7 @@ function create_fragment$a(ctx) {
     }
   };
 }
-function instance$b($$self, $$props, $$invalidate) {
+function instance$c($$self, $$props, $$invalidate) {
   const omit_props_names = [];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   $$self.$$set = ($$new_props) => {
@@ -50590,10 +52383,10 @@ function instance$b($$self, $$props, $$invalidate) {
 class LineHorizontal3 extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$b, create_fragment$a, safe_not_equal, {});
+    init(this, options, instance$c, create_fragment$b, safe_not_equal, {});
   }
 }
-function create_fragment$9(ctx) {
+function create_fragment$a(ctx) {
   let svg;
   let path2;
   let svg_levels = [
@@ -50641,7 +52434,7 @@ function create_fragment$9(ctx) {
     }
   };
 }
-function instance$a($$self, $$props, $$invalidate) {
+function instance$b($$self, $$props, $$invalidate) {
   const omit_props_names = [];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   $$self.$$set = ($$new_props) => {
@@ -50653,10 +52446,10 @@ function instance$a($$self, $$props, $$invalidate) {
 class Multiply extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$a, create_fragment$9, safe_not_equal, {});
+    init(this, options, instance$b, create_fragment$a, safe_not_equal, {});
   }
 }
-function create_fragment$8(ctx) {
+function create_fragment$9(ctx) {
   let svg;
   let path2;
   let svg_levels = [
@@ -50704,7 +52497,7 @@ function create_fragment$8(ctx) {
     }
   };
 }
-function instance$9($$self, $$props, $$invalidate) {
+function instance$a($$self, $$props, $$invalidate) {
   const omit_props_names = [];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   $$self.$$set = ($$new_props) => {
@@ -50716,10 +52509,10 @@ function instance$9($$self, $$props, $$invalidate) {
 class Question extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$9, create_fragment$8, safe_not_equal, {});
+    init(this, options, instance$a, create_fragment$9, safe_not_equal, {});
   }
 }
-const uiEN = {
+const ui$1 = {
   panel: {
     title: "Menu",
     navTitle: "Navigation",
@@ -50751,14 +52544,21 @@ const uiEN = {
       "November",
       "December"
     ],
-    days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    emptyEvent: "There are no events today."
   },
   wikipopup: {
     title: "About the holiday",
     openedLinkText: "More details..."
+  },
+  notificationcenter: {
+    title: "Notification Center",
+    tabBtnCurrent: "Current",
+    tabBtnNext: "Next month",
+    empty: "No notifications."
   }
 };
-const calendarEN = {
+const calendar$1 = {
   govnonworkingday: [
     {
       date: {
@@ -50862,22 +52662,27 @@ const calendarEN = {
     }
   ]
 };
-const logRU = {
+const debugmsg$1 = {
   debug: {
-    langDefault: "язык по умолчанию:",
+    langDefault: "default language:",
     onLanguageChangedMsg: "i18next onLanguageChanged:",
     app: {
-      localesChecking: "APP -> проверка переводов:"
+      localesChecking: "APP -> translation verification:"
     },
     calendar: {
-      dataFromLocales: "Calendar -> данные из переводов:",
-      eventAfterLangChanged: "Calendar -> События календаря (после смены языка):",
-      eventDefault: "Calendar -> События календаря (обычное состояние):",
-      monthAfterLangChanged: "Calendar -> Массив с месяцами (после смены языка):"
+      dataFromLocales: "Calendar -> data from the translations:",
+      eventAfterLangChanged: "Calendar -> events of the Calendar (after the language change):",
+      eventDefault: "Calendar -> events of the Calendar (normal state):",
+      monthAfterLangChanged: "Calendar -> array with the months (after the language change):"
     }
   }
 };
-const uiRU = {
+const localeEN = {
+  ui: ui$1,
+  calendar: calendar$1,
+  debugmsg: debugmsg$1
+};
+const ui = {
   panel: {
     title: "Меню",
     navTitle: "Навигация",
@@ -50909,14 +52714,21 @@ const uiRU = {
       "Ноябрь",
       "Декабрь"
     ],
-    days: ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
+    days: ["пн", "вт", "ср", "чт", "пт", "сб", "вс"],
+    emptyEvent: "Сегодня нет никаких событий."
   },
   wikipopup: {
     title: "О празднике",
     openedLinkText: "Подробнее..."
+  },
+  notificationcenter: {
+    title: "Центр оповещений",
+    tabBtnCurrent: "Текущие",
+    tabBtnNext: "Следующий месяц",
+    empty: "Оповещения отсутствуют."
   }
 };
-const calendarRU = {
+const calendar = {
   govnonworkingday: [
     {
       date: {
@@ -51052,36 +52864,33 @@ const calendarRU = {
     }
   ]
 };
-const logEN = {
+const debugmsg = {
   debug: {
-    langDefault: "default language:",
+    langDefault: "язык по умолчанию:",
     onLanguageChangedMsg: "i18next onLanguageChanged:",
     app: {
-      localesChecking: "APP -> translation verification:"
+      localesChecking: "APP -> проверка переводов:"
     },
     calendar: {
-      dataFromLocales: "Calendar -> data from the translations:",
-      eventAfterLangChanged: "Calendar -> events of the Calendar (after the language change):",
-      eventDefault: "Calendar -> events of the Calendar (normal state):",
-      monthAfterLangChanged: "Calendar -> array with the months (after the language change):"
+      dataFromLocales: "Calendar -> данные из переводов:",
+      eventAfterLangChanged: "Calendar -> События календаря (после смены языка):",
+      eventDefault: "Calendar -> События календаря (обычное состояние):",
+      monthAfterLangChanged: "Calendar -> Массив с месяцами (после смены языка):"
     }
   }
 };
+const localeRU = {
+  ui,
+  calendar,
+  debugmsg
+};
 const resources = {
-  en: {
-    ui: uiEN,
-    calendar: calendarEN,
-    debugmsg: logEN
-  },
-  ru: {
-    ui: uiRU,
-    calendar: calendarRU,
-    debugmsg: logRU
-  }
+  en: { ...localeEN },
+  ru: { ...localeRU }
 };
 function debug(msg, value2) {
 }
-function create_default_slot$7(ctx) {
+function create_default_slot$8(ctx) {
   let div;
   return {
     c() {
@@ -51099,14 +52908,14 @@ function create_default_slot$7(ctx) {
     }
   };
 }
-function create_fragment$7(ctx) {
+function create_fragment$8(ctx) {
   let block;
   let current;
   block = new Block({
     props: {
       strong: true,
       inset: true,
-      $$slots: { default: [create_default_slot$7] },
+      $$slots: { default: [create_default_slot$8] },
       $$scope: { ctx }
     }
   });
@@ -51140,7 +52949,7 @@ function create_fragment$7(ctx) {
     }
   };
 }
-function instance$8($$self, $$props, $$invalidate) {
+function instance$9($$self, $$props, $$invalidate) {
   let $i18n;
   const i18n2 = getContext("i18n");
   component_subscribe($$self, i18n2, (value2) => $$invalidate(2, $i18n = value2));
@@ -51193,802 +53002,14 @@ function instance$8($$self, $$props, $$invalidate) {
 class CalendarzSwiat extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$8, create_fragment$7, safe_not_equal, { events: 1 });
-  }
-}
-function get_each_context$3(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[1] = list[i];
-  child_ctx[3] = i;
-  return child_ctx;
-}
-function create_default_slot_5$2(ctx) {
-  let t2;
-  return {
-    c() {
-      t2 = text("Notification");
-    },
-    m(target, anchor) {
-      insert(target, t2, anchor);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-    }
-  };
-}
-function create_root_start_slot$1(ctx) {
-  let div;
-  let div_style_value;
-  return {
-    c() {
-      div = element("div");
-      attr(div, "class", "event-color");
-      attr(div, "style", div_style_value = `background-color: ${/*item*/
-      ctx[1].color}`);
-      attr(div, "slot", "root-start");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*eventItems*/
-      1 && div_style_value !== (div_style_value = `background-color: ${/*item*/
-      ctx2[1].color}`)) {
-        attr(div, "style", div_style_value);
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-    }
-  };
-}
-function create_each_block$3(key_1, ctx) {
-  let first;
-  let listitem;
-  let current;
-  listitem = new List_item({
-    props: {
-      title: (
-        /*item*/
-        ctx[1].title
-      ),
-      after: (
-        /*item*/
-        ctx[1].time
-      ),
-      $$slots: { "root-start": [create_root_start_slot$1] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    key: key_1,
-    first: null,
-    c() {
-      first = empty();
-      create_component(listitem.$$.fragment);
-      this.first = first;
-    },
-    m(target, anchor) {
-      insert(target, first, anchor);
-      mount_component(listitem, target, anchor);
-      current = true;
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      const listitem_changes = {};
-      if (dirty & /*eventItems*/
-      1) listitem_changes.title = /*item*/
-      ctx[1].title;
-      if (dirty & /*eventItems*/
-      1) listitem_changes.after = /*item*/
-      ctx[1].time;
-      if (dirty & /*$$scope, eventItems*/
-      17) {
-        listitem_changes.$$scope = { dirty, ctx };
-      }
-      listitem.$set(listitem_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(listitem.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(listitem.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(first);
-      }
-      destroy_component(listitem, detaching);
-    }
-  };
-}
-function create_if_block$2(ctx) {
-  let listitem;
-  let current;
-  listitem = new List_item({
-    props: {
-      $$slots: { default: [create_default_slot_4$4] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(listitem.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(listitem, target, anchor);
-      current = true;
-    },
-    i(local) {
-      if (current) return;
-      transition_in(listitem.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(listitem.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(listitem, detaching);
-    }
-  };
-}
-function create_default_slot_4$4(ctx) {
-  let t2;
-  return {
-    c() {
-      t2 = text("Оповещения отсутствуют.");
-    },
-    m(target, anchor) {
-      insert(target, t2, anchor);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-    }
-  };
-}
-function create_default_slot_3$5(ctx) {
-  let each_blocks = [];
-  let each_1_lookup = /* @__PURE__ */ new Map();
-  let t2;
-  let if_block_anchor;
-  let current;
-  let each_value = ensure_array_like(
-    /*eventItems*/
-    ctx[0]
-  );
-  const get_key = (ctx2) => (
-    /*index*/
-    ctx2[3]
-  );
-  for (let i = 0; i < each_value.length; i += 1) {
-    let child_ctx = get_each_context$3(ctx, each_value, i);
-    let key = get_key(child_ctx);
-    each_1_lookup.set(key, each_blocks[i] = create_each_block$3(key, child_ctx));
-  }
-  let if_block = (
-    /*eventItems*/
-    ctx[0].length === 0 && create_if_block$2(ctx)
-  );
-  return {
-    c() {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      t2 = space();
-      if (if_block) if_block.c();
-      if_block_anchor = empty();
-    },
-    m(target, anchor) {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(target, anchor);
-        }
-      }
-      insert(target, t2, anchor);
-      if (if_block) if_block.m(target, anchor);
-      insert(target, if_block_anchor, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*eventItems*/
-      1) {
-        each_value = ensure_array_like(
-          /*eventItems*/
-          ctx2[0]
-        );
-        group_outros();
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, t2.parentNode, outro_and_destroy_block, create_each_block$3, t2, get_each_context$3);
-        check_outros();
-      }
-      if (
-        /*eventItems*/
-        ctx2[0].length === 0
-      ) {
-        if (if_block) {
-          if (dirty & /*eventItems*/
-          1) {
-            transition_in(if_block, 1);
-          }
-        } else {
-          if_block = create_if_block$2(ctx2);
-          if_block.c();
-          transition_in(if_block, 1);
-          if_block.m(if_block_anchor.parentNode, if_block_anchor);
-        }
-      } else if (if_block) {
-        group_outros();
-        transition_out(if_block, 1, 1, () => {
-          if_block = null;
-        });
-        check_outros();
-      }
-    },
-    i(local) {
-      if (current) return;
-      for (let i = 0; i < each_value.length; i += 1) {
-        transition_in(each_blocks[i]);
-      }
-      transition_in(if_block);
-      current = true;
-    },
-    o(local) {
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        transition_out(each_blocks[i]);
-      }
-      transition_out(if_block);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-        detach(if_block_anchor);
-      }
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].d(detaching);
-      }
-      if (if_block) if_block.d(detaching);
-    }
-  };
-}
-function create_default_slot_2$5(ctx) {
-  let list;
-  let current;
-  list = new List({
-    props: {
-      $$slots: { default: [create_default_slot_3$5] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(list.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(list, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const list_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      17) {
-        list_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      list.$set(list_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(list.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(list.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(list, detaching);
-    }
-  };
-}
-function create_default_slot_1$6(ctx) {
-  let blocktitle;
-  let t2;
-  let block;
-  let current;
-  blocktitle = new Block_title({
-    props: {
-      large: true,
-      $$slots: { default: [create_default_slot_5$2] },
-      $$scope: { ctx }
-    }
-  });
-  block = new Block({
-    props: {
-      strongIos: true,
-      outlineIos: true,
-      $$slots: { default: [create_default_slot_2$5] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(blocktitle.$$.fragment);
-      t2 = space();
-      create_component(block.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(blocktitle, target, anchor);
-      insert(target, t2, anchor);
-      mount_component(block, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const blocktitle_changes = {};
-      if (dirty & /*$$scope*/
-      16) {
-        blocktitle_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      blocktitle.$set(blocktitle_changes);
-      const block_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      17) {
-        block_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      block.$set(block_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(blocktitle.$$.fragment, local);
-      transition_in(block.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(blocktitle.$$.fragment, local);
-      transition_out(block.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-      destroy_component(blocktitle, detaching);
-      destroy_component(block, detaching);
-    }
-  };
-}
-function create_fixed_slot(ctx) {
-  let button;
-  return {
-    c() {
-      button = element("button");
-      attr(button, "slot", "fixed");
-      attr(button, "class", "UI-swipe-handler swipe-handler");
-    },
-    m(target, anchor) {
-      insert(target, button, anchor);
-    },
-    p: noop$1,
-    d(detaching) {
-      if (detaching) {
-        detach(button);
-      }
-    }
-  };
-}
-function create_default_slot$6(ctx) {
-  let page;
-  let current;
-  page = new Page({
-    props: {
-      $$slots: {
-        fixed: [create_fixed_slot],
-        default: [create_default_slot_1$6]
-      },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(page.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(page, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const page_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      17) {
-        page_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      page.$set(page_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(page.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(page.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(page, detaching);
-    }
-  };
-}
-function create_fragment$6(ctx) {
-  let popup;
-  let current;
-  popup = new Popup2({
-    props: {
-      class: "popup-notification",
-      swipeToClose: "to-bottom",
-      swipeHandler: ".swipe-handler",
-      $$slots: { default: [create_default_slot$6] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(popup.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(popup, target, anchor);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      const popup_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      17) {
-        popup_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      popup.$set(popup_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(popup.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(popup.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(popup, detaching);
-    }
-  };
-}
-function instance$7($$self, $$props, $$invalidate) {
-  let { eventItems = [] } = $$props;
-  $$self.$$set = ($$props2) => {
-    if ("eventItems" in $$props2) $$invalidate(0, eventItems = $$props2.eventItems);
-  };
-  return [eventItems];
-}
-class EventsNotificationPopup extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance$7, create_fragment$6, safe_not_equal, { eventItems: 0 });
+    init(this, options, instance$9, create_fragment$8, safe_not_equal, { events: 1 });
   }
 }
 function get_each_context$2(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[20] = list[i];
-  child_ctx[22] = i;
+  child_ctx[4] = list[i];
+  child_ctx[6] = i;
   return child_ctx;
-}
-function create_default_slot_9$1(ctx) {
-  let linehorizontal3;
-  let current;
-  linehorizontal3 = new LineHorizontal3({
-    props: {
-      class: "UI-nav-icons icon-menu-horizontal"
-    }
-  });
-  return {
-    c() {
-      create_component(linehorizontal3.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(linehorizontal3, target, anchor);
-      current = true;
-    },
-    p: noop$1,
-    i(local) {
-      if (current) return;
-      transition_in(linehorizontal3.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(linehorizontal3.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(linehorizontal3, detaching);
-    }
-  };
-}
-function create_default_slot_8$1(ctx) {
-  let button;
-  let current;
-  button = new Button({
-    props: {
-      panelOpen: "left",
-      $$slots: { default: [create_default_slot_9$1] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(button.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(button, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const button_changes = {};
-      if (dirty & /*$$scope*/
-      8388608) {
-        button_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button.$set(button_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(button.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(button.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(button, detaching);
-    }
-  };
-}
-function create_default_slot_7$1(ctx) {
-  let t_value = (
-    /*$i18n*/
-    ctx[1].t("ui:home:navTitle") + ""
-  );
-  let t2;
-  return {
-    c() {
-      t2 = text(t_value);
-    },
-    m(target, anchor) {
-      insert(target, t2, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*$i18n*/
-      2 && t_value !== (t_value = /*$i18n*/
-      ctx2[1].t("ui:home:navTitle") + "")) set_data(t2, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-    }
-  };
-}
-function create_default_slot_6$1(ctx) {
-  let t_value = (
-    /*eventItems*/
-    ctx[0].length + ""
-  );
-  let t2;
-  return {
-    c() {
-      t2 = text(t_value);
-    },
-    m(target, anchor) {
-      insert(target, t2, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*eventItems*/
-      1 && t_value !== (t_value = /*eventItems*/
-      ctx2[0].length + "")) set_data(t2, t_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-    }
-  };
-}
-function create_default_slot_5$1(ctx) {
-  let bell;
-  let t2;
-  let badge;
-  let current;
-  bell = new Bell({
-    props: { class: "UI-nav-icons icon-bell" }
-  });
-  badge = new Badge({
-    props: {
-      class: "UI-badge",
-      color: "red",
-      $$slots: { default: [create_default_slot_6$1] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(bell.$$.fragment);
-      t2 = space();
-      create_component(badge.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(bell, target, anchor);
-      insert(target, t2, anchor);
-      mount_component(badge, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const badge_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      8388609) {
-        badge_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      badge.$set(badge_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(bell.$$.fragment, local);
-      transition_in(badge.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(bell.$$.fragment, local);
-      transition_out(badge.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t2);
-      }
-      destroy_component(bell, detaching);
-      destroy_component(badge, detaching);
-    }
-  };
-}
-function create_default_slot_4$3(ctx) {
-  let button;
-  let current;
-  button = new Button({
-    props: {
-      class: "UI-btn-popup-notification",
-      popupOpen: ".popup-notification",
-      $$slots: { default: [create_default_slot_5$1] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(button.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(button, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const button_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      8388609) {
-        button_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      button.$set(button_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(button.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(button.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(button, detaching);
-    }
-  };
-}
-function create_default_slot_3$4(ctx) {
-  let navleft;
-  let t0;
-  let navtitle;
-  let t1;
-  let navright;
-  let current;
-  navleft = new Nav_left({
-    props: {
-      $$slots: { default: [create_default_slot_8$1] },
-      $$scope: { ctx }
-    }
-  });
-  navtitle = new Nav_title({
-    props: {
-      $$slots: { default: [create_default_slot_7$1] },
-      $$scope: { ctx }
-    }
-  });
-  navright = new Nav_right({
-    props: {
-      $$slots: { default: [create_default_slot_4$3] },
-      $$scope: { ctx }
-    }
-  });
-  return {
-    c() {
-      create_component(navleft.$$.fragment);
-      t0 = space();
-      create_component(navtitle.$$.fragment);
-      t1 = space();
-      create_component(navright.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(navleft, target, anchor);
-      insert(target, t0, anchor);
-      mount_component(navtitle, target, anchor);
-      insert(target, t1, anchor);
-      mount_component(navright, target, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      const navleft_changes = {};
-      if (dirty & /*$$scope*/
-      8388608) {
-        navleft_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      navleft.$set(navleft_changes);
-      const navtitle_changes = {};
-      if (dirty & /*$$scope, $i18n*/
-      8388610) {
-        navtitle_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      navtitle.$set(navtitle_changes);
-      const navright_changes = {};
-      if (dirty & /*$$scope, eventItems*/
-      8388609) {
-        navright_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      navright.$set(navright_changes);
-    },
-    i(local) {
-      if (current) return;
-      transition_in(navleft.$$.fragment, local);
-      transition_in(navtitle.$$.fragment, local);
-      transition_in(navright.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(navleft.$$.fragment, local);
-      transition_out(navtitle.$$.fragment, local);
-      transition_out(navright.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(t0);
-        detach(t1);
-      }
-      destroy_component(navleft, detaching);
-      destroy_component(navtitle, detaching);
-      destroy_component(navright, detaching);
-    }
-  };
 }
 function create_if_block_2(ctx) {
   let link;
@@ -51996,22 +53017,26 @@ function create_if_block_2(ctx) {
   link = new Link({
     props: {
       href: "/event-wiki-popup/",
+      popupClose: (
+        /*popupCloseParam*/
+        ctx[1]
+      ),
       routeProps: {
         popupProps: {
           title: (
             /*item*/
-            ctx[20].title
+            ctx[4].title
           ),
           description: (
             /*item*/
-            ctx[20].description
+            ctx[4].description
           ),
           iterable: false
         }
       },
       text: (
         /*$i18n*/
-        ctx[1].t("ui:wikipopup:openedLinkText")
+        ctx[2].t("ui:wikipopup:openedLinkText")
       )
     }
   });
@@ -52025,23 +53050,26 @@ function create_if_block_2(ctx) {
     },
     p(ctx2, dirty) {
       const link_changes = {};
-      if (dirty & /*eventItems*/
+      if (dirty & /*popupCloseParam*/
+      2) link_changes.popupClose = /*popupCloseParam*/
+      ctx2[1];
+      if (dirty & /*events*/
       1) link_changes.routeProps = {
         popupProps: {
           title: (
             /*item*/
-            ctx2[20].title
+            ctx2[4].title
           ),
           description: (
             /*item*/
-            ctx2[20].description
+            ctx2[4].description
           ),
           iterable: false
         }
       };
       if (dirty & /*$i18n*/
-      2) link_changes.text = /*$i18n*/
-      ctx2[1].t("ui:wikipopup:openedLinkText");
+      4) link_changes.text = /*$i18n*/
+      ctx2[2].t("ui:wikipopup:openedLinkText");
       link.$set(link_changes);
     },
     i(local) {
@@ -52064,26 +53092,30 @@ function create_if_block_1(ctx) {
   link = new Link({
     props: {
       href: "/event-wiki-popup/",
+      popupClose: (
+        /*popupCloseParam*/
+        ctx[1]
+      ),
       routeProps: {
         popupProps: {
           title: (
             /*item*/
-            ctx[20].title
+            ctx[4].title
           ),
           description: (
             /*item*/
-            ctx[20].description
+            ctx[4].description
           ),
           wiki: (
             /*item*/
-            ctx[20].wiki
+            ctx[4].wiki
           ),
           iterable: false
         }
       },
       text: (
         /*$i18n*/
-        ctx[1].t("ui:wikipopup:openedLinkText")
+        ctx[2].t("ui:wikipopup:openedLinkText")
       )
     }
   });
@@ -52097,27 +53129,30 @@ function create_if_block_1(ctx) {
     },
     p(ctx2, dirty) {
       const link_changes = {};
-      if (dirty & /*eventItems*/
+      if (dirty & /*popupCloseParam*/
+      2) link_changes.popupClose = /*popupCloseParam*/
+      ctx2[1];
+      if (dirty & /*events*/
       1) link_changes.routeProps = {
         popupProps: {
           title: (
             /*item*/
-            ctx2[20].title
+            ctx2[4].title
           ),
           description: (
             /*item*/
-            ctx2[20].description
+            ctx2[4].description
           ),
           wiki: (
             /*item*/
-            ctx2[20].wiki
+            ctx2[4].wiki
           ),
           iterable: false
         }
       };
       if (dirty & /*$i18n*/
-      2) link_changes.text = /*$i18n*/
-      ctx2[1].t("ui:wikipopup:openedLinkText");
+      4) link_changes.text = /*$i18n*/
+      ctx2[2].t("ui:wikipopup:openedLinkText");
       link.$set(link_changes);
     },
     i(local) {
@@ -52134,7 +53169,7 @@ function create_if_block_1(ctx) {
     }
   };
 }
-function create_default_slot_2$4(ctx) {
+function create_default_slot_1$7(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
@@ -52144,11 +53179,11 @@ function create_default_slot_2$4(ctx) {
   function select_block_type(ctx2, dirty) {
     if (
       /*item*/
-      ctx2[20].wiki !== void 0
+      ctx2[4].wiki !== void 0
     ) return 0;
     if (
       /*item*/
-      ctx2[20].description !== void 0
+      ctx2[4].description !== void 0
     ) return 1;
     return -1;
   }
@@ -52216,34 +53251,6 @@ function create_default_slot_2$4(ctx) {
     }
   };
 }
-function create_root_start_slot(ctx) {
-  let div;
-  let div_style_value;
-  return {
-    c() {
-      div = element("div");
-      attr(div, "class", "event-color");
-      attr(div, "style", div_style_value = `background-color: ${/*item*/
-      ctx[20].color}`);
-      attr(div, "slot", "root-start");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*eventItems*/
-      1 && div_style_value !== (div_style_value = `background-color: ${/*item*/
-      ctx2[20].color}`)) {
-        attr(div, "style", div_style_value);
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-    }
-  };
-}
 function create_each_block$2(key_1, ctx) {
   let first;
   let listitem;
@@ -52252,20 +53259,17 @@ function create_each_block$2(key_1, ctx) {
     props: {
       title: (
         /*item*/
-        ctx[20].title
+        ctx[4].title
       ),
       after: (
         /*item*/
-        ctx[20].time
+        ctx[4].time
       ),
       subtitle: (
         /*item*/
-        ctx[20].description
+        ctx[4].description
       ),
-      $$slots: {
-        "root-start": [create_root_start_slot],
-        default: [create_default_slot_2$4]
-      },
+      $$slots: { default: [create_default_slot_1$7] },
       $$scope: { ctx }
     }
   });
@@ -52285,17 +53289,17 @@ function create_each_block$2(key_1, ctx) {
     p(new_ctx, dirty) {
       ctx = new_ctx;
       const listitem_changes = {};
-      if (dirty & /*eventItems*/
+      if (dirty & /*events*/
       1) listitem_changes.title = /*item*/
-      ctx[20].title;
-      if (dirty & /*eventItems*/
+      ctx[4].title;
+      if (dirty & /*events*/
       1) listitem_changes.after = /*item*/
-      ctx[20].time;
-      if (dirty & /*eventItems*/
+      ctx[4].time;
+      if (dirty & /*events*/
       1) listitem_changes.subtitle = /*item*/
-      ctx[20].description;
-      if (dirty & /*$$scope, eventItems, $i18n*/
-      8388611) {
+      ctx[4].description;
+      if (dirty & /*$$scope, popupCloseParam, events, $i18n*/
+      135) {
         listitem_changes.$$scope = { dirty, ctx };
       }
       listitem.$set(listitem_changes);
@@ -52317,7 +53321,7 @@ function create_each_block$2(key_1, ctx) {
     }
   };
 }
-function create_if_block$1(ctx) {
+function create_if_block$2(ctx) {
   let listitem;
   let current;
   listitem = new List_item({
@@ -52333,6 +53337,14 @@ function create_if_block$1(ctx) {
     m(target, anchor) {
       mount_component(listitem, target, anchor);
       current = true;
+    },
+    p(ctx2, dirty) {
+      const listitem_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      132) {
+        listitem_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      listitem.$set(listitem_changes);
     },
     i(local) {
       if (current) return;
@@ -52350,17 +53362,26 @@ function create_if_block$1(ctx) {
 }
 function create_title_slot(ctx) {
   let span;
+  let t_value = (
+    /*$i18n*/
+    ctx[2].t("ui:calendar:emptyEvent") + ""
+  );
+  let t2;
   return {
     c() {
       span = element("span");
-      span.textContent = "Сегодня нет никаких событий.";
-      attr(span, "class", "text-color-gray");
+      t2 = text(t_value);
       attr(span, "slot", "title");
     },
     m(target, anchor) {
       insert(target, span, anchor);
+      append(span, t2);
     },
-    p: noop$1,
+    p(ctx2, dirty) {
+      if (dirty & /*$i18n*/
+      4 && t_value !== (t_value = /*$i18n*/
+      ctx2[2].t("ui:calendar:emptyEvent") + "")) set_data(t2, t_value);
+    },
     d(detaching) {
       if (detaching) {
         detach(span);
@@ -52368,19 +53389,19 @@ function create_title_slot(ctx) {
     }
   };
 }
-function create_default_slot_1$5(ctx) {
+function create_default_slot$7(ctx) {
   let each_blocks = [];
   let each_1_lookup = /* @__PURE__ */ new Map();
   let t2;
   let if_block_anchor;
   let current;
   let each_value = ensure_array_like(
-    /*eventItems*/
+    /*events*/
     ctx[0]
   );
   const get_key = (ctx2) => (
     /*index*/
-    ctx2[22]
+    ctx2[6]
   );
   for (let i = 0; i < each_value.length; i += 1) {
     let child_ctx = get_each_context$2(ctx, each_value, i);
@@ -52388,8 +53409,8 @@ function create_default_slot_1$5(ctx) {
     each_1_lookup.set(key, each_blocks[i] = create_each_block$2(key, child_ctx));
   }
   let if_block = (
-    /*eventItems*/
-    ctx[0].length === 0 && create_if_block$1(ctx)
+    /*events*/
+    ctx[0].length === 0 && create_if_block$2(ctx)
   );
   return {
     c() {
@@ -52412,10 +53433,10 @@ function create_default_slot_1$5(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      if (dirty & /*eventItems, $i18n, undefined*/
-      3) {
+      if (dirty & /*events, popupCloseParam, $i18n, undefined*/
+      7) {
         each_value = ensure_array_like(
-          /*eventItems*/
+          /*events*/
           ctx2[0]
         );
         group_outros();
@@ -52423,16 +53444,17 @@ function create_default_slot_1$5(ctx) {
         check_outros();
       }
       if (
-        /*eventItems*/
+        /*events*/
         ctx2[0].length === 0
       ) {
         if (if_block) {
-          if (dirty & /*eventItems*/
+          if_block.p(ctx2, dirty);
+          if (dirty & /*events*/
           1) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$1(ctx2);
+          if_block = create_if_block$2(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -52472,25 +53494,9 @@ function create_default_slot_1$5(ctx) {
     }
   };
 }
-function create_default_slot$5(ctx) {
-  let navbar;
-  let t0;
-  let calendarzswiat;
-  let t1;
+function create_fragment$7(ctx) {
   let list;
-  let t2;
-  let eventsnotificationpopup;
   let current;
-  navbar = new Navbar({
-    props: {
-      $$slots: { default: [create_default_slot_3$4] },
-      $$scope: { ctx }
-    }
-  });
-  calendarzswiat = new CalendarzSwiat({ props: { events: (
-    /*events*/
-    ctx[3]
-  ) } });
   list = new List({
     props: {
       dividersIos: true,
@@ -52499,11 +53505,1005 @@ function create_default_slot$5(ctx) {
       strongIos: true,
       id: "calendar-events",
       class: "no-margin no-safe-area-left",
+      $$slots: { default: [create_default_slot$7] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(list.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(list, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const list_changes = {};
+      if (dirty & /*$$scope, $i18n, events, popupCloseParam*/
+      135) {
+        list_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      list.$set(list_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(list.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(list.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(list, detaching);
+    }
+  };
+}
+function instance$8($$self, $$props, $$invalidate) {
+  let $i18n;
+  const i18n2 = getContext("i18n");
+  component_subscribe($$self, i18n2, (value2) => $$invalidate(2, $i18n = value2));
+  let { events = [] } = $$props;
+  let { popupCloseParam = "" } = $$props;
+  $$self.$$set = ($$props2) => {
+    if ("events" in $$props2) $$invalidate(0, events = $$props2.events);
+    if ("popupCloseParam" in $$props2) $$invalidate(1, popupCloseParam = $$props2.popupCloseParam);
+  };
+  return [events, popupCloseParam, $i18n, i18n2];
+}
+class EventsList extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$8, create_fragment$7, safe_not_equal, { events: 0, popupCloseParam: 1 });
+  }
+}
+function create_default_slot_10$1(ctx) {
+  let t_value = (
+    /*$i18n*/
+    ctx[1].t("ui:notificationcenter:title") + ""
+  );
+  let t2;
+  return {
+    c() {
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, t2, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$i18n*/
+      2 && t_value !== (t_value = /*$i18n*/
+      ctx2[1].t("ui:notificationcenter:title") + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+    }
+  };
+}
+function create_default_slot_9$1(ctx) {
+  let t_value = (
+    /*$i18n*/
+    ctx[1].t("ui:notificationcenter:tabBtnCurrent") + ""
+  );
+  let t2;
+  return {
+    c() {
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, t2, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$i18n*/
+      2 && t_value !== (t_value = /*$i18n*/
+      ctx2[1].t("ui:notificationcenter:tabBtnCurrent") + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+    }
+  };
+}
+function create_default_slot_8$1(ctx) {
+  let t_value = (
+    /*$i18n*/
+    ctx[1].t("ui:notificationcenter:tabBtnNext") + ""
+  );
+  let t2;
+  return {
+    c() {
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, t2, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$i18n*/
+      2 && t_value !== (t_value = /*$i18n*/
+      ctx2[1].t("ui:notificationcenter:tabBtnNext") + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+    }
+  };
+}
+function create_default_slot_7$2(ctx) {
+  let button0;
+  let t2;
+  let button1;
+  let current;
+  button0 = new Button({
+    props: {
+      small: true,
+      href: false,
+      tabLink: "#current-notify",
+      tabLinkActive: true,
+      $$slots: { default: [create_default_slot_9$1] },
+      $$scope: { ctx }
+    }
+  });
+  button1 = new Button({
+    props: {
+      small: true,
+      href: false,
+      tabLink: "#next-notify",
+      $$slots: { default: [create_default_slot_8$1] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(button0.$$.fragment);
+      t2 = space();
+      create_component(button1.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(button0, target, anchor);
+      insert(target, t2, anchor);
+      mount_component(button1, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const button0_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      10) {
+        button0_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button0.$set(button0_changes);
+      const button1_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      10) {
+        button1_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button1.$set(button1_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(button0.$$.fragment, local);
+      transition_in(button1.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(button0.$$.fragment, local);
+      transition_out(button1.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+      destroy_component(button0, detaching);
+      destroy_component(button1, detaching);
+    }
+  };
+}
+function create_default_slot_6$2(ctx) {
+  let eventslist;
+  let current;
+  eventslist = new EventsList({
+    props: {
+      events: (
+        /*eventItems*/
+        ctx[0]
+      ),
+      popupCloseParam: ".popup-notification-center"
+    }
+  });
+  return {
+    c() {
+      create_component(eventslist.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(eventslist, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const eventslist_changes = {};
+      if (dirty & /*eventItems*/
+      1) eventslist_changes.events = /*eventItems*/
+      ctx2[0];
+      eventslist.$set(eventslist_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(eventslist.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(eventslist.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(eventslist, detaching);
+    }
+  };
+}
+function create_default_slot_5$2(ctx) {
+  let block;
+  let current;
+  block = new Block({
+    props: {
+      strongIos: true,
+      outlineIos: true,
+      $$slots: { default: [create_default_slot_6$2] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(block.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(block, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const block_changes = {};
+      if (dirty & /*$$scope, eventItems*/
+      9) {
+        block_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      block.$set(block_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(block.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(block.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(block, detaching);
+    }
+  };
+}
+function create_default_slot_4$4(ctx) {
+  let t_value = (
+    /*$i18n*/
+    ctx[1].t("ui:notificationcenter:empty") + ""
+  );
+  let t2;
+  return {
+    c() {
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, t2, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$i18n*/
+      2 && t_value !== (t_value = /*$i18n*/
+      ctx2[1].t("ui:notificationcenter:empty") + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+    }
+  };
+}
+function create_default_slot_3$5(ctx) {
+  let block;
+  let current;
+  block = new Block({
+    props: {
+      strongIos: true,
+      outlineIos: true,
+      $$slots: { default: [create_default_slot_4$4] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(block.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(block, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const block_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      10) {
+        block_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      block.$set(block_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(block.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(block.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(block, detaching);
+    }
+  };
+}
+function create_default_slot_2$5(ctx) {
+  let tab0;
+  let t2;
+  let tab1;
+  let current;
+  tab0 = new Tab({
+    props: {
+      id: "current-notify",
+      class: "page-content",
+      tabActive: true,
+      $$slots: { default: [create_default_slot_5$2] },
+      $$scope: { ctx }
+    }
+  });
+  tab1 = new Tab({
+    props: {
+      id: "next-notify",
+      class: "page-content",
+      $$slots: { default: [create_default_slot_3$5] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(tab0.$$.fragment);
+      t2 = space();
+      create_component(tab1.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(tab0, target, anchor);
+      insert(target, t2, anchor);
+      mount_component(tab1, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const tab0_changes = {};
+      if (dirty & /*$$scope, eventItems*/
+      9) {
+        tab0_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      tab0.$set(tab0_changes);
+      const tab1_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      10) {
+        tab1_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      tab1.$set(tab1_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(tab0.$$.fragment, local);
+      transition_in(tab1.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(tab0.$$.fragment, local);
+      transition_out(tab1.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+      destroy_component(tab0, detaching);
+      destroy_component(tab1, detaching);
+    }
+  };
+}
+function create_default_slot_1$6(ctx) {
+  let div;
+  let span;
+  let t0;
+  let blocktitle;
+  let t1;
+  let nav;
+  let segmented;
+  let t2;
+  let tabs;
+  let current;
+  blocktitle = new Block_title({
+    props: {
+      class: "UI-notify-title",
+      large: true,
+      $$slots: { default: [create_default_slot_10$1] },
+      $$scope: { ctx }
+    }
+  });
+  segmented = new Segmented({
+    props: {
+      class: "UI-notify-center-segmented",
+      strong: true,
+      $$slots: { default: [create_default_slot_7$2] },
+      $$scope: { ctx }
+    }
+  });
+  tabs = new Tabs({
+    props: {
+      animated: true,
+      $$slots: { default: [create_default_slot_2$5] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      div = element("div");
+      span = element("span");
+      t0 = space();
+      create_component(blocktitle.$$.fragment);
+      t1 = space();
+      nav = element("nav");
+      create_component(segmented.$$.fragment);
+      t2 = space();
+      create_component(tabs.$$.fragment);
+      attr(span, "class", "UI-popup-close-modern swipe-handler svelte-16h8rk");
+      attr(nav, "class", "UI-notify-center-navigation svelte-16h8rk");
+      attr(div, "class", "UI-notify-center-header svelte-16h8rk");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append(div, span);
+      append(div, t0);
+      mount_component(blocktitle, div, null);
+      append(div, t1);
+      append(div, nav);
+      mount_component(segmented, nav, null);
+      insert(target, t2, anchor);
+      mount_component(tabs, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const blocktitle_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      10) {
+        blocktitle_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      blocktitle.$set(blocktitle_changes);
+      const segmented_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      10) {
+        segmented_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      segmented.$set(segmented_changes);
+      const tabs_changes = {};
+      if (dirty & /*$$scope, $i18n, eventItems*/
+      11) {
+        tabs_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      tabs.$set(tabs_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(blocktitle.$$.fragment, local);
+      transition_in(segmented.$$.fragment, local);
+      transition_in(tabs.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(blocktitle.$$.fragment, local);
+      transition_out(segmented.$$.fragment, local);
+      transition_out(tabs.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+        detach(t2);
+      }
+      destroy_component(blocktitle);
+      destroy_component(segmented);
+      destroy_component(tabs, detaching);
+    }
+  };
+}
+function create_default_slot$6(ctx) {
+  let page;
+  let current;
+  page = new Page({
+    props: {
+      pageContent: false,
+      $$slots: { default: [create_default_slot_1$6] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(page.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(page, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const page_changes = {};
+      if (dirty & /*$$scope, $i18n, eventItems*/
+      11) {
+        page_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      page.$set(page_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(page.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(page.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(page, detaching);
+    }
+  };
+}
+function create_fragment$6(ctx) {
+  let popup;
+  let current;
+  popup = new Popup2({
+    props: {
+      class: "popup-notification-center",
+      swipeToClose: "to-bottom",
+      $$slots: { default: [create_default_slot$6] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(popup.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(popup, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const popup_changes = {};
+      if (dirty & /*$$scope, $i18n, eventItems*/
+      11) {
+        popup_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      popup.$set(popup_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(popup.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(popup.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(popup, detaching);
+    }
+  };
+}
+function instance$7($$self, $$props, $$invalidate) {
+  let $i18n;
+  const i18n2 = getContext("i18n");
+  component_subscribe($$self, i18n2, (value2) => $$invalidate(1, $i18n = value2));
+  let { eventItems = [] } = $$props;
+  $$self.$$set = ($$props2) => {
+    if ("eventItems" in $$props2) $$invalidate(0, eventItems = $$props2.eventItems);
+  };
+  return [eventItems, $i18n, i18n2];
+}
+class NotificationCenter extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$7, create_fragment$6, safe_not_equal, { eventItems: 0 });
+  }
+}
+function create_default_slot_7$1(ctx) {
+  let linehorizontal3;
+  let current;
+  linehorizontal3 = new LineHorizontal3({
+    props: {
+      class: "UI-nav-icons icon-menu-horizontal"
+    }
+  });
+  return {
+    c() {
+      create_component(linehorizontal3.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(linehorizontal3, target, anchor);
+      current = true;
+    },
+    p: noop$1,
+    i(local) {
+      if (current) return;
+      transition_in(linehorizontal3.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(linehorizontal3.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(linehorizontal3, detaching);
+    }
+  };
+}
+function create_default_slot_6$1(ctx) {
+  let button;
+  let current;
+  button = new Button({
+    props: {
+      panelOpen: "left",
+      $$slots: { default: [create_default_slot_7$1] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(button.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(button, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const button_changes = {};
+      if (dirty & /*$$scope*/
+      1048576) {
+        button_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button.$set(button_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(button.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(button.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(button, detaching);
+    }
+  };
+}
+function create_default_slot_5$1(ctx) {
+  let t_value = (
+    /*$i18n*/
+    ctx[1].t("ui:home:navTitle") + ""
+  );
+  let t2;
+  return {
+    c() {
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, t2, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$i18n*/
+      2 && t_value !== (t_value = /*$i18n*/
+      ctx2[1].t("ui:home:navTitle") + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+    }
+  };
+}
+function create_if_block$1(ctx) {
+  let badge;
+  let current;
+  badge = new Badge({
+    props: {
+      class: "UI-badge",
+      color: "red",
+      $$slots: { default: [create_default_slot_4$3] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(badge.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(badge, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const badge_changes = {};
+      if (dirty & /*$$scope, eventItems*/
+      1048577) {
+        badge_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      badge.$set(badge_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(badge.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(badge.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(badge, detaching);
+    }
+  };
+}
+function create_default_slot_4$3(ctx) {
+  let t_value = (
+    /*eventItems*/
+    ctx[0].length + ""
+  );
+  let t2;
+  return {
+    c() {
+      t2 = text(t_value);
+    },
+    m(target, anchor) {
+      insert(target, t2, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*eventItems*/
+      1 && t_value !== (t_value = /*eventItems*/
+      ctx2[0].length + "")) set_data(t2, t_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+      }
+    }
+  };
+}
+function create_default_slot_3$4(ctx) {
+  let bell;
+  let t2;
+  let if_block_anchor;
+  let current;
+  bell = new Bell({
+    props: { class: "UI-nav-icons icon-bell" }
+  });
+  let if_block = (
+    /*eventItems*/
+    ctx[0].length !== 0 && create_if_block$1(ctx)
+  );
+  return {
+    c() {
+      create_component(bell.$$.fragment);
+      t2 = space();
+      if (if_block) if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      mount_component(bell, target, anchor);
+      insert(target, t2, anchor);
+      if (if_block) if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (
+        /*eventItems*/
+        ctx2[0].length !== 0
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & /*eventItems*/
+          1) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block$1(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(bell.$$.fragment, local);
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(bell.$$.fragment, local);
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t2);
+        detach(if_block_anchor);
+      }
+      destroy_component(bell, detaching);
+      if (if_block) if_block.d(detaching);
+    }
+  };
+}
+function create_default_slot_2$4(ctx) {
+  let button;
+  let current;
+  button = new Button({
+    props: {
+      class: "UI-btn-popup-notification",
+      popupOpen: ".popup-notification-center",
+      $$slots: { default: [create_default_slot_3$4] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(button.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(button, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const button_changes = {};
+      if (dirty & /*$$scope, eventItems*/
+      1048577) {
+        button_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      button.$set(button_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(button.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(button.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(button, detaching);
+    }
+  };
+}
+function create_default_slot_1$5(ctx) {
+  let navleft;
+  let t0;
+  let navtitle;
+  let t1;
+  let navright;
+  let current;
+  navleft = new Nav_left({
+    props: {
+      $$slots: { default: [create_default_slot_6$1] },
+      $$scope: { ctx }
+    }
+  });
+  navtitle = new Nav_title({
+    props: {
+      $$slots: { default: [create_default_slot_5$1] },
+      $$scope: { ctx }
+    }
+  });
+  navright = new Nav_right({
+    props: {
+      $$slots: { default: [create_default_slot_2$4] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(navleft.$$.fragment);
+      t0 = space();
+      create_component(navtitle.$$.fragment);
+      t1 = space();
+      create_component(navright.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(navleft, target, anchor);
+      insert(target, t0, anchor);
+      mount_component(navtitle, target, anchor);
+      insert(target, t1, anchor);
+      mount_component(navright, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const navleft_changes = {};
+      if (dirty & /*$$scope*/
+      1048576) {
+        navleft_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navleft.$set(navleft_changes);
+      const navtitle_changes = {};
+      if (dirty & /*$$scope, $i18n*/
+      1048578) {
+        navtitle_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navtitle.$set(navtitle_changes);
+      const navright_changes = {};
+      if (dirty & /*$$scope, eventItems*/
+      1048577) {
+        navright_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      navright.$set(navright_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(navleft.$$.fragment, local);
+      transition_in(navtitle.$$.fragment, local);
+      transition_in(navright.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(navleft.$$.fragment, local);
+      transition_out(navtitle.$$.fragment, local);
+      transition_out(navright.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t0);
+        detach(t1);
+      }
+      destroy_component(navleft, detaching);
+      destroy_component(navtitle, detaching);
+      destroy_component(navright, detaching);
+    }
+  };
+}
+function create_default_slot$5(ctx) {
+  let navbar;
+  let t0;
+  let calendarzswiat;
+  let t1;
+  let eventslist;
+  let t2;
+  let notificationcenter;
+  let current;
+  navbar = new Navbar({
+    props: {
       $$slots: { default: [create_default_slot_1$5] },
       $$scope: { ctx }
     }
   });
-  eventsnotificationpopup = new EventsNotificationPopup({
+  calendarzswiat = new CalendarzSwiat({ props: { events: (
+    /*events*/
+    ctx[3]
+  ) } });
+  eventslist = new EventsList({ props: { events: (
+    /*eventItems*/
+    ctx[0]
+  ) } });
+  notificationcenter = new NotificationCenter({
     props: { eventItems: (
       /*eventItems*/
       ctx[0]
@@ -52515,52 +54515,51 @@ function create_default_slot$5(ctx) {
       t0 = space();
       create_component(calendarzswiat.$$.fragment);
       t1 = space();
-      create_component(list.$$.fragment);
+      create_component(eventslist.$$.fragment);
       t2 = space();
-      create_component(eventsnotificationpopup.$$.fragment);
+      create_component(notificationcenter.$$.fragment);
     },
     m(target, anchor) {
       mount_component(navbar, target, anchor);
       insert(target, t0, anchor);
       mount_component(calendarzswiat, target, anchor);
       insert(target, t1, anchor);
-      mount_component(list, target, anchor);
+      mount_component(eventslist, target, anchor);
       insert(target, t2, anchor);
-      mount_component(eventsnotificationpopup, target, anchor);
+      mount_component(notificationcenter, target, anchor);
       current = true;
     },
     p(ctx2, dirty) {
       const navbar_changes = {};
       if (dirty & /*$$scope, eventItems, $i18n*/
-      8388611) {
+      1048579) {
         navbar_changes.$$scope = { dirty, ctx: ctx2 };
       }
       navbar.$set(navbar_changes);
-      const list_changes = {};
-      if (dirty & /*$$scope, eventItems, $i18n*/
-      8388611) {
-        list_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      list.$set(list_changes);
-      const eventsnotificationpopup_changes = {};
+      const eventslist_changes = {};
       if (dirty & /*eventItems*/
-      1) eventsnotificationpopup_changes.eventItems = /*eventItems*/
+      1) eventslist_changes.events = /*eventItems*/
       ctx2[0];
-      eventsnotificationpopup.$set(eventsnotificationpopup_changes);
+      eventslist.$set(eventslist_changes);
+      const notificationcenter_changes = {};
+      if (dirty & /*eventItems*/
+      1) notificationcenter_changes.eventItems = /*eventItems*/
+      ctx2[0];
+      notificationcenter.$set(notificationcenter_changes);
     },
     i(local) {
       if (current) return;
       transition_in(navbar.$$.fragment, local);
       transition_in(calendarzswiat.$$.fragment, local);
-      transition_in(list.$$.fragment, local);
-      transition_in(eventsnotificationpopup.$$.fragment, local);
+      transition_in(eventslist.$$.fragment, local);
+      transition_in(notificationcenter.$$.fragment, local);
       current = true;
     },
     o(local) {
       transition_out(navbar.$$.fragment, local);
       transition_out(calendarzswiat.$$.fragment, local);
-      transition_out(list.$$.fragment, local);
-      transition_out(eventsnotificationpopup.$$.fragment, local);
+      transition_out(eventslist.$$.fragment, local);
+      transition_out(notificationcenter.$$.fragment, local);
       current = false;
     },
     d(detaching) {
@@ -52571,8 +54570,8 @@ function create_default_slot$5(ctx) {
       }
       destroy_component(navbar, detaching);
       destroy_component(calendarzswiat, detaching);
-      destroy_component(list, detaching);
-      destroy_component(eventsnotificationpopup, detaching);
+      destroy_component(eventslist, detaching);
+      destroy_component(notificationcenter, detaching);
     }
   };
 }
@@ -52605,7 +54604,7 @@ function create_fragment$5(ctx) {
     p(ctx2, [dirty]) {
       const page_changes = {};
       if (dirty & /*$$scope, eventItems, $i18n*/
-      8388611) {
+      1048579) {
         page_changes.$$scope = { dirty, ctx: ctx2 };
       }
       page.$set(page_changes);
@@ -57453,7 +59452,8 @@ Framework7.use([
   Panel$1,
   PickerComponent,
   Calendar2,
-  AccordionComponent
+  AccordionComponent,
+  TabsComponent
 ]);
 new App_1({
   target: document.getElementById("app")
