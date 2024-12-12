@@ -23085,7 +23085,7 @@ class Panel2 extends SvelteComponent {
     return this.$$.ctx[27];
   }
 }
-function create_if_block_4$2(ctx) {
+function create_if_block_4$3(ctx) {
   let popup;
   let current;
   popup = new Popup2({
@@ -23594,7 +23594,7 @@ function create_fragment$F(ctx) {
   let current;
   let if_block0 = (
     /*openIn*/
-    ctx[0] === "popup" && create_if_block_4$2(ctx)
+    ctx[0] === "popup" && create_if_block_4$3(ctx)
   );
   let if_block1 = (
     /*openIn*/
@@ -23647,7 +23647,7 @@ function create_fragment$F(ctx) {
             transition_in(if_block0, 1);
           }
         } else {
-          if_block0 = create_if_block_4$2(ctx2);
+          if_block0 = create_if_block_4$3(ctx2);
           if_block0.c();
           transition_in(if_block0, 1);
           if_block0.m(t0.parentNode, t0);
@@ -25962,7 +25962,7 @@ function create_else_block_1$3(ctx) {
   let current;
   let mounted;
   let dispose;
-  const if_block_creators = [create_if_block_6$1, create_else_block_2$2];
+  const if_block_creators = [create_if_block_6$1, create_else_block_2$3];
   const if_blocks = [];
   function select_block_type_2(ctx2, dirty) {
     if (
@@ -26234,7 +26234,7 @@ function create_if_block$g(ctx) {
     }
   };
 }
-function create_else_block_2$2(ctx) {
+function create_else_block_2$3(ctx) {
   let t0;
   let t1;
   let current;
@@ -26651,7 +26651,7 @@ function create_else_block$7(ctx) {
     ctx[8] && create_if_block_5$1(ctx)
   );
   let if_block1 = typeof /*text*/
-  ctx[0] !== "undefined" && create_if_block_4$1(ctx);
+  ctx[0] !== "undefined" && create_if_block_4$2(ctx);
   const default_slot_template = (
     /*#slots*/
     ctx[45].default
@@ -26710,7 +26710,7 @@ function create_else_block$7(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block_4$1(ctx2);
+          if_block1 = create_if_block_4$2(ctx2);
           if_block1.c();
           if_block1.m(t1.parentNode, t1);
         }
@@ -26954,7 +26954,7 @@ function create_if_block_5$1(ctx) {
     }
   };
 }
-function create_if_block_4$1(ctx) {
+function create_if_block_4$2(ctx) {
   let span;
   let t_value = plainText(
     /*text*/
@@ -29779,7 +29779,7 @@ function create_else_block$6(ctx) {
     ctx[83],
     get_root_start_slot_context
   );
-  const if_block_creators = [create_if_block_4, create_if_block_67, create_else_block_7];
+  const if_block_creators = [create_if_block_4$1, create_if_block_67, create_else_block_7];
   const if_blocks = [];
   function select_block_type_1(ctx2, dirty) {
     if (
@@ -30901,12 +30901,12 @@ function create_if_block_67(ctx) {
     }
   };
 }
-function create_if_block_4(ctx) {
+function create_if_block_4$1(ctx) {
   let div;
   let current_block_type_index;
   let if_block;
   let current;
-  const if_block_creators = [create_if_block_5, create_else_block_2$1];
+  const if_block_creators = [create_if_block_5, create_else_block_2$2];
   const if_blocks = [];
   function select_block_type_2(ctx2, dirty) {
     if (
@@ -38735,7 +38735,7 @@ function create_if_block_69(ctx) {
     }
   };
 }
-function create_else_block_2$1(ctx) {
+function create_else_block_2$2(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
@@ -47851,7 +47851,7 @@ function create_else_block_1$1(ctx) {
     ctx[55],
     get_before_list_slot_context_1
   );
-  const if_block_creators = [create_if_block_2$6, create_else_block_2];
+  const if_block_creators = [create_if_block_2$6, create_else_block_2$1];
   const if_blocks = [];
   function select_block_type_2(ctx2, dirty) {
     if (
@@ -48243,7 +48243,7 @@ function create_if_block$c(ctx) {
     }
   };
 }
-function create_else_block_2(ctx) {
+function create_else_block_2$1(ctx) {
   let current;
   const default_slot_template = (
     /*#slots*/
@@ -54539,7 +54539,8 @@ const ui$1 = {
     title: "Notification Center",
     tabBtnCurrent: "Current",
     tabBtnNext: "Next month",
-    empty: "No notifications."
+    empty: "No notifications.",
+    lastMonthOfTheYear: "The calendar will be updated on January 1st next year."
   }
 };
 const calendar$1 = {
@@ -54709,7 +54710,8 @@ const ui = {
     title: "Центр оповещений",
     tabBtnCurrent: "Текущие",
     tabBtnNext: "Следующий месяц",
-    empty: "Оповещения отсутствуют."
+    empty: "Оповещения отсутствуют.",
+    lastMonthOfTheYear: "Календарь обновится 1 января следующего года."
   }
 };
 const calendar = {
@@ -56150,12 +56152,12 @@ class EmptyEvent extends SvelteComponent {
 }
 function get_each_context$2(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[6] = list[i];
+  child_ctx[7] = list[i];
   return child_ctx;
 }
 function get_each_context_1(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[6] = list[i];
+  child_ctx[7] = list[i];
   return child_ctx;
 }
 function create_default_slot_10(ctx) {
@@ -56273,13 +56275,13 @@ function create_default_slot_7$1(ctx) {
     p(ctx2, dirty) {
       const button0_changes = {};
       if (dirty & /*$$scope, $i18n*/
-      2052) {
+      4100) {
         button0_changes.$$scope = { dirty, ctx: ctx2 };
       }
       button0.$set(button0_changes);
       const button1_changes = {};
       if (dirty & /*$$scope, $i18n*/
-      2052) {
+      4100) {
         button1_changes.$$scope = { dirty, ctx: ctx2 };
       }
       button1.$set(button1_changes);
@@ -56304,7 +56306,7 @@ function create_default_slot_7$1(ctx) {
     }
   };
 }
-function create_else_block_1(ctx) {
+function create_else_block_2(ctx) {
   let emptyevent;
   let current;
   emptyevent = new EmptyEvent({
@@ -56342,7 +56344,7 @@ function create_else_block_1(ctx) {
     }
   };
 }
-function create_if_block_2(ctx) {
+function create_if_block_3(ctx) {
   let each_1_anchor;
   let current;
   let each_value_1 = ensure_array_like(
@@ -56421,7 +56423,7 @@ function create_if_block_2(ctx) {
     }
   };
 }
-function create_if_block_3(ctx) {
+function create_if_block_4(ctx) {
   let eventcard;
   let current;
   eventcard = new EventCard({
@@ -56429,7 +56431,7 @@ function create_if_block_3(ctx) {
       events: {
         calendarEvents: (
           /*event*/
-          ctx[6]
+          ctx[7]
         ),
         wikiContent: false,
         showData: true
@@ -56450,7 +56452,7 @@ function create_if_block_3(ctx) {
       1) eventcard_changes.events = {
         calendarEvents: (
           /*event*/
-          ctx2[6]
+          ctx2[7]
         ),
         wikiContent: false,
         showData: true
@@ -56474,12 +56476,12 @@ function create_if_block_3(ctx) {
 function create_each_block_1(ctx) {
   let show_if = (
     /*event*/
-    ctx[6].date.getMonth() === /*currentMonth*/
+    ctx[7].date.getMonth() === /*currentMonth*/
     ctx[4]
   );
   let if_block_anchor;
   let current;
-  let if_block = show_if && create_if_block_3(ctx);
+  let if_block = show_if && create_if_block_4(ctx);
   return {
     c() {
       if (if_block) if_block.c();
@@ -56493,7 +56495,7 @@ function create_each_block_1(ctx) {
     p(ctx2, dirty) {
       if (dirty & /*props*/
       1) show_if = /*event*/
-      ctx2[6].date.getMonth() === /*currentMonth*/
+      ctx2[7].date.getMonth() === /*currentMonth*/
       ctx2[4];
       if (show_if) {
         if (if_block) {
@@ -56503,7 +56505,7 @@ function create_each_block_1(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block_3(ctx2);
+          if_block = create_if_block_4(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -56538,7 +56540,7 @@ function create_default_slot_6$1(ctx) {
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block_2, create_else_block_1];
+  const if_block_creators = [create_if_block_3, create_else_block_2];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -56620,7 +56622,7 @@ function create_default_slot_5$1(ctx) {
     p(ctx2, dirty) {
       const block_changes = {};
       if (dirty & /*$$scope, props*/
-      2049) {
+      4097) {
         block_changes.$$scope = { dirty, ctx: ctx2 };
       }
       block.$set(block_changes);
@@ -56640,6 +56642,102 @@ function create_default_slot_5$1(ctx) {
   };
 }
 function create_else_block(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block_1, create_else_block_1];
+  const if_blocks = [];
+  function select_block_type_2(ctx2, dirty) {
+    if (
+      /*props*/
+      ctx2[0].currentEvents !== void 0
+    ) return 0;
+    return 1;
+  }
+  current_block_type_index = select_block_type_2(ctx);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type_2(ctx2);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(if_block_anchor.parentNode, if_block_anchor);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_blocks[current_block_type_index].d(detaching);
+    }
+  };
+}
+function create_if_block$1(ctx) {
+  let p;
+  let t_value = (
+    /*$i18n*/
+    ctx[2].t("ui:notificationcenter:lastMonthOfTheYear") + ""
+  );
+  let t2;
+  return {
+    c() {
+      p = element("p");
+      t2 = text(t_value);
+      attr(p, "class", "lastmonth-of-theyear svelte-9cl5bv");
+    },
+    m(target, anchor) {
+      insert(target, p, anchor);
+      append(p, t2);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$i18n*/
+      4 && t_value !== (t_value = /*$i18n*/
+      ctx2[2].t("ui:notificationcenter:lastMonthOfTheYear") + "")) set_data(t2, t_value);
+    },
+    i: noop$1,
+    o: noop$1,
+    d(detaching) {
+      if (detaching) {
+        detach(p);
+      }
+    }
+  };
+}
+function create_else_block_1(ctx) {
   let emptyevent;
   let current;
   emptyevent = new EmptyEvent({
@@ -56677,7 +56775,7 @@ function create_else_block(ctx) {
     }
   };
 }
-function create_if_block$1(ctx) {
+function create_if_block_1(ctx) {
   let each_1_anchor;
   let current;
   let each_value = ensure_array_like(
@@ -56756,7 +56854,7 @@ function create_if_block$1(ctx) {
     }
   };
 }
-function create_if_block_1(ctx) {
+function create_if_block_2(ctx) {
   let eventcard;
   let current;
   eventcard = new EventCard({
@@ -56764,7 +56862,7 @@ function create_if_block_1(ctx) {
       events: {
         calendarEvents: (
           /*event*/
-          ctx[6]
+          ctx[7]
         ),
         wikiContent: false,
         showData: true
@@ -56785,7 +56883,7 @@ function create_if_block_1(ctx) {
       1) eventcard_changes.events = {
         calendarEvents: (
           /*event*/
-          ctx2[6]
+          ctx2[7]
         ),
         wikiContent: false,
         showData: true
@@ -56809,12 +56907,12 @@ function create_if_block_1(ctx) {
 function create_each_block$2(ctx) {
   let show_if = (
     /*event*/
-    ctx[6].date.getMonth() === /*nextMonth*/
+    ctx[7].date.getMonth() === /*nextMonth*/
     ctx[1]
   );
   let if_block_anchor;
   let current;
-  let if_block = show_if && create_if_block_1(ctx);
+  let if_block = show_if && create_if_block_2(ctx);
   return {
     c() {
       if (if_block) if_block.c();
@@ -56828,7 +56926,7 @@ function create_each_block$2(ctx) {
     p(ctx2, dirty) {
       if (dirty & /*props, nextMonth*/
       3) show_if = /*event*/
-      ctx2[6].date.getMonth() === /*nextMonth*/
+      ctx2[7].date.getMonth() === /*nextMonth*/
       ctx2[1];
       if (show_if) {
         if (if_block) {
@@ -56838,7 +56936,7 @@ function create_each_block$2(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block_1(ctx2);
+          if_block = create_if_block_2(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -56877,8 +56975,8 @@ function create_default_slot_4$3(ctx) {
   const if_blocks = [];
   function select_block_type_1(ctx2, dirty) {
     if (
-      /*props*/
-      ctx2[0].currentEvents !== void 0
+      /*lastMonthOnTheYear*/
+      ctx2[5]
     ) return 0;
     return 1;
   }
@@ -56895,26 +56993,7 @@ function create_default_slot_4$3(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type_1(ctx2);
-      if (current_block_type_index === previous_block_index) {
-        if_blocks[current_block_type_index].p(ctx2, dirty);
-      } else {
-        group_outros();
-        transition_out(if_blocks[previous_block_index], 1, 1, () => {
-          if_blocks[previous_block_index] = null;
-        });
-        check_outros();
-        if_block = if_blocks[current_block_type_index];
-        if (!if_block) {
-          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
-          if_block.c();
-        } else {
-          if_block.p(ctx2, dirty);
-        }
-        transition_in(if_block, 1);
-        if_block.m(if_block_anchor.parentNode, if_block_anchor);
-      }
+      if_block.p(ctx2, dirty);
     },
     i(local) {
       if (current) return;
@@ -56954,8 +57033,8 @@ function create_default_slot_3$3(ctx) {
     },
     p(ctx2, dirty) {
       const block_changes = {};
-      if (dirty & /*$$scope, props, nextMonth*/
-      2051) {
+      if (dirty & /*$$scope, $i18n, props, nextMonth*/
+      4103) {
         block_changes.$$scope = { dirty, ctx: ctx2 };
       }
       block.$set(block_changes);
@@ -57011,13 +57090,13 @@ function create_default_slot_2$3(ctx) {
     p(ctx2, dirty) {
       const tab0_changes = {};
       if (dirty & /*$$scope, props*/
-      2049) {
+      4097) {
         tab0_changes.$$scope = { dirty, ctx: ctx2 };
       }
       tab0.$set(tab0_changes);
       const tab1_changes = {};
-      if (dirty & /*$$scope, props, nextMonth*/
-      2051) {
+      if (dirty & /*$$scope, $i18n, props, nextMonth*/
+      4103) {
         tab1_changes.$$scope = { dirty, ctx: ctx2 };
       }
       tab1.$set(tab1_changes);
@@ -57103,11 +57182,11 @@ function create_default_slot_1$4(ctx) {
       create_component(segmented.$$.fragment);
       t4 = space();
       create_component(tabs.$$.fragment);
-      attr(span, "class", "UI-popup-close-modern swipe-handler svelte-1tfbxyf");
-      attr(p, "class", "UI-notify-center-bar-title svelte-1tfbxyf");
-      attr(div0, "class", "UI-notify-center-bar svelte-1tfbxyf");
-      attr(nav, "class", "UI-notify-center-navigation svelte-1tfbxyf");
-      attr(div1, "class", "UI-notify-center-header svelte-1tfbxyf");
+      attr(span, "class", "UI-popup-close-modern swipe-handler svelte-9cl5bv");
+      attr(p, "class", "UI-notify-center-bar-title svelte-9cl5bv");
+      attr(div0, "class", "UI-notify-center-bar svelte-9cl5bv");
+      attr(nav, "class", "UI-notify-center-navigation svelte-9cl5bv");
+      attr(div1, "class", "UI-notify-center-header svelte-9cl5bv");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -57131,19 +57210,19 @@ function create_default_slot_1$4(ctx) {
       ctx2[2].t("ui:notificationcenter:title") + "")) set_data(t1, t1_value);
       const button_changes = {};
       if (dirty & /*$$scope*/
-      2048) {
+      4096) {
         button_changes.$$scope = { dirty, ctx: ctx2 };
       }
       button.$set(button_changes);
       const segmented_changes = {};
       if (dirty & /*$$scope, $i18n*/
-      2052) {
+      4100) {
         segmented_changes.$$scope = { dirty, ctx: ctx2 };
       }
       segmented.$set(segmented_changes);
       const tabs_changes = {};
-      if (dirty & /*$$scope, props, nextMonth*/
-      2051) {
+      if (dirty & /*$$scope, $i18n, props, nextMonth*/
+      4103) {
         tabs_changes.$$scope = { dirty, ctx: ctx2 };
       }
       tabs.$set(tabs_changes);
@@ -57192,8 +57271,8 @@ function create_default_slot$4(ctx) {
     },
     p(ctx2, dirty) {
       const page_changes = {};
-      if (dirty & /*$$scope, props, nextMonth, $i18n*/
-      2055) {
+      if (dirty & /*$$scope, $i18n, props, nextMonth*/
+      4103) {
         page_changes.$$scope = { dirty, ctx: ctx2 };
       }
       page.$set(page_changes);
@@ -57233,8 +57312,8 @@ function create_fragment$4(ctx) {
     },
     p(ctx2, [dirty]) {
       const popup_changes = {};
-      if (dirty & /*$$scope, props, nextMonth, $i18n*/
-      2055) {
+      if (dirty & /*$$scope, $i18n, props, nextMonth*/
+      4103) {
         popup_changes.$$scope = { dirty, ctx: ctx2 };
       }
       popup.$set(popup_changes);
@@ -57261,6 +57340,7 @@ function instance$5($$self, $$props, $$invalidate) {
   let now2 = /* @__PURE__ */ new Date();
   let currentMonth = (/* @__PURE__ */ new Date()).getMonth();
   let nextMonth;
+  let lastMonthOnTheYear = new Date(now2.getFullYear(), 11, 31);
   if (now2.getMonth() == 11) {
     let current = new Date(now2.getFullYear() + 1, 0, 0);
     nextMonth = current.getMonth();
@@ -57271,7 +57351,7 @@ function instance$5($$self, $$props, $$invalidate) {
   $$self.$$set = ($$props2) => {
     if ("props" in $$props2) $$invalidate(0, props = $$props2.props);
   };
-  return [props, nextMonth, $i18n, i18n2, currentMonth];
+  return [props, nextMonth, $i18n, i18n2, currentMonth, lastMonthOnTheYear];
 }
 class NotificationCenter extends SvelteComponent {
   constructor(options) {
@@ -57948,15 +58028,24 @@ function instance$4($$self, $$props, $$invalidate) {
   const today = new Date(year, month, day);
   let events = [];
   let eventCount = [];
-  $i18n.on("languageChanged", (changed) => {
-    changed ? $$invalidate(0, events) : events;
-    changed ? $$invalidate(1, eventCount) : eventCount;
-  });
   console.log(eventCount);
   let eventItems = [];
   let monthNames = [];
   let daysNames = [];
   let SPEventsCalendar;
+  $i18n.on("languageChanged", (changed) => {
+    if (changed) {
+      $$invalidate(0, events);
+      $$invalidate(1, eventCount);
+      $i18n.t("debugmsg:debug:onLanguageChangedMsg");
+      dynamicDateGenerator(changed);
+      $i18n.t("debugmsg:debug:calendar:monthAfterLangChanged");
+      f7.$(".calendar-custom-toolbar .center").text(`${monthNames[SPEventsCalendar.currentMonth]}, ${SPEventsCalendar.currentYear}`);
+      f7.$(".calendar-week-day").forEach((el, index2) => {
+        el.innerText = daysNames[index2];
+      });
+    }
+  });
   function renderEvents(SPEventsCalendar2) {
     const currentDate = SPEventsCalendar2.value[0];
     const currentEvents = events.filter((event) => event.date.getTime() >= currentDate.getTime() && event.date.getTime() < currentDate.getTime() + 24 * 60 * 60 * 1e3);
@@ -58013,11 +58102,6 @@ function instance$4($$self, $$props, $$invalidate) {
         renderDaysNameLocales(resources.ru.ui.calendar.days);
         break;
     }
-    $i18n.on("languageChanged", (changed) => {
-      $i18n.t("debugmsg:debug:onLanguageChangedMsg");
-      dynamicDateGenerator(changed);
-      $i18n.t("debugmsg:debug:calendar:monthAfterLangChanged");
-    });
   }
   dynamicDateGenerator();
   function onPageInit() {
@@ -58051,14 +58135,6 @@ function instance$4($$self, $$props, $$invalidate) {
           });
           $$(".calendar-custom-toolbar .right .link").on("click", () => {
             SPEventsCalendar2.nextMonth(300);
-          });
-          $i18n.on("languageChanged", (changed) => {
-            if (changed) {
-              $$(".calendar-custom-toolbar .center").text(`${monthNames[SPEventsCalendar2.currentMonth]}, ${SPEventsCalendar2.currentYear}`);
-              $$(".calendar-week-day").forEach((el, index2) => {
-                el.innerText = daysNames[index2];
-              });
-            }
           });
           renderEvents(SPEventsCalendar2);
         },
